@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { authStore } from '$lib/stores/authStore.svelte';
+	import { mockProfile } from '$lib/data/mockPortfolio';
 	import {
+		ArrowUpRight,
 		ArrowLeft,
 		Mail,
 		CheckCircle2,
 		ShieldAlert,
-		ArrowRight,
 		KeyRound,
 		ShieldCheck,
 		Lock,
@@ -43,120 +44,101 @@
 </svelte:head>
 
 <div class="reset-page">
-	<!-- Background Ambient Glows -->
-	<div class="ambient-glow glow-1"></div>
-	<div class="ambient-glow glow-2"></div>
-	<div class="ambient-glow glow-3"></div>
-	<div class="grid-overlay"></div>
+	<!-- Background Design Elements matching website hero -->
+	<div class="bg-diagonal-line"></div>
+	<div class="bg-ambient-blob blob-1"></div>
+	<div class="bg-ambient-blob blob-2"></div>
 
-	<div class="reset-layout">
-		<!-- LEFT SIDE: Showcase & Security Guide -->
-		<aside class="showcase-side">
-			<div class="showcase-content">
-				<!-- Brand Badge Header -->
-				<div class="showcase-brand">
-					<div class="brand-monogram">
-						<span>MB</span>
-						<span class="pulse-dot"></span>
-					</div>
-					<div class="brand-info">
-						<div class="brand-badge-row">
-							<span class="role-badge">Pusat Keamanan</span>
-							<span class="version-pill">v2.5</span>
-						</div>
-						<h2 class="brand-name">Muhammad Bagiz</h2>
-						<p class="brand-tagline">Lead UX/UI Designer & Business Strategist</p>
-					</div>
-				</div>
+	<!-- Top Navigation Header matching website Navbar -->
+	<header class="reset-header">
+		<div class="header-inner">
+			<!-- Brand Logo with blue accent -->
+			<div class="brand-logo">
+				<a href="/" class="logo-link" title="Ke Beranda Portofolio">
+					<span>B</span><span class="logo-accent">a</span><span>giz</span>
+				</a>
+				<span class="brand-subpill">Admin Studio</span>
+			</div>
 
-				<!-- Instructions Card -->
+			<!-- Right Action Links -->
+			<div class="header-actions">
+				<a href="/admin/login" class="back-pill-btn">
+					<ArrowLeft size={15} />
+					<span>Kembali ke Halaman Masuk</span>
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<!-- Main Container -->
+	<main class="reset-main">
+		<div class="reset-grid">
+			<!-- LEFT COLUMN: Recovery Instructions & Profile -->
+			<section class="showcase-column">
 				<div class="showcase-card">
-					<div class="card-glass-header">
-						<div class="card-title-group">
-							<span class="card-eyebrow">PROTOKOL PEMULIHAN AKUN</span>
-							<h3 class="card-headline">Langkah Reset Kata Sandi</h3>
-						</div>
-					</div>
-
-					<p class="card-description">
-						Ikuti petunjuk sistem berikut untuk mendapatkan kembali akses penuh ke panel CMS manajemen portofolio Anda.
+					<div class="card-eyebrow">PROTOKOL KEAMANAN</div>
+					<h2 class="card-title">Pemulihan Akses Administrator</h2>
+					<p class="card-desc">
+						Ikuti 3 tahapan verifikasi berikut untuk mengembalikan hak akses pengelolaan portofolio Anda.
 					</p>
 
 					<!-- Steps List -->
-					<div class="steps-list">
-						<div class="step-item">
-							<div class="step-num">1</div>
-							<div class="step-text">
-								<strong>Masukkan Alamat Email</strong>
-								<span>Gunakan email yang terdaftar pada akun administrator Anda.</span>
+					<div class="steps-wrapper">
+						<div class="step-card">
+							<div class="step-badge">1</div>
+							<div class="step-content">
+								<strong>Kirim Permintaan Reset</strong>
+								<p>Masukkan alamat email administrator yang terdaftar pada sistem.</p>
 							</div>
 						</div>
-						<div class="step-item">
-							<div class="step-num">2</div>
-							<div class="step-text">
-								<strong>Periksa Tautan Pemulihan</strong>
-								<span>Instruksi verifikasi dan tautan reset akan dikirimkan ke kotak masuk.</span>
+						<div class="step-card">
+							<div class="step-badge">2</div>
+							<div class="step-content">
+								<strong>Verifikasi Tautan</strong>
+								<p>Sistem akan mengirimkan tautan pemulihan aman ke kotak masuk Anda.</p>
 							</div>
 						</div>
-						<div class="step-item">
-							<div class="step-num">3</div>
-							<div class="step-text">
-								<strong>Buat Kata Sandi Baru</strong>
-								<span>Atur kata sandi baru yang kuat (minimal 6 karakter kombinasi).</span>
+						<div class="step-card">
+							<div class="step-badge">3</div>
+							<div class="step-content">
+								<strong>Atur Sandi Baru</strong>
+								<p>Buat kata sandi baru yang kuat dengan minimal 6 karakter kombinasi.</p>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<!-- Quick Demo Reminder -->
-				<div class="info-card">
-					<div class="info-header">
-						<HelpCircle size={16} class="info-icon" />
-						<span class="info-title">Butuh Akses Cepat Mode Demo?</span>
+					<!-- Demo Help Box -->
+					<div class="demo-reminder-box">
+						<div class="reminder-head">
+							<HelpCircle size={16} class="help-icon" />
+							<span>Butuh Masuk Cepat Saat Pengujian?</span>
+						</div>
+						<p class="reminder-text">
+							Untuk pratinjau lokal, Anda dapat langsung masuk tanpa reset menggunakan akun demo:
+							<code>admin@bagiz.design</code> / <code>admin123</code>.
+						</p>
+						<a href="/admin/login" class="reminder-action">
+							<span>Gunakan Login Demo</span>
+							<ArrowUpRight size={14} />
+						</a>
 					</div>
-					<p class="info-body">
-						Untuk keperluan pratinjau dan pengujian lokal, Anda dapat langsung masuk menggunakan akun demo bawaan:
-						<code>admin@bagiz.design</code> dengan sandi <code>admin123</code>.
-					</p>
-					<a href="/admin/login" class="info-link">
-						<span>Buka Halaman Masuk Demo</span>
-						<ArrowRight size={13} />
-					</a>
 				</div>
+			</section>
 
-				<!-- Security Note Bottom -->
-				<div class="showcase-security">
-					<ShieldCheck size={14} class="sec-icon" />
-					<span>Tautan pemulihan memiliki masa berlaku aktif selama 60 menit.</span>
-				</div>
-			</div>
-		</aside>
-
-		<!-- RIGHT SIDE: Modern Clean Reset Form -->
-		<main class="form-side">
-			<div class="form-container">
-				<!-- Top Bar: Back to Login -->
-				<div class="form-topbar">
-					<a href="/admin/login" class="back-link">
-						<ArrowLeft size={14} />
-						<span>Kembali ke Halaman Masuk</span>
-					</a>
-				</div>
-
-				<!-- Main Card Form -->
+			<!-- RIGHT COLUMN: Reset Form Card -->
+			<section class="auth-column">
 				<div class="auth-card">
-					<!-- Card Header -->
-					<div class="auth-card-header">
-						<div class="key-monogram">
+					<div class="auth-header">
+						<div class="icon-capsule">
 							<KeyRound size={22} />
 						</div>
 						<h1 class="auth-title">Atur Ulang Sandi</h1>
 						<p class="auth-subtitle">
-							Masukkan alamat email Anda untuk menerima instruksi pemulihan kata sandi.
+							Masukkan alamat email Anda untuk menerima tautan instruksi pemulihan kata sandi.
 						</p>
 					</div>
 
-					<!-- Status Alert -->
+					<!-- Alert Message -->
 					{#if statusMsg}
 						<div class={isError ? 'alert-box error' : 'alert-box success'} role="alert">
 							{#if isError}
@@ -170,15 +152,14 @@
 
 					<!-- Form -->
 					<form onsubmit={handleReset} class="auth-form">
-						<!-- Email Input -->
 						<div class="form-group">
 							<label for="reset-email">Alamat Email Terdaftar</label>
-							<div class="input-wrapper">
-								<Mail size={16} class="input-icon" />
+							<div class="input-shell">
+								<Mail size={16} class="field-icon" />
 								<input
 									id="reset-email"
 									type="email"
-									class="auth-input"
+									class="text-input"
 									placeholder="admin@bagiz.design"
 									bind:value={email}
 									autocomplete="email"
@@ -188,407 +169,337 @@
 							</div>
 						</div>
 
-						<!-- Submit CTA -->
-						<button type="submit" class="auth-submit-btn" disabled={loading}>
+						<button type="submit" class="submit-pill-btn" disabled={loading}>
 							{#if loading}
 								<span class="btn-spinner"></span>
 								<span>Mengirim Instruksi...</span>
 							{:else}
 								<span>Kirim Tautan Pemulihan</span>
-								<ArrowRight size={16} />
+								<ArrowUpRight size={17} />
 							{/if}
 						</button>
 					</form>
 
-					<!-- Bottom Footnote -->
-					<div class="auth-footer-note">
-						<Lock size={13} class="sec-mini-icon" />
-						<span>Proses pemulihan dilindungi enkripsi aman.</span>
+					<div class="auth-security-footer">
+						<ShieldCheck size={15} class="sec-icon" />
+						<span>Tautan pemulihan memiliki masa aktif 60 menit setelah dikirim.</span>
 					</div>
 				</div>
 
-				<!-- Copyright Footer -->
-				<footer class="form-footer">
-					<p>© 2026 Muhammad Bagiz. All rights reserved.</p>
-				</footer>
-			</div>
-		</main>
-	</div>
+				<div class="auth-copyright">
+					<p>© 2026 Muhammad Bagiz. Lead UX/UI Designer & Business Strategist.</p>
+				</div>
+			</section>
+		</div>
+	</main>
 </div>
 
 <style>
 	/* ==========================================================================
-	   CONTAINER & AMBIENT CANVAS
+	   LIGHT PALETTE HARMONIOUS WITH WEBPAGE
 	   ========================================================================== */
 	.reset-page {
 		min-height: 100vh;
-		background: #060b14;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0;
-		font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-		color: #e2e8f0;
+		background-color: #ffffff;
+		font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		color: #0a1628;
 		position: relative;
 		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
 	}
 
-	.grid-overlay {
+	.bg-diagonal-line {
 		position: absolute;
-		inset: 0;
-		background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-		background-size: 28px 28px;
-		pointer-events: none;
-		z-index: 1;
-	}
-
-	.ambient-glow {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(140px);
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.4) 100%);
 		pointer-events: none;
 		z-index: 0;
 	}
-	.glow-1 {
-		top: -10%;
-		left: -5%;
-		width: 600px;
-		height: 600px;
-		background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, transparent 70%);
+
+	.bg-ambient-blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(100px);
+		pointer-events: none;
+		z-index: 0;
 	}
-	.glow-2 {
-		bottom: -15%;
-		right: 5%;
-		width: 700px;
-		height: 700px;
-		background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-	}
-	.glow-3 {
-		top: 40%;
-		left: 45%;
+	.blob-1 {
+		top: -100px;
+		right: 10%;
 		width: 450px;
 		height: 450px;
-		background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
+		background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+	}
+	.blob-2 {
+		bottom: -100px;
+		left: 5%;
+		width: 500px;
+		height: 500px;
+		background: radial-gradient(circle, rgba(14, 165, 233, 0.06) 0%, transparent 70%);
 	}
 
-	/* ==========================================================================
-	   SPLIT SCREEN LAYOUT
-	   ========================================================================== */
-	.reset-layout {
-		width: 100%;
-		min-height: 100vh;
-		display: grid;
-		grid-template-columns: 1.15fr 1fr;
+	/* Header */
+	.reset-header {
 		position: relative;
 		z-index: 10;
+		padding: 24px 40px;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid rgba(10, 22, 40, 0.07);
 	}
-
-	/* ==========================================================================
-	   LEFT SIDE: SHOWCASE
-	   ========================================================================== */
-	.showcase-side {
-		border-right: 1px solid rgba(255, 255, 255, 0.07);
-		background: linear-gradient(160deg, rgba(11, 20, 38, 0.7) 0%, rgba(6, 12, 24, 0.9) 100%);
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding: 60px 70px;
-		position: relative;
-	}
-
-	.showcase-content {
-		max-width: 560px;
+	.header-inner {
+		max-width: 1240px;
 		margin: 0 auto;
-		width: 100%;
 		display: flex;
-		flex-direction: column;
-		gap: 32px;
+		align-items: center;
+		justify-content: space-between;
 	}
 
-	.showcase-brand {
+	.brand-logo {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.logo-link {
+		font-family: 'Plus Jakarta Sans', sans-serif;
+		font-size: 28px;
+		font-weight: 800;
+		color: #0a1628;
+		text-decoration: none;
+		letter-spacing: -0.03em;
+		display: inline-flex;
+		align-items: center;
+	}
+	.logo-accent {
+		color: #2563eb;
+	}
+	.brand-subpill {
+		font-size: 11px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #2563eb;
+		background: #eff6ff;
+		border: 1px solid #dbeafe;
+		padding: 3px 9px;
+		border-radius: 9999px;
+	}
+
+	.header-actions {
 		display: flex;
 		align-items: center;
 		gap: 16px;
 	}
-	.brand-monogram {
-		width: 52px;
-		height: 52px;
-		border-radius: 14px;
-		background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 100%);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+	.back-pill-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		font-size: 13px;
+		font-weight: 700;
+		color: #0a1628;
+		text-decoration: none;
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.15);
+		padding: 8px 18px;
+		border-radius: 9999px;
+		transition: all 0.2s ease;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+	}
+	.back-pill-btn:hover {
+		background: #0a1628;
+		color: #ffffff;
+		border-color: #0a1628;
+		transform: translateY(-1px);
+	}
+
+	/* Main */
+	.reset-main {
+		flex: 1;
+		position: relative;
+		z-index: 5;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: #ffffff;
-		font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-		font-size: 20px;
-		font-weight: 800;
-		letter-spacing: -0.02em;
-		box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
-		position: relative;
-		flex-shrink: 0;
+		padding: 40px 24px;
 	}
-	.pulse-dot {
-		position: absolute;
-		bottom: -2px;
-		right: -2px;
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-		background: #10b981;
-		border: 2px solid #060b14;
-		box-shadow: 0 0 8px #10b981;
+	.reset-grid {
+		width: 100%;
+		max-width: 1160px;
+		display: grid;
+		grid-template-columns: 1.05fr 1fr;
+		gap: 48px;
+		align-items: center;
 	}
-	.brand-info {
+
+	/* Showcase */
+	.showcase-column {
 		display: flex;
 		flex-direction: column;
 	}
-	.brand-badge-row {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		margin-bottom: 2px;
-	}
-	.role-badge {
-		font-size: 10.5px;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: #93c5fd;
-		background: rgba(37, 99, 235, 0.15);
-		border: 1px solid rgba(37, 99, 235, 0.25);
-		padding: 2px 7px;
-		border-radius: 4px;
-	}
-	.version-pill {
-		font-size: 10.5px;
-		font-weight: 600;
-		color: #64748b;
-	}
-	.brand-name {
-		font-size: 20px;
-		font-weight: 800;
-		color: #ffffff;
-		letter-spacing: -0.02em;
-		margin: 0;
-	}
-	.brand-tagline {
-		font-size: 13px;
-		color: #94a3b8;
-		margin: 0;
-	}
-
 	.showcase-card {
-		background: rgba(15, 26, 48, 0.6);
-		backdrop-filter: blur(20px);
-		-webkit-backdrop-filter: blur(20px);
-		border: 1px solid rgba(255, 255, 255, 0.09);
-		border-radius: 20px;
-		padding: 28px;
-		box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.45);
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.08);
+		border-radius: 28px;
+		padding: 36px;
+		box-shadow: 0 20px 45px -15px rgba(10, 22, 40, 0.06);
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
 	}
 	.card-eyebrow {
-		font-size: 10.5px;
+		font-size: 11px;
 		font-weight: 800;
 		letter-spacing: 0.08em;
-		color: #38bdf8;
+		color: #2563eb;
 		text-transform: uppercase;
-		display: block;
-		margin-bottom: 4px;
+		margin-bottom: 2px;
 	}
-	.card-headline {
-		font-size: 17px;
-		font-weight: 700;
-		color: #f8fafc;
+	.card-title {
+		font-size: 24px;
+		font-weight: 800;
+		color: #0a1628;
+		letter-spacing: -0.02em;
 		margin: 0;
-		letter-spacing: -0.01em;
 	}
-	.card-description {
-		font-size: 13px;
+	.card-desc {
+		font-size: 13.5px;
+		color: #64748b;
 		line-height: 1.6;
-		color: #94a3b8;
-		margin: 12px 0 20px;
+		margin: 0;
 	}
 
-	.steps-list {
+	.steps-wrapper {
 		display: flex;
 		flex-direction: column;
-		gap: 14px;
-	}
-	.step-item {
-		display: flex;
-		align-items: flex-start;
 		gap: 12px;
 	}
-	.step-num {
-		width: 26px;
-		height: 26px;
-		border-radius: 8px;
-		background: rgba(37, 99, 235, 0.2);
-		border: 1px solid rgba(59, 130, 246, 0.4);
-		color: #93c5fd;
-		font-size: 12px;
+	.step-card {
+		display: flex;
+		align-items: flex-start;
+		gap: 14px;
+		background: #f8fafc;
+		border: 1px solid rgba(10, 22, 40, 0.06);
+		border-radius: 14px;
+		padding: 14px 16px;
+	}
+	.step-badge {
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		background: #eff6ff;
+		color: #2563eb;
+		border: 1px solid #bfdbfe;
+		font-size: 13px;
 		font-weight: 800;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
 	}
-	.step-text {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
+	.step-content strong {
+		display: block;
+		font-size: 13px;
+		font-weight: 700;
+		color: #0a1628;
+		margin-bottom: 2px;
 	}
-	.step-text strong {
-		font-size: 12.5px;
-		color: #f1f5f9;
-	}
-	.step-text span {
+	.step-content p {
 		font-size: 12px;
-		color: #94a3b8;
-		line-height: 1.4;
+		color: #64748b;
+		margin: 0;
+		line-height: 1.45;
 	}
 
-	.info-card {
-		background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(99, 102, 241, 0.05) 100%);
-		border: 1px solid rgba(99, 102, 241, 0.2);
+	.demo-reminder-box {
+		background: #eff6ff;
+		border: 1px solid #dbeafe;
 		border-radius: 16px;
-		padding: 20px 24px;
+		padding: 18px 20px;
 	}
-	.info-header {
+	.reminder-head {
 		display: flex;
 		align-items: center;
-		gap: 8px;
-		margin-bottom: 8px;
-	}
-	:global(.info-icon) {
-		color: #60a5fa;
-	}
-	.info-title {
+		gap: 7px;
 		font-size: 12.5px;
 		font-weight: 700;
-		color: #e2e8f0;
+		color: #1e40af;
+		margin-bottom: 6px;
 	}
-	.info-body {
-		font-size: 12.5px;
-		line-height: 1.6;
-		color: #94a3b8;
-		margin: 0 0 12px;
+	:global(.help-icon) {
+		color: #2563eb;
 	}
-	.info-body code {
+	.reminder-text {
+		font-size: 12px;
+		line-height: 1.55;
+		color: #3b82f6;
+		margin: 0 0 10px;
+	}
+	.reminder-text code {
 		font-family: ui-monospace, monospace;
-		background: rgba(0, 0, 0, 0.35);
+		background: rgba(37, 99, 235, 0.12);
 		padding: 1px 5px;
 		border-radius: 4px;
-		color: #f1f5f9;
+		color: #1e3a8a;
+		font-weight: 700;
 	}
-	.info-link {
+	.reminder-action {
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
-		font-size: 12px;
+		font-size: 12.5px;
 		font-weight: 700;
-		color: #60a5fa;
+		color: #1d4ed8;
 		text-decoration: none;
 	}
-	.info-link:hover {
-		color: #93c5fd;
+	.reminder-action:hover {
 		text-decoration: underline;
 	}
 
-	.showcase-security {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 12px;
-		color: #64748b;
-	}
-	:global(.sec-icon) {
-		color: #10b981;
-		flex-shrink: 0;
-	}
-
-	/* ==========================================================================
-	   RIGHT SIDE: FORM
-	   ========================================================================== */
-	.form-side {
+	/* Auth Column */
+	.auth-column {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px 30px;
-		position: relative;
+		gap: 16px;
 	}
-
-	.form-container {
-		width: 100%;
-		max-width: 440px;
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-	}
-
-	.form-topbar {
-		display: flex;
-		align-items: center;
-	}
-	.back-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 12.5px;
-		font-weight: 600;
-		color: #94a3b8;
-		text-decoration: none;
-		padding: 7px 12px;
-		border-radius: 8px;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		transition: all 0.2s ease;
-	}
-	.back-link:hover {
-		color: #ffffff;
-		background: rgba(255, 255, 255, 0.08);
-		border-color: rgba(255, 255, 255, 0.15);
-		transform: translateX(-2px);
-	}
-
 	.auth-card {
-		background: rgba(13, 21, 38, 0.85);
-		backdrop-filter: blur(28px);
-		-webkit-backdrop-filter: blur(28px);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 24px;
-		padding: 38px 34px;
-		box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.09);
+		border-radius: 28px;
+		padding: 40px 36px;
+		box-shadow: 0 25px 50px -15px rgba(10, 22, 40, 0.07);
 	}
 
-	.auth-card-header {
+	.auth-header {
 		margin-bottom: 24px;
 	}
-	.key-monogram {
-		width: 46px;
-		height: 46px;
-		border-radius: 12px;
-		background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 100%);
+	.icon-capsule {
+		width: 48px;
+		height: 48px;
+		border-radius: 14px;
+		background: #0a1628;
+		color: #ffffff;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: #ffffff;
-		margin-bottom: 16px;
-		box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+		margin-bottom: 14px;
+		box-shadow: 0 6px 16px rgba(10, 22, 40, 0.2);
 	}
 	.auth-title {
-		font-size: 22px;
+		font-size: 26px;
 		font-weight: 800;
-		color: #ffffff;
-		letter-spacing: -0.02em;
-		margin: 0 0 6px;
+		color: #0a1628;
+		letter-spacing: -0.03em;
+		margin: 0 0 8px;
 	}
 	.auth-subtitle {
-		font-size: 13px;
-		color: #94a3b8;
-		line-height: 1.5;
+		font-size: 13.5px;
+		line-height: 1.55;
+		color: #64748b;
 		margin: 0;
 	}
 
@@ -603,14 +514,14 @@
 		line-height: 1.45;
 	}
 	.alert-box.error {
-		background: rgba(239, 68, 68, 0.12);
-		border: 1px solid rgba(239, 68, 68, 0.3);
-		color: #fca5a5;
+		background: #fef2f2;
+		border: 1px solid #fecaca;
+		color: #b91c1c;
 	}
 	.alert-box.success {
-		background: rgba(16, 185, 129, 0.12);
-		border: 1px solid rgba(16, 185, 129, 0.3);
-		color: #6ee7b7;
+		background: #ecfdf5;
+		border: 1px solid #a7f3d0;
+		color: #065f46;
 	}
 	:global(.alert-icon) {
 		flex-shrink: 0;
@@ -628,75 +539,74 @@
 		gap: 6px;
 	}
 	.form-group label {
-		font-size: 12.5px;
-		font-weight: 600;
-		color: #cbd5e1;
+		font-size: 13px;
+		font-weight: 700;
+		color: #0a1628;
 	}
 
-	.input-wrapper {
+	.input-shell {
 		position: relative;
 		display: flex;
 		align-items: center;
 	}
-	:global(.input-icon) {
+	:global(.field-icon) {
 		position: absolute;
 		left: 14px;
-		color: #64748b;
+		color: #94a3b8;
 		pointer-events: none;
 		transition: color 0.2s ease;
 	}
-	.input-wrapper:focus-within :global(.input-icon) {
-		color: #3b82f6;
+	.input-shell:focus-within :global(.field-icon) {
+		color: #2563eb;
 	}
 
-	.auth-input {
+	.text-input {
 		width: 100%;
 		padding: 12px 14px 12px 42px;
-		background: rgba(4, 9, 20, 0.65);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.15);
 		border-radius: 12px;
-		font-size: 13.5px;
-		color: #ffffff;
+		font-size: 14px;
+		color: #0a1628;
 		outline: none;
-		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+		transition: all 0.2s ease;
 		font-family: inherit;
 	}
-	.auth-input:focus {
-		border-color: #3b82f6;
-		background: rgba(4, 9, 20, 0.95);
-		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+	.text-input:focus {
+		border-color: #2563eb;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 	}
 
-	.auth-submit-btn {
+	.submit-pill-btn {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 8px;
-		padding: 13px 20px;
-		background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #4f46e5 100%);
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		border-radius: 12px;
-		font-size: 14px;
+		padding: 14px 24px;
+		background: #0a1628;
+		border: 1px solid #0a1628;
+		border-radius: 9999px;
+		font-size: 14.5px;
 		font-weight: 700;
 		color: #ffffff;
 		cursor: pointer;
-		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-		box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4);
+		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+		box-shadow: 0 4px 16px rgba(10, 22, 40, 0.2);
 		margin-top: 4px;
 		font-family: inherit;
 	}
-	.auth-submit-btn:hover:not(:disabled) {
-		background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 50%, #4338ca 100%);
-		transform: translateY(-1px);
-		box-shadow: 0 6px 24px rgba(37, 99, 235, 0.55);
+	.submit-pill-btn:hover:not(:disabled) {
+		background: #1e293b;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 24px rgba(10, 22, 40, 0.3);
 	}
-	.auth-submit-btn:disabled {
+	.submit-pill-btn:disabled {
 		opacity: 0.7;
 		cursor: not-allowed;
 	}
 	.btn-spinner {
-		width: 15px;
-		height: 15px;
+		width: 16px;
+		height: 16px;
 		border: 2px solid rgba(255, 255, 255, 0.3);
 		border-top-color: #ffffff;
 		border-radius: 50%;
@@ -706,53 +616,44 @@
 		to { transform: rotate(360deg); }
 	}
 
-	.auth-footer-note {
+	.auth-security-footer {
 		display: flex;
 		align-items: center;
-		gap: 8px;
-		font-size: 11px;
+		gap: 7px;
+		font-size: 11.5px;
+		font-weight: 500;
 		color: #64748b;
 		margin-top: 24px;
 		padding-top: 18px;
-		border-top: 1px solid rgba(255, 255, 255, 0.07);
+		border-top: 1px solid rgba(10, 22, 40, 0.08);
 		justify-content: center;
+		text-align: center;
 	}
-	:global(.sec-mini-icon) {
+	:global(.sec-icon) {
 		color: #10b981;
 		flex-shrink: 0;
 	}
 
-	.form-footer {
+	.auth-copyright {
 		text-align: center;
 	}
-	.form-footer p {
+	.auth-copyright p {
 		font-size: 12px;
-		color: #475569;
+		color: #94a3b8;
 		margin: 0;
 	}
 
-	@media (max-width: 1080px) {
-		.reset-layout {
-			grid-template-columns: 1fr 1fr;
-		}
-		.showcase-side {
-			padding: 40px;
-		}
-	}
-
-	@media (max-width: 900px) {
-		.reset-layout {
+	@media (max-width: 1024px) {
+		.reset-grid {
 			grid-template-columns: 1fr;
+			max-width: 520px;
+			gap: 32px;
 		}
-		.showcase-side {
+		.showcase-column {
 			display: none;
 		}
-		.form-side {
-			padding: 40px 20px;
-			min-height: 100vh;
-		}
-		.auth-card {
-			padding: 30px 24px;
+		.reset-header {
+			padding: 18px 20px;
 		}
 	}
 </style>

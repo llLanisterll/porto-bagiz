@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { authStore } from '$lib/stores/authStore.svelte';
+	import { mockProfile } from '$lib/data/mockPortfolio';
 	import { goto } from '$app/navigation';
 	import {
-		ArrowLeft,
+		ArrowUpRight,
 		Lock,
 		Mail,
 		ShieldAlert,
-		ArrowRight,
 		Eye,
 		EyeOff,
 		Check,
@@ -48,7 +48,7 @@
 			if (res.success) {
 				goto('/admin');
 			} else {
-				errorMsg = res.message || 'Kredensial tidak cocok. Silakan coba lagi.';
+				errorMsg = res.message || 'Kredensial tidak cocok. Silakan periksa email dan kata sandi Anda.';
 			}
 		}, 400);
 	}
@@ -59,144 +59,142 @@
 </svelte:head>
 
 <div class="login-page">
-	<!-- Background Ambient Glows -->
-	<div class="ambient-glow glow-1"></div>
-	<div class="ambient-glow glow-2"></div>
-	<div class="ambient-glow glow-3"></div>
-	<div class="grid-overlay"></div>
+	<!-- Background Design Elements matching website hero -->
+	<div class="bg-diagonal-line"></div>
+	<div class="bg-ambient-blob blob-1"></div>
+	<div class="bg-ambient-blob blob-2"></div>
 
-	<div class="login-layout">
-		<!-- LEFT SIDE: Showcase & Executive Brand Overview (Desktop) -->
-		<aside class="showcase-side">
-			<div class="showcase-content">
-				<!-- Brand Badge Header -->
-				<div class="showcase-brand">
-					<div class="brand-monogram">
-						<span>MB</span>
-						<span class="pulse-dot"></span>
-					</div>
-					<div class="brand-info">
-						<div class="brand-badge-row">
-							<span class="role-badge">Admin Studio</span>
-							<span class="version-pill">v2.5</span>
-						</div>
-						<h2 class="brand-name">Muhammad Bagiz</h2>
-						<p class="brand-tagline">Lead UX/UI Designer & Business Strategist</p>
-					</div>
+	<!-- Top Navigation Header matching website Navbar -->
+	<header class="login-header">
+		<div class="header-inner">
+			<!-- Brand Logo with blue accent -->
+			<div class="brand-logo">
+				<a href="/" class="logo-link" title="Ke Beranda Portofolio">
+					<span>B</span><span class="logo-accent">a</span><span>giz</span>
+				</a>
+				<span class="brand-subpill">Admin Studio</span>
+			</div>
+
+			<!-- Right Action Links -->
+			<div class="header-actions">
+				<div class="system-status-pill">
+					<span class="pulse-dot"></span>
+					<span>Sistem Online</span>
 				</div>
+				<a href="/" class="back-pill-btn">
+					<span>Lihat Portofolio</span>
+					<ArrowUpRight size={15} />
+				</a>
+			</div>
+		</div>
+	</header>
 
-				<!-- Live Preview Interactive Card -->
+	<!-- Main Container -->
+	<main class="login-main">
+		<div class="login-grid">
+			<!-- LEFT COLUMN: Executive Profile & Brand Showcase -->
+			<section class="showcase-column">
 				<div class="showcase-card">
-					<div class="card-glass-header">
-						<div class="card-title-group">
-							<span class="card-eyebrow">PORTAL KENDALI UTAMA</span>
-							<h3 class="card-headline">Portofolio & Studi Kasus Terintegrasi</h3>
+					<!-- Profile Header with signature shape -->
+					<div class="showcase-top">
+						<div class="profile-pic-box">
+							<div class="profile-shape">
+								<img
+									src={mockProfile.avatar}
+									alt={mockProfile.name}
+									class="profile-img"
+									loading="eager"
+								/>
+							</div>
+							<div class="floating-badge">
+								<span class="pulse-dot"></span>
+								<span>Admin CMS Mode</span>
+							</div>
 						</div>
-						<span class="status-live">
-							<span class="live-indicator"></span>
-							Online
-						</span>
-					</div>
 
-					<p class="card-description">
-						Kelola katalog proyek desain, riwayat pengalaman strategis, matriks keahlian, dan sinkronisasi instan ke beranda publik.
-					</p>
-
-					<!-- Stats Metrics Strip -->
-					<div class="metrics-grid">
-						<div class="metric-item">
-							<span class="metric-val">10+</span>
-							<span class="metric-lbl">Tahun Pengalaman</span>
-						</div>
-						<div class="metric-divider"></div>
-						<div class="metric-item">
-							<span class="metric-val">60+</span>
-							<span class="metric-lbl">Karya Digital</span>
-						</div>
-						<div class="metric-divider"></div>
-						<div class="metric-item">
-							<span class="metric-val">100%</span>
-							<span class="metric-lbl">Kepuasan Klien</span>
+						<div class="showcase-bio">
+							<div class="role-row">
+								<span class="role-badge">Lead Product Designer</span>
+								<span class="location-badge">Jakarta • Global</span>
+							</div>
+							<h2 class="designer-name">{mockProfile.name}</h2>
+							<p class="designer-headline">{mockProfile.headline}</p>
 						</div>
 					</div>
 
-					<!-- Highlights List -->
-					<div class="feature-pills">
-						<div class="pill-item">
-							<FolderKanban size={13} class="pill-icon" />
-							<span>Manajemen Studi Kasus</span>
+					<!-- Metric Strip matching website counters -->
+					<div class="stats-capsule">
+						<div class="stat-box">
+							<span class="stat-number">10+</span>
+							<span class="stat-label">Tahun Pengalaman</span>
 						</div>
-						<div class="pill-item">
-							<Briefcase size={13} class="pill-icon" />
+						<div class="stat-divider"></div>
+						<div class="stat-box">
+							<span class="stat-number">60+</span>
+							<span class="stat-label">Studi Kasus</span>
+						</div>
+						<div class="stat-divider"></div>
+						<div class="stat-box">
+							<span class="stat-number">100%</span>
+							<span class="stat-label">Kepuasan Klien</span>
+						</div>
+					</div>
+
+					<!-- Feature Checklist Pills -->
+					<div class="features-list">
+						<div class="feature-item">
+							<div class="feature-icon-circle">
+								<FolderKanban size={13} />
+							</div>
+							<span>Katalog Karya & Studi Kasus</span>
+						</div>
+						<div class="feature-item">
+							<div class="feature-icon-circle">
+								<Briefcase size={13} />
+							</div>
 							<span>Timeline Pengalaman</span>
 						</div>
-						<div class="pill-item">
-							<Award size={13} class="pill-icon" />
+						<div class="feature-item">
+							<div class="feature-icon-circle">
+								<Award size={13} />
+							</div>
 							<span>Matriks Level Keahlian</span>
 						</div>
-						<div class="pill-item">
-							<Zap size={13} class="pill-icon" />
-							<span>Live Auto-Sync</span>
+						<div class="feature-item">
+							<div class="feature-icon-circle">
+								<Zap size={13} />
+							</div>
+							<span>Sinkronisasi Publik Instan</span>
 						</div>
 					</div>
-				</div>
 
-				<!-- Designer Philosophy Quote Card -->
-				<div class="quote-card">
-					<div class="quote-header">
-						<Quote size={18} class="quote-icon" />
-						<span class="quote-meta">Filosofi Desain</span>
-					</div>
-					<p class="quote-body">
-						"Desain terbaik bukan sekadar tampilan visual estetis, melainkan kejelasan sistematis yang memecahkan masalah nyata dan mendorong pertumbuhan bisnis."
-					</p>
-					<div class="quote-author">
-						<div class="author-avatar">MB</div>
-						<div>
-							<div class="author-name">Muhammad Bagiz</div>
-							<div class="author-sub">Jakarta & Global • Senior Design Practitioner</div>
-						</div>
+					<!-- Philosophy Quote Box -->
+					<div class="philosophy-card">
+						<Quote size={16} class="quote-mark" />
+						<p class="quote-text">
+							"{mockProfile.bio}"
+						</p>
+						<span class="quote-signature">— Muhammad Bagiz</span>
 					</div>
 				</div>
+			</section>
 
-				<!-- Security Note Bottom -->
-				<div class="showcase-security">
-					<ShieldCheck size={14} class="sec-icon" />
-					<span>Dilindungi dengan otentikasi sesi lokal & enkripsi browser.</span>
-				</div>
-			</div>
-		</aside>
-
-		<!-- RIGHT SIDE: Modern Clean Login Form -->
-		<main class="form-side">
-			<div class="form-container">
-				<!-- Top Bar: Back to Portfolio & Status -->
-				<div class="form-topbar">
-					<a href="/" class="back-link">
-						<ArrowLeft size={14} />
-						<span>Kembali ke Beranda</span>
-					</a>
-					<div class="system-status">
-						<span class="system-dot"></span>
-						<span>Sistem Aktif</span>
-					</div>
-				</div>
-
-				<!-- Main Card Form -->
+			<!-- RIGHT COLUMN: Elegant White Login Card -->
+			<section class="auth-column">
 				<div class="auth-card">
 					<!-- Card Header -->
-					<div class="auth-card-header">
-						<div class="mobile-monogram">
-							<span>MB</span>
-							<span class="mobile-pulse"></span>
+					<div class="auth-header">
+						<div class="admin-pill-badge">
+							<Sparkles size={12} class="sparkle-blue" />
+							<span>PORTAL ADMINISTRATOR</span>
 						</div>
 						<h1 class="auth-title">Masuk ke Panel CMS</h1>
 						<p class="auth-subtitle">
-							Akses dashboard manajemen untuk mengelola portofolio, karya pilihan, dan pengalaman kerja.
+							Kelola seluruh katalog karya, riwayat pengalaman, dan keahlian portofolio Anda secara terpusat.
 						</p>
 					</div>
 
-					<!-- Error Alert -->
+					<!-- Alert Box -->
 					{#if errorMsg}
 						<div class="alert-box" role="alert">
 							<ShieldAlert size={16} class="alert-icon" />
@@ -209,13 +207,13 @@
 						<!-- Email Input -->
 						<div class="form-group">
 							<label for="admin-email">Alamat Email Administrator</label>
-							<div class="input-wrapper">
-								<Mail size={16} class="input-icon" />
+							<div class="input-shell">
+								<Mail size={16} class="field-icon" />
 								<input
 									id="admin-email"
 									name="username"
 									type="email"
-									class="auth-input"
+									class="text-input"
 									placeholder="admin@bagiz.design"
 									bind:value={email}
 									autocomplete="username"
@@ -231,13 +229,13 @@
 								<label for="admin-password">Kata Sandi</label>
 								<a href="/admin/lupa-sandi" class="forgot-link">Lupa sandi?</a>
 							</div>
-							<div class="input-wrapper">
-								<Lock size={16} class="input-icon" />
+							<div class="input-shell">
+								<Lock size={16} class="field-icon" />
 								<input
 									id="admin-password"
 									name="current-password"
 									type={showPassword ? 'text' : 'password'}
-									class="auth-input has-action"
+									class="text-input has-action"
 									placeholder="••••••••"
 									bind:value={password}
 									autocomplete="current-password"
@@ -246,24 +244,24 @@
 								/>
 								<button
 									type="button"
-									class="toggle-action"
+									class="password-toggle"
 									onclick={() => (showPassword = !showPassword)}
 									title={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
 									aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
 								>
 									{#if showPassword}
-										<EyeOff size={15} />
+										<EyeOff size={16} />
 									{:else}
-										<Eye size={15} />
+										<Eye size={16} />
 									{/if}
 								</button>
 							</div>
 						</div>
 
-						<!-- Remember me & Quick Access Options -->
+						<!-- Remember Me Checkbox -->
 						<div class="options-row">
 							<label class="remember-label">
-								<input type="checkbox" bind:checked={rememberMe} class="remember-checkbox" />
+								<input type="checkbox" bind:checked={rememberMe} class="real-checkbox" />
 								<span class="custom-checkbox" class:checked={rememberMe}>
 									{#if rememberMe}
 										<Check size={11} strokeWidth={3} />
@@ -273,25 +271,25 @@
 							</label>
 						</div>
 
-						<!-- Quick Demo Pill -->
-						<div class="demo-widget">
-							<div class="demo-meta">
-								<div class="demo-badge">
-									<Sparkles size={12} class="sparkle-icon" />
-									<span>Akses Demo Cepat</span>
+						<!-- Quick Demo Widget in Navy/Blue tone -->
+						<div class="demo-box">
+							<div class="demo-info">
+								<div class="demo-head">
+									<Sparkles size={12} class="demo-star" />
+									<span>Akses Cepat Demo</span>
 								</div>
-								<div class="demo-credentials">
-									<code>admin@bagiz.design</code> • <code>admin123</code>
+								<div class="demo-creds">
+									<code>admin@bagiz.design</code> / <code>admin123</code>
 								</div>
 							</div>
 							<button
 								type="button"
-								class="demo-fill-button"
+								class="demo-fill-btn"
 								onclick={fillDemoCredentials}
 								title="Otomatis mengisi kredensial demo"
 							>
 								{#if demoFilled}
-									<Check size={13} class="check-icon" />
+									<Check size={13} class="check-green" />
 									<span>Terisi!</span>
 								{:else}
 									<span>Isi Otomatis</span>
@@ -299,163 +297,268 @@
 							</button>
 						</div>
 
-						<!-- Submit CTA -->
-						<button type="submit" class="auth-submit-btn" disabled={loading}>
+						<!-- Primary CTA Button (matches Let's Talk button on homepage) -->
+						<button type="submit" class="submit-pill-btn" disabled={loading}>
 							{#if loading}
 								<span class="btn-spinner"></span>
 								<span>Memverifikasi Kredensial...</span>
 							{:else}
 								<span>Masuk ke Dashboard</span>
-								<ArrowRight size={16} />
+								<ArrowUpRight size={17} />
 							{/if}
 						</button>
 					</form>
 
-					<!-- Bottom Footnote -->
-					<div class="auth-footer-note">
-						<ShieldCheck size={14} class="sec-mini-icon" />
-						<span>Hak Akses Eksklusif Administrator CMS • Muhammad Bagiz</span>
+					<!-- Security Note -->
+					<div class="auth-security-footer">
+						<ShieldCheck size={15} class="sec-icon" />
+						<span>Koneksi Sesi Terenkripsi • Data Tersimpan Aman di Browser</span>
 					</div>
 				</div>
 
-				<!-- Copyright Footer -->
-				<footer class="form-footer">
-					<p>© 2026 Muhammad Bagiz. All rights reserved.</p>
-				</footer>
-			</div>
-		</main>
-	</div>
+				<div class="auth-copyright">
+					<p>© 2026 Muhammad Bagiz. Lead UX/UI Designer & Business Strategist.</p>
+				</div>
+			</section>
+		</div>
+	</main>
 </div>
 
 <style>
 	/* ==========================================================================
-	   CONTAINER & AMBIENT CANVAS
+	   LIGHT PALETTE HARMONIOUS WITH WEBPAGE
 	   ========================================================================== */
 	.login-page {
 		min-height: 100vh;
-		background: #060b14;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0;
-		font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-		color: #e2e8f0;
+		background-color: #ffffff;
+		font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		color: #0a1628;
 		position: relative;
 		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
 	}
 
-	.grid-overlay {
+	/* Angled decorative background line like Hero */
+	.bg-diagonal-line {
 		position: absolute;
-		inset: 0;
-		background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-		background-size: 28px 28px;
-		pointer-events: none;
-		z-index: 1;
-	}
-
-	.ambient-glow {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(140px);
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.45) 100%);
 		pointer-events: none;
 		z-index: 0;
 	}
-	.glow-1 {
-		top: -10%;
-		left: -5%;
-		width: 600px;
-		height: 600px;
-		background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, transparent 70%);
+
+	.bg-ambient-blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(120px);
+		pointer-events: none;
+		z-index: 0;
 	}
-	.glow-2 {
-		bottom: -15%;
-		right: 5%;
-		width: 700px;
-		height: 700px;
-		background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+	.blob-1 {
+		top: -120px;
+		right: 15%;
+		width: 480px;
+		height: 480px;
+		background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
 	}
-	.glow-3 {
-		top: 40%;
-		left: 45%;
-		width: 450px;
-		height: 450px;
-		background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
+	.blob-2 {
+		bottom: -100px;
+		left: 8%;
+		width: 500px;
+		height: 500px;
+		background: radial-gradient(circle, rgba(14, 165, 233, 0.06) 0%, transparent 70%);
 	}
 
 	/* ==========================================================================
-	   SPLIT SCREEN LAYOUT
+	   TOP NAVIGATION HEADER
 	   ========================================================================== */
-	.login-layout {
-		width: 100%;
-		min-height: 100vh;
-		display: grid;
-		grid-template-columns: 1.15fr 1fr;
+	.login-header {
 		position: relative;
 		z-index: 10;
+		padding: 20px 40px;
+		background: rgba(255, 255, 255, 0.88);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid rgba(10, 22, 40, 0.07);
 	}
-
-	/* ==========================================================================
-	   LEFT SIDE: SHOWCASE / EXECUTIVE BRAND
-	   ========================================================================== */
-	.showcase-side {
-		border-right: 1px solid rgba(255, 255, 255, 0.07);
-		background: linear-gradient(160deg, rgba(11, 20, 38, 0.7) 0%, rgba(6, 12, 24, 0.9) 100%);
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding: 60px 70px;
-		position: relative;
-	}
-
-	.showcase-content {
-		max-width: 560px;
+	.header-inner {
+		max-width: 1200px;
 		margin: 0 auto;
-		width: 100%;
 		display: flex;
-		flex-direction: column;
-		gap: 32px;
+		align-items: center;
+		justify-content: space-between;
 	}
 
-	/* Monogram Brand Header */
-	.showcase-brand {
+	/* Logo styling */
+	.brand-logo {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.logo-link {
+		font-family: 'Plus Jakarta Sans', sans-serif;
+		font-size: 27px;
+		font-weight: 800;
+		color: #0a1628;
+		text-decoration: none;
+		letter-spacing: -0.03em;
+		display: inline-flex;
+		align-items: center;
+	}
+	.logo-accent {
+		color: #2563eb;
+	}
+	.brand-subpill {
+		font-size: 11px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #2563eb;
+		background: #eff6ff;
+		border: 1px solid #dbeafe;
+		padding: 3px 9px;
+		border-radius: 9999px;
+	}
+
+	.header-actions {
 		display: flex;
 		align-items: center;
 		gap: 16px;
 	}
-	.brand-monogram {
-		width: 52px;
-		height: 52px;
-		border-radius: 14px;
-		background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 100%);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+	.system-status-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 12px;
+		font-weight: 600;
+		color: #059669;
+		background: #ecfdf5;
+		border: 1px solid #d1fae5;
+		padding: 5px 12px;
+		border-radius: 9999px;
+	}
+	.pulse-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: #10b981;
+		box-shadow: 0 0 6px #10b981;
+	}
+
+	.back-pill-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 13px;
+		font-weight: 700;
+		color: #0a1628;
+		text-decoration: none;
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.15);
+		padding: 7px 16px;
+		border-radius: 9999px;
+		transition: all 0.2s ease;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+	}
+	.back-pill-btn:hover {
+		background: #0a1628;
+		color: #ffffff;
+		border-color: #0a1628;
+		transform: translateY(-1px);
+	}
+
+	/* ==========================================================================
+	   MAIN LAYOUT GRID
+	   ========================================================================== */
+	.login-main {
+		flex: 1;
+		position: relative;
+		z-index: 5;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: #ffffff;
-		font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-		font-size: 20px;
-		font-weight: 800;
-		letter-spacing: -0.02em;
-		box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
-		position: relative;
-		flex-shrink: 0;
+		padding: 36px 24px;
 	}
-	.pulse-dot {
-		position: absolute;
-		bottom: -2px;
-		right: -2px;
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-		background: #10b981;
-		border: 2px solid #060b14;
-		box-shadow: 0 0 8px #10b981;
+	.login-grid {
+		width: 100%;
+		max-width: 1140px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 40px;
+		align-items: center;
 	}
-	.brand-info {
+
+	/* ==========================================================================
+	   LEFT COLUMN: SHOWCASE
+	   ========================================================================== */
+	.showcase-column {
 		display: flex;
 		flex-direction: column;
 	}
-	.brand-badge-row {
+	.showcase-card {
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.08);
+		border-radius: 28px;
+		padding: 30px;
+		box-shadow: 0 20px 45px -15px rgba(10, 22, 40, 0.06);
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	/* Signature Profile Box */
+	.showcase-top {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+	}
+	.profile-pic-box {
+		position: relative;
+		flex-shrink: 0;
+	}
+	.profile-shape {
+		width: 96px;
+		height: 116px;
+		border-radius: 20px 60px 20px 20px;
+		overflow: hidden;
+		background: linear-gradient(135deg, #0a1628 0%, #1e3a8a 100%);
+		box-shadow: 0 8px 24px -4px rgba(10, 22, 40, 0.2);
+	}
+	.profile-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+	}
+	.floating-badge {
+		position: absolute;
+		bottom: -8px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.1);
+		border-radius: 9999px;
+		padding: 3px 9px;
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 10px;
+		font-weight: 700;
+		color: #0a1628;
+		white-space: nowrap;
+		box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+	}
+
+	.showcase-bio {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+	}
+	.role-row {
 		display: flex;
 		align-items: center;
 		gap: 6px;
@@ -464,338 +567,168 @@
 	.role-badge {
 		font-size: 10.5px;
 		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: #93c5fd;
-		background: rgba(37, 99, 235, 0.15);
-		border: 1px solid rgba(37, 99, 235, 0.25);
+		color: #2563eb;
+		background: #eff6ff;
 		padding: 2px 7px;
-		border-radius: 4px;
+		border-radius: 5px;
 	}
-	.version-pill {
+	.location-badge {
 		font-size: 10.5px;
 		font-weight: 600;
 		color: #64748b;
 	}
-	.brand-name {
-		font-size: 20px;
+	.designer-name {
+		font-size: 22px;
 		font-weight: 800;
-		color: #ffffff;
+		color: #0a1628;
 		letter-spacing: -0.02em;
 		margin: 0;
 	}
-	.brand-tagline {
-		font-size: 13px;
-		color: #94a3b8;
+	.designer-headline {
+		font-size: 12.5px;
+		color: #64748b;
 		margin: 0;
+		line-height: 1.45;
 	}
 
-	/* Showcase Card */
-	.showcase-card {
-		background: rgba(15, 26, 48, 0.6);
-		backdrop-filter: blur(20px);
-		-webkit-backdrop-filter: blur(20px);
-		border: 1px solid rgba(255, 255, 255, 0.09);
-		border-radius: 20px;
-		padding: 28px;
-		box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.45);
-	}
-	.card-glass-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		margin-bottom: 12px;
-	}
-	.card-eyebrow {
-		font-size: 10.5px;
-		font-weight: 800;
-		letter-spacing: 0.08em;
-		color: #38bdf8;
-		text-transform: uppercase;
-		display: block;
-		margin-bottom: 4px;
-	}
-	.card-headline {
-		font-size: 17px;
-		font-weight: 700;
-		color: #f8fafc;
-		margin: 0;
-		letter-spacing: -0.01em;
-	}
-	.status-live {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-		font-size: 11.5px;
-		font-weight: 600;
-		color: #10b981;
-		background: rgba(16, 185, 129, 0.1);
-		border: 1px solid rgba(16, 185, 129, 0.2);
-		padding: 4px 10px;
-		border-radius: 20px;
-	}
-	.live-indicator {
-		width: 6px;
-		height: 6px;
-		border-radius: 50%;
-		background: #10b981;
-		box-shadow: 0 0 6px #10b981;
-		animation: blink 2s infinite ease-in-out;
-	}
-	@keyframes blink {
-		0%, 100% { opacity: 1; transform: scale(1); }
-		50% { opacity: 0.4; transform: scale(0.85); }
-	}
-	.card-description {
-		font-size: 13px;
-		line-height: 1.6;
-		color: #94a3b8;
-		margin: 0 0 20px;
-	}
-
-	/* Metrics Strip */
-	.metrics-grid {
+	/* Stats Capsule matching website */
+	.stats-capsule {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		background: rgba(6, 12, 24, 0.55);
-		border: 1px solid rgba(255, 255, 255, 0.06);
-		border-radius: 14px;
-		padding: 14px 20px;
-		margin-bottom: 20px;
+		background: #f8fafc;
+		border: 1px solid rgba(10, 22, 40, 0.06);
+		border-radius: 16px;
+		padding: 14px 18px;
 	}
-	.metric-item {
+	.stat-box {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		text-align: center;
 	}
-	.metric-val {
+	.stat-number {
 		font-size: 19px;
 		font-weight: 800;
-		color: #ffffff;
+		color: #0a1628;
 		letter-spacing: -0.02em;
-		font-family: 'Outfit', sans-serif;
 	}
-	.metric-lbl {
-		font-size: 11px;
-		font-weight: 500;
+	.stat-label {
+		font-size: 10.5px;
+		font-weight: 600;
 		color: #64748b;
 		margin-top: 1px;
 	}
-	.metric-divider {
+	.stat-divider {
 		width: 1px;
-		height: 28px;
-		background: rgba(255, 255, 255, 0.08);
+		height: 26px;
+		background: rgba(10, 22, 40, 0.08);
 	}
 
-	/* Feature Pills */
-	.feature-pills {
+	/* Features Grid */
+	.features-list {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 8px;
 	}
-	.pill-item {
+	.feature-item {
 		display: flex;
 		align-items: center;
 		gap: 8px;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(255, 255, 255, 0.06);
-		padding: 8px 12px;
-		border-radius: 8px;
-		font-size: 12px;
+		background: #f8fafc;
+		border: 1px solid rgba(10, 22, 40, 0.06);
+		border-radius: 10px;
+		padding: 8px 11px;
+		font-size: 11.5px;
 		font-weight: 600;
-		color: #cbd5e1;
+		color: #1e293b;
 	}
-	:global(.pill-icon) {
-		color: #38bdf8;
-		flex-shrink: 0;
-	}
-
-	/* Quote Card */
-	.quote-card {
-		background: linear-gradient(135deg, rgba(37, 99, 235, 0.07) 0%, rgba(79, 70, 229, 0.04) 100%);
-		border: 1px solid rgba(99, 102, 241, 0.18);
-		border-radius: 16px;
-		padding: 20px 24px;
-	}
-	.quote-header {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		margin-bottom: 10px;
-	}
-	:global(.quote-icon) {
-		color: #60a5fa;
-	}
-	.quote-meta {
-		font-size: 11px;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: #93c5fd;
-	}
-	.quote-body {
-		font-size: 13.5px;
-		line-height: 1.6;
-		color: #e2e8f0;
-		font-style: italic;
-		margin: 0 0 14px;
-	}
-	.quote-author {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-	.author-avatar {
-		width: 32px;
-		height: 32px;
+	.feature-icon-circle {
+		width: 22px;
+		height: 22px;
 		border-radius: 50%;
-		background: #1e293b;
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		color: #60a5fa;
-		font-size: 11px;
-		font-weight: 700;
+		background: #eff6ff;
+		color: #2563eb;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-	.author-name {
-		font-size: 12.5px;
-		font-weight: 700;
-		color: #ffffff;
-	}
-	.author-sub {
-		font-size: 11px;
-		color: #64748b;
+		flex-shrink: 0;
 	}
 
-	/* Showcase Security */
-	.showcase-security {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 12px;
-		color: #64748b;
+	/* Philosophy Quote Card */
+	.philosophy-card {
+		background: #eff6ff;
+		border: 1px solid #dbeafe;
+		border-radius: 14px;
+		padding: 14px 18px;
+		position: relative;
 	}
-	:global(.sec-icon) {
-		color: #10b981;
-		flex-shrink: 0;
+	:global(.quote-mark) {
+		color: #3b82f6;
+		margin-bottom: 4px;
+	}
+	.quote-text {
+		font-size: 12px;
+		line-height: 1.55;
+		color: #1e3a8a;
+		font-style: italic;
+		margin: 0 0 4px;
+	}
+	.quote-signature {
+		font-size: 11px;
+		font-weight: 700;
+		color: #1d4ed8;
+		display: block;
 	}
 
 	/* ==========================================================================
-	   RIGHT SIDE: FORM SIDE
+	   RIGHT COLUMN: AUTH FORM
 	   ========================================================================== */
-	.form-side {
+	.auth-column {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px 30px;
-		position: relative;
+		gap: 14px;
+	}
+	.auth-card {
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.09);
+		border-radius: 28px;
+		padding: 36px 32px;
+		box-shadow: 0 25px 50px -15px rgba(10, 22, 40, 0.07);
 	}
 
-	.form-container {
-		width: 100%;
-		max-width: 440px;
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
+	.auth-header {
+		margin-bottom: 22px;
 	}
-
-	/* Top Bar */
-	.form-topbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-	.back-link {
+	.admin-pill-badge {
 		display: inline-flex;
 		align-items: center;
-		gap: 8px;
-		font-size: 12.5px;
-		font-weight: 600;
-		color: #94a3b8;
-		text-decoration: none;
-		padding: 7px 12px;
-		border-radius: 8px;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		transition: all 0.2s ease;
-	}
-	.back-link:hover {
-		color: #ffffff;
-		background: rgba(255, 255, 255, 0.08);
-		border-color: rgba(255, 255, 255, 0.15);
-		transform: translateX(-2px);
-	}
-	.system-status {
-		display: flex;
-		align-items: center;
 		gap: 6px;
-		font-size: 11.5px;
-		color: #64748b;
-		font-weight: 500;
-	}
-	.system-dot {
-		width: 6px;
-		height: 6px;
-		border-radius: 50%;
-		background: #10b981;
-		box-shadow: 0 0 6px #10b981;
-	}
-
-	/* Main Auth Card */
-	.auth-card {
-		background: rgba(13, 21, 38, 0.85);
-		backdrop-filter: blur(28px);
-		-webkit-backdrop-filter: blur(28px);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 24px;
-		padding: 38px 34px;
-		box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-	}
-
-	.auth-card-header {
-		margin-bottom: 24px;
-	}
-	.mobile-monogram {
-		display: none;
-		width: 44px;
-		height: 44px;
-		border-radius: 12px;
-		background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 100%);
-		align-items: center;
-		justify-content: center;
-		color: #ffffff;
-		font-family: 'Outfit', sans-serif;
-		font-size: 18px;
+		font-size: 10.5px;
 		font-weight: 800;
-		position: relative;
-		margin-bottom: 16px;
-		box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: #2563eb;
+		background: #eff6ff;
+		border: 1px solid #dbeafe;
+		padding: 3px 9px;
+		border-radius: 9999px;
+		margin-bottom: 10px;
 	}
-	.mobile-pulse {
-		position: absolute;
-		bottom: -2px;
-		right: -2px;
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		background: #10b981;
-		border: 2px solid #060b14;
+	:global(.sparkle-blue) {
+		color: #2563eb;
 	}
 	.auth-title {
-		font-size: 22px;
+		font-size: 25px;
 		font-weight: 800;
-		color: #ffffff;
-		letter-spacing: -0.02em;
+		color: #0a1628;
+		letter-spacing: -0.03em;
 		margin: 0 0 6px;
 	}
 	.auth-subtitle {
 		font-size: 13px;
-		color: #94a3b8;
 		line-height: 1.5;
+		color: #64748b;
 		margin: 0;
 	}
 
@@ -804,32 +737,26 @@
 		display: flex;
 		align-items: flex-start;
 		gap: 10px;
-		background: rgba(239, 68, 68, 0.12);
-		border: 1px solid rgba(239, 68, 68, 0.3);
-		color: #fca5a5;
-		padding: 12px 14px;
+		background: #fef2f2;
+		border: 1px solid #fecaca;
+		color: #b91c1c;
+		padding: 11px 13px;
 		border-radius: 12px;
 		font-size: 12.5px;
-		margin-bottom: 20px;
+		margin-bottom: 18px;
 		line-height: 1.45;
-		animation: shake 0.3s ease;
-	}
-	@keyframes shake {
-		0%, 100% { transform: translateX(0); }
-		20%, 60% { transform: translateX(-4px); }
-		40%, 80% { transform: translateX(4px); }
 	}
 	:global(.alert-icon) {
-		color: #ef4444;
+		color: #dc2626;
 		flex-shrink: 0;
 		margin-top: 1px;
 	}
 
-	/* Form Elements */
+	/* Form */
 	.auth-form {
 		display: flex;
 		flex-direction: column;
-		gap: 18px;
+		gap: 16px;
 	}
 	.form-group {
 		display: flex;
@@ -838,8 +765,8 @@
 	}
 	.form-group label {
 		font-size: 12.5px;
-		font-weight: 600;
-		color: #cbd5e1;
+		font-weight: 700;
+		color: #0a1628;
 	}
 	.label-row {
 		display: flex;
@@ -849,69 +776,67 @@
 	.forgot-link {
 		font-size: 12px;
 		font-weight: 600;
-		color: #60a5fa;
+		color: #2563eb;
 		text-decoration: none;
 		transition: color 0.15s ease;
 	}
 	.forgot-link:hover {
-		color: #93c5fd;
+		color: #1d4ed8;
 		text-decoration: underline;
 	}
 
-	.input-wrapper {
+	.input-shell {
 		position: relative;
 		display: flex;
 		align-items: center;
 	}
-	:global(.input-icon) {
+	:global(.field-icon) {
 		position: absolute;
 		left: 14px;
-		color: #64748b;
+		color: #94a3b8;
 		pointer-events: none;
 		transition: color 0.2s ease;
 	}
-	.input-wrapper:focus-within :global(.input-icon) {
-		color: #3b82f6;
+	.input-shell:focus-within :global(.field-icon) {
+		color: #2563eb;
 	}
 
-	.auth-input {
+	.text-input {
 		width: 100%;
-		padding: 12px 14px 12px 42px;
-		background: rgba(4, 9, 20, 0.65);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 11px 14px 11px 40px;
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.15);
 		border-radius: 12px;
 		font-size: 13.5px;
-		color: #ffffff;
+		color: #0a1628;
 		outline: none;
-		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+		transition: all 0.2s ease;
 		font-family: inherit;
 	}
-	.auth-input:focus {
-		border-color: #3b82f6;
-		background: rgba(4, 9, 20, 0.95);
-		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+	.text-input:focus {
+		border-color: #2563eb;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 	}
-	.auth-input.has-action {
-		padding-right: 44px;
+	.text-input.has-action {
+		padding-right: 42px;
 	}
 
-	.toggle-action {
+	.password-toggle {
 		position: absolute;
 		right: 12px;
 		background: transparent;
 		border: none;
-		color: #64748b;
+		color: #94a3b8;
 		cursor: pointer;
 		padding: 4px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		border-radius: 6px;
-		transition: color 0.15s ease, background 0.15s ease;
+		transition: color 0.15s ease;
 	}
-	.toggle-action:hover {
-		color: #cbd5e1;
-		background: rgba(255, 255, 255, 0.05);
+	.password-toggle:hover {
+		color: #0a1628;
 	}
 
 	/* Remember Me Option */
@@ -927,7 +852,7 @@
 		cursor: pointer;
 		user-select: none;
 	}
-	.remember-checkbox {
+	.real-checkbox {
 		position: absolute;
 		opacity: 0;
 		pointer-events: none;
@@ -936,8 +861,8 @@
 		width: 16px;
 		height: 16px;
 		border-radius: 4px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(0, 0, 0, 0.3);
+		border: 1.5px solid rgba(10, 22, 40, 0.25);
+		background: #ffffff;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -950,99 +875,93 @@
 	}
 	.remember-text {
 		font-size: 12px;
-		color: #94a3b8;
+		color: #64748b;
 		font-weight: 500;
 	}
 
-	/* Quick Demo Pill */
-	.demo-widget {
-		background: linear-gradient(135deg, rgba(37, 99, 235, 0.09) 0%, rgba(99, 102, 241, 0.05) 100%);
-		border: 1px solid rgba(59, 130, 246, 0.25);
+	/* Demo Account Box */
+	.demo-box {
+		background: #f8fafc;
+		border: 1px solid rgba(10, 22, 40, 0.08);
 		border-radius: 12px;
-		padding: 12px 14px;
+		padding: 10px 14px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		gap: 12px;
 	}
-	.demo-meta {
-		display: flex;
-		flex-direction: column;
-		gap: 3px;
-	}
-	.demo-badge {
+	.demo-head {
 		display: flex;
 		align-items: center;
 		gap: 5px;
-		font-size: 11.5px;
+		font-size: 11px;
 		font-weight: 700;
-		color: #93c5fd;
+		color: #2563eb;
 	}
-	:global(.sparkle-icon) {
-		color: #fbbf24;
+	:global(.demo-star) {
+		color: #f59e0b;
 	}
-	.demo-credentials {
+	.demo-creds {
 		font-size: 11.5px;
-		color: #94a3b8;
+		color: #64748b;
+		margin-top: 1px;
 	}
-	.demo-credentials code {
-		font-family: ui-monospace, SFMono-Regular, monospace;
-		background: rgba(0, 0, 0, 0.35);
+	.demo-creds code {
+		font-family: ui-monospace, monospace;
+		background: rgba(10, 22, 40, 0.06);
 		padding: 1px 5px;
 		border-radius: 4px;
-		color: #f1f5f9;
-		font-size: 11px;
+		color: #0a1628;
+		font-weight: 600;
 	}
-	.demo-fill-button {
+	.demo-fill-btn {
 		display: inline-flex;
 		align-items: center;
-		gap: 5px;
+		gap: 4px;
 		padding: 6px 12px;
-		background: rgba(37, 99, 235, 0.2);
-		border: 1px solid rgba(59, 130, 246, 0.35);
-		color: #dbeafe;
+		background: #0a1628;
+		border: 1px solid #0a1628;
+		color: #ffffff;
 		font-size: 11.5px;
 		font-weight: 700;
-		border-radius: 8px;
+		border-radius: 9999px;
 		cursor: pointer;
-		transition: all 0.15s ease;
+		transition: all 0.2s ease;
 		white-space: nowrap;
 	}
-	.demo-fill-button:hover {
-		background: #2563eb;
-		color: #ffffff;
-		border-color: #2563eb;
+	.demo-fill-btn:hover {
+		background: #1e293b;
 		transform: translateY(-1px);
 	}
-	:global(.check-icon) {
+	:global(.check-green) {
 		color: #10b981;
 	}
 
-	/* Submit Button */
-	.auth-submit-btn {
+	/* Submit Button matching Let's Talk button */
+	.submit-pill-btn {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 8px;
-		padding: 13px 20px;
-		background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #4f46e5 100%);
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		border-radius: 12px;
+		padding: 13px 22px;
+		background: #0a1628;
+		border: 1px solid #0a1628;
+		border-radius: 9999px;
 		font-size: 14px;
 		font-weight: 700;
 		color: #ffffff;
 		cursor: pointer;
-		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-		box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4);
-		margin-top: 4px;
+		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+		box-shadow: 0 4px 16px rgba(10, 22, 40, 0.2);
+		margin-top: 2px;
 		font-family: inherit;
 	}
-	.auth-submit-btn:hover:not(:disabled) {
-		background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 50%, #4338ca 100%);
-		transform: translateY(-1px);
-		box-shadow: 0 6px 24px rgba(37, 99, 235, 0.55);
+	.submit-pill-btn:hover:not(:disabled) {
+		background: #1e293b;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 24px rgba(10, 22, 40, 0.3);
 	}
-	.auth-submit-btn:disabled {
+	.submit-pill-btn:disabled {
 		opacity: 0.7;
 		cursor: not-allowed;
 	}
@@ -1058,60 +977,47 @@
 		to { transform: rotate(360deg); }
 	}
 
-	.auth-footer-note {
+	.auth-security-footer {
 		display: flex;
 		align-items: center;
-		gap: 8px;
-		font-size: 11px;
+		gap: 7px;
+		font-size: 11.5px;
+		font-weight: 500;
 		color: #64748b;
-		margin-top: 24px;
-		padding-top: 18px;
-		border-top: 1px solid rgba(255, 255, 255, 0.07);
+		margin-top: 20px;
+		padding-top: 16px;
+		border-top: 1px solid rgba(10, 22, 40, 0.08);
 		justify-content: center;
 		text-align: center;
 	}
-	:global(.sec-mini-icon) {
+	:global(.sec-icon) {
 		color: #10b981;
 		flex-shrink: 0;
 	}
 
-	.form-footer {
+	.auth-copyright {
 		text-align: center;
 	}
-	.form-footer p {
+	.auth-copyright p {
 		font-size: 12px;
-		color: #475569;
+		color: #94a3b8;
 		margin: 0;
 	}
 
 	/* ==========================================================================
-	   RESPONSIVE BREAKPOINTS
+	   RESPONSIVE DESIGN
 	   ========================================================================== */
-	@media (max-width: 1080px) {
-		.login-layout {
-			grid-template-columns: 1fr 1fr;
-		}
-		.showcase-side {
-			padding: 40px;
-		}
-	}
-
-	@media (max-width: 900px) {
-		.login-layout {
+	@media (max-width: 1024px) {
+		.login-grid {
 			grid-template-columns: 1fr;
+			max-width: 480px;
+			gap: 28px;
 		}
-		.showcase-side {
+		.showcase-column {
 			display: none;
 		}
-		.form-side {
-			padding: 40px 20px;
-			min-height: 100vh;
-		}
-		.mobile-monogram {
-			display: inline-flex;
-		}
-		.auth-card {
-			padding: 30px 24px;
+		.login-header {
+			padding: 16px 20px;
 		}
 	}
 </style>
