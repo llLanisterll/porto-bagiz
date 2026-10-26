@@ -137,7 +137,7 @@
 			<div class="kpi-number">{portfolioStore.experiences.length}</div>
 			<div class="kpi-label">Riwayat Pengalaman</div>
 			<div class="kpi-footer">
-				<span>Terkini: Lead UX/UI Designer</span>
+				<span>{portfolioStore.experiences.length > 0 ? `Terkini: ${portfolioStore.experiences[0].role}` : 'Belum ada data pengalaman'}</span>
 				<ArrowRight size={14} class="kpi-arrow" />
 			</div>
 		</a>
@@ -148,12 +148,12 @@
 				<div class="kpi-icon-wrap amber">
 					<Layers size={20} />
 				</div>
-				<span class="kpi-tag">4 Pilar Utama</span>
+				<span class="kpi-tag">{portfolioStore.skillPillars.length} Pilar Utama</span>
 			</div>
 			<div class="kpi-number">{portfolioStore.skillPillars.length}</div>
 			<div class="kpi-label">Pilar Keahlian</div>
 			<div class="kpi-footer">
-				<span>Desain Produk, Design System & Bisnis</span>
+				<span>{portfolioStore.skillPillars.length > 0 ? portfolioStore.skillPillars.map(p => p.title.split('&')[0].trim()).join(', ') : 'Belum ada pilar keahlian'}</span>
 				<ArrowRight size={14} class="kpi-arrow" />
 			</div>
 		</a>
@@ -203,9 +203,13 @@
 					Kelola kartu portofolio, atur urutan tampilan di beranda, aktifkan status publikasi atau karya unggulan, serta lengkapi metrik dampak dan studi kasus interaktif.
 				</p>
 				<div class="hub-preview-pills">
-					{#each portfolioStore.projects.slice(0, 3) as proj}
-						<span class="mini-pill">{proj.title.split('-')[0].trim()}</span>
-					{/each}
+					{#if portfolioStore.projects.length === 0}
+						<span class="mini-pill empty">Belum ada karya ditambahkan</span>
+					{:else}
+						{#each portfolioStore.projects.slice(0, 3) as proj}
+							<span class="mini-pill">{proj.title.split('-')[0].trim()}</span>
+						{/each}
+					{/if}
 				</div>
 				<div class="hub-card-actions">
 					<a href="/admin/karya" class="hub-link-btn">
@@ -229,9 +233,13 @@
 					Perbarui rekam jejak profesional karir, nama perusahaan, durasi, ringkasan peran, capaian kunci (achievements), dan tools yang dikuasai.
 				</p>
 				<div class="hub-preview-pills">
-					{#each portfolioStore.experiences.slice(0, 2) as exp}
-						<span class="mini-pill">{exp.company}</span>
-					{/each}
+					{#if portfolioStore.experiences.length === 0}
+						<span class="mini-pill empty">Belum ada pengalaman ditambahkan</span>
+					{:else}
+						{#each portfolioStore.experiences.slice(0, 2) as exp}
+							<span class="mini-pill">{exp.company}</span>
+						{/each}
+					{/if}
 				</div>
 				<div class="hub-card-actions">
 					<a href="/admin/pengalaman" class="hub-link-btn">
@@ -255,9 +263,13 @@
 					Sesuaikan pilar keahlian hibrida Anda (Desain Produk, Design System, Strategi Bisnis, Analisis Produk) beserta level penguasaan (Expert, Master, Advanced, Specialist).
 				</p>
 				<div class="hub-preview-pills">
-					{#each portfolioStore.skillPillars as pil}
-						<span class="mini-pill">{pil.title.split('&')[0].trim()}</span>
-					{/each}
+					{#if portfolioStore.skillPillars.length === 0}
+						<span class="mini-pill empty">Belum ada pilar keahlian</span>
+					{:else}
+						{#each portfolioStore.skillPillars as pil}
+							<span class="mini-pill">{pil.title.split('&')[0].trim()}</span>
+						{/each}
+					{/if}
 				</div>
 				<div class="hub-card-actions">
 					<a href="/admin/keahlian" class="hub-link-btn">
@@ -798,6 +810,12 @@
 		padding: 4px 10px;
 		border-radius: 6px;
 		font-weight: 500;
+	}
+	.mini-pill.empty {
+		font-style: italic;
+		color: #94a3b8;
+		background: transparent;
+		border-style: dashed;
 	}
 
 	.hub-card-actions {

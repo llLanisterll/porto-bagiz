@@ -1,10 +1,13 @@
 import { error } from '@sveltejs/kit';
-import { mockProjects, mockProfile } from '#lib/data/mockPortfolio';
-import type { Project } from '#lib/types/portfolio';
+import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
+import { mockProjects, mockProfile } from '$lib/data/mockPortfolio';
+import type { Project } from '$lib/types/portfolio';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ params }) => {
-	const project = mockProjects.find((p: Project) => p.slug === params.slug);
+	const project =
+		portfolioStore.projects.find((p: Project) => p.slug === params.slug) ||
+		mockProjects.find((p: Project) => p.slug === params.slug);
 
 	if (!project) {
 		throw error(404, {
@@ -14,6 +17,6 @@ export const load: PageLoad = async ({ params }) => {
 
 	return {
 		project,
-		profile: mockProfile
+		profile: portfolioStore.profile || mockProfile
 	};
 };

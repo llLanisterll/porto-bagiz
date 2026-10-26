@@ -42,7 +42,18 @@
 		</div>
 
 		<!-- Interactive Experience Accordion Wrapper -->
-		<div class="exp-item-wrapper">
+		{#if experiences.length === 0}
+			<div class="empty-experience-wrap">
+				<div class="empty-exp-icon">
+					<Briefcase size={32} />
+				</div>
+				<h4 class="empty-exp-title">Belum Ada Riwayat Pengalaman</h4>
+				<p class="empty-exp-desc">
+					Rekam jejak pengalaman karir dan kepemimpinan produk akan ditampilkan di sini setelah ditambahkan melalui dashboard admin.
+				</p>
+			</div>
+		{:else}
+			<div class="exp-item-wrapper">
 			{#each experiences as item, idx (item.id)}
 				<div
 					class="exp-item"
@@ -169,6 +180,7 @@
 				</div>
 			{/each}
 		</div>
+		{/if}
 
 		<!-- Bottom Track Record Highlights & CV Download CTA -->
 		<div class="exp-bottom-cta">
@@ -259,6 +271,46 @@
 		background: #f8fafc;
 		border-color: rgba(37, 99, 235, 0.25);
 		box-shadow: 0 10px 30px rgba(10, 22, 40, 0.04);
+	}
+
+	/* Empty State */
+	.empty-experience-wrap {
+		padding: 72px 24px;
+		background: #f8fafc;
+		border: 1px dashed rgba(10, 22, 40, 0.15);
+		border-radius: 20px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 50px;
+	}
+	.empty-exp-icon {
+		width: 64px;
+		height: 64px;
+		border-radius: 16px;
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.08);
+		color: #10b981;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 16px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+	}
+	.empty-exp-title {
+		font-family: var(--ff-syne);
+		font-size: 20px;
+		font-weight: 700;
+		color: #0a1628;
+		margin: 0 0 8px;
+	}
+	.empty-exp-desc {
+		font-size: 14.5px;
+		color: #64748b;
+		max-width: 520px;
+		margin: 0;
+		line-height: 1.6;
 	}
 
 	.exp-header-row {

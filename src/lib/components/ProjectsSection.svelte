@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	import { mockProfile } from '$lib/data/mockPortfolio';
-	import { ArrowUpRight, TrendingUp, Briefcase, Calendar, Download, Sparkles } from 'lucide-svelte';
+	import { ArrowUpRight, TrendingUp, Briefcase, Calendar, Download, Sparkles, FolderKanban } from 'lucide-svelte';
 
 	let activeFilter = $state<string>('Semua');
 
@@ -80,7 +80,18 @@
 		</div>
 
 		<!-- Refined Showcase Grid -->
-		<div class="portfolio-cards-grid" class:single-item={filteredProjects.length === 1}>
+		{#if filteredProjects.length === 0}
+			<div class="empty-showcase-box">
+				<div class="empty-showcase-icon">
+					<FolderKanban size={32} />
+				</div>
+				<h4 class="empty-showcase-title">Belum Ada Karya yang Ditampilkan</h4>
+				<p class="empty-showcase-desc">
+					Koleksi studi kasus desain produk dan strategi bisnis akan segera hadir di sini. Silakan kunjungi kembali dalam waktu dekat atau hubungi saya langsung untuk presentasi portofolio privat.
+				</p>
+			</div>
+		{:else}
+			<div class="portfolio-cards-grid" class:single-item={filteredProjects.length === 1}>
 			{#each filteredProjects as project (project.id)}
 				<article class="portfolio-card" class:is-horizontal={filteredProjects.length === 1}>
 					<a href="/karya/{project.slug}" class="card-inner-link">
@@ -175,6 +186,7 @@
 				</article>
 			{/each}
 		</div>
+		{/if}
 
 		<!-- Bottom Executive Action Strip -->
 		<div class="projects-bottom-banner">
@@ -290,6 +302,46 @@
 	.filter-tab-btn.active .tab-badge {
 		background: rgba(255, 255, 255, 0.22);
 		color: #ffffff;
+	}
+
+	/* Empty State */
+	.empty-showcase-box {
+		padding: 72px 24px;
+		background: #f8fafc;
+		border: 1px dashed rgba(10, 22, 40, 0.15);
+		border-radius: 20px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 50px;
+	}
+	.empty-showcase-icon {
+		width: 64px;
+		height: 64px;
+		border-radius: 16px;
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.08);
+		color: #2563eb;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 16px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+	}
+	.empty-showcase-title {
+		font-family: var(--ff-syne);
+		font-size: 20px;
+		font-weight: 700;
+		color: #0a1628;
+		margin: 0 0 8px;
+	}
+	.empty-showcase-desc {
+		font-size: 14.5px;
+		color: #64748b;
+		max-width: 520px;
+		margin: 0;
+		line-height: 1.6;
 	}
 
 	/* Showcase Grid */

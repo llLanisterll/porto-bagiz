@@ -123,12 +123,19 @@
 			<div class="hero-right wow fadeInRight">
 				<div class="profile-pic-container">
 					<div class="profile-shape-bg">
-						<img
-							src={portfolioStore.profile.avatar}
-							alt={portfolioStore.profile.name}
-							class="profile-img"
-							loading="eager"
-						/>
+						{#if portfolioStore.profile.avatar}
+							<img
+								src={portfolioStore.profile.avatar}
+								alt={portfolioStore.profile.name}
+								class="profile-img"
+								loading="eager"
+							/>
+						{:else}
+							<div class="profile-img-placeholder">
+								<span class="placeholder-initials">{portfolioStore.profile.name ? portfolioStore.profile.name.split(' ').map((n) => n[0]).slice(0, 2).join('') : 'MB'}</span>
+								<span class="placeholder-tag">Foto Profil Belum Diunggah</span>
+							</div>
+						{/if}
 					</div>
 					<!-- Subtle floating badge -->
 					<div class="hero-float-badge">
@@ -170,5 +177,37 @@
 		border-radius: 50%;
 		background: #10b981;
 		box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+	}
+
+	.profile-img-placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		padding: 30px;
+		text-align: center;
+	}
+	.placeholder-initials {
+		font-family: var(--ff-syne);
+		font-size: clamp(56px, 8vw, 84px);
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	.placeholder-tag {
+		font-size: 12.5px;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.75);
+		background: rgba(255, 255, 255, 0.1);
+		padding: 6px 14px;
+		border-radius: 999px;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		backdrop-filter: blur(8px);
 	}
 </style>

@@ -205,7 +205,7 @@
 			title: '',
 			slug: '',
 			subtitle: '',
-			category: 'Desain',
+			category: portfolioStore.categories[0]?.name || 'Umum',
 			summary: '',
 			thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
 			role: 'Lead Product Designer',
@@ -1114,9 +1114,13 @@
 								<div class="form-group">
 									<label for="form-category" class="field-label">Kategori Karya *</label>
 									<select id="form-category" class="input-select" bind:value={formData.category}>
-										{#each portfolioStore.categories as cat}
-											<option value={cat.name}>{cat.name} {cat.description ? `— ${cat.description.slice(0, 42)}...` : ''}</option>
-										{/each}
+										{#if portfolioStore.categories.length === 0}
+											<option value="Umum">Umum (Belum ada master kategori)</option>
+										{:else}
+											{#each portfolioStore.categories as cat}
+												<option value={cat.name}>{cat.name} {cat.description ? `— ${cat.description.slice(0, 42)}...` : ''}</option>
+											{/each}
+										{/if}
 									</select>
 								</div>
 

@@ -31,7 +31,18 @@
 		</div>
 
 		<!-- 3-Pillar Skill Cards Grid -->
-		<div class="skills-cards-grid">
+		{#if pillars.length === 0}
+			<div class="empty-skills-wrap">
+				<div class="empty-skills-icon">
+					<Layers size={32} />
+				</div>
+				<h4 class="empty-skills-title">Belum Ada Pilar Keahlian</h4>
+				<p class="empty-skills-desc">
+					Matriks spesialisasi dan pilar keahlian desain produk serta analisis bisnis akan ditampilkan di sini setelah ditambahkan melalui dashboard admin.
+				</p>
+			</div>
+		{:else}
+			<div class="skills-cards-grid">
 			{#each pillars as pillar}
 				<div class="skill-card wow fadeInUp" class:featured={pillar.isFeatured}>
 					<div class="card-top">
@@ -92,6 +103,7 @@
 				</div>
 			{/each}
 		</div>
+		{/if}
 	</div>
 </section>
 
@@ -127,6 +139,46 @@
 	.skills-sub {
 		color: var(--clr-gray);
 		font-size: 16px;
+		line-height: 1.6;
+	}
+
+	/* Empty State */
+	.empty-skills-wrap {
+		margin-top: 40px;
+		padding: 72px 24px;
+		background: #ffffff;
+		border: 1px dashed rgba(10, 22, 40, 0.15);
+		border-radius: 20px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.empty-skills-icon {
+		width: 64px;
+		height: 64px;
+		border-radius: 16px;
+		background: #f8fafc;
+		border: 1px solid rgba(10, 22, 40, 0.08);
+		color: #8b5cf6;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 16px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+	}
+	.empty-skills-title {
+		font-family: var(--ff-syne);
+		font-size: 20px;
+		font-weight: 700;
+		color: #0a1628;
+		margin: 0 0 8px;
+	}
+	.empty-skills-desc {
+		font-size: 14.5px;
+		color: #64748b;
+		max-width: 520px;
+		margin: 0 auto;
 		line-height: 1.6;
 	}
 

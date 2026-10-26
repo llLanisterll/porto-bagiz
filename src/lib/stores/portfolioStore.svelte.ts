@@ -15,12 +15,12 @@ import type {
 	CategoryItem
 } from '$lib/types/portfolio';
 
-const STORAGE_KEY_PROJECTS = 'porto_bagiz_projects_v1';
-const STORAGE_KEY_CATEGORIES = 'porto_bagiz_categories_v1';
-const STORAGE_KEY_PROFILE = 'porto_bagiz_profile_v1';
-const STORAGE_KEY_EXPERIENCES = 'porto_bagiz_experiences_v1';
-const STORAGE_KEY_PILLARS = 'porto_bagiz_pillars_v1';
-const STORAGE_KEY_MESSAGES = 'porto_bagiz_messages_v1';
+const STORAGE_KEY_PROJECTS = 'porto_bagiz_projects_v2';
+const STORAGE_KEY_CATEGORIES = 'porto_bagiz_categories_v2';
+const STORAGE_KEY_PROFILE = 'porto_bagiz_profile_v2';
+const STORAGE_KEY_EXPERIENCES = 'porto_bagiz_experiences_v2';
+const STORAGE_KEY_PILLARS = 'porto_bagiz_pillars_v2';
+const STORAGE_KEY_MESSAGES = 'porto_bagiz_messages_v2';
 
 class PortfolioStore {
 	projects = $state<Project[]>(mockProjects);
@@ -39,55 +39,87 @@ class PortfolioStore {
 
 	loadFromStorage() {
 		try {
+			// One-time cleanup of v1 dummy data if migrating
+			if (localStorage.getItem('porto_bagiz_projects_v1') !== null) {
+				localStorage.removeItem('porto_bagiz_projects_v1');
+				localStorage.removeItem('porto_bagiz_categories_v1');
+				localStorage.removeItem('porto_bagiz_experiences_v1');
+				localStorage.removeItem('porto_bagiz_pillars_v1');
+				localStorage.removeItem('porto_bagiz_messages_v1');
+				const oldProf = localStorage.getItem('porto_bagiz_profile_v1');
+				if (oldProf && !localStorage.getItem(STORAGE_KEY_PROFILE)) {
+					localStorage.setItem(STORAGE_KEY_PROFILE, oldProf);
+				}
+				localStorage.removeItem('porto_bagiz_profile_v1');
+			}
+
 			// Projects
 			const savedProjects = localStorage.getItem(STORAGE_KEY_PROJECTS);
-			if (savedProjects) {
+			if (savedProjects !== null) {
 				const parsed = JSON.parse(savedProjects);
-				if (Array.isArray(parsed) && parsed.length > 0) {
+				if (Array.isArray(parsed)) {
 					this.projects = parsed;
 				}
+			} else {
+				this.projects = [...mockProjects];
+				this.saveToStorage();
 			}
 
 			// Categories
 			const savedCategories = localStorage.getItem(STORAGE_KEY_CATEGORIES);
-			if (savedCategories) {
+			if (savedCategories !== null) {
 				const parsed = JSON.parse(savedCategories);
-				if (Array.isArray(parsed) && parsed.length > 0) {
+				if (Array.isArray(parsed)) {
 					this.categories = parsed;
 				}
+			} else {
+				this.categories = [...mockCategories];
+				this.saveToStorage();
 			}
 
 			// Profile
 			const savedProfile = localStorage.getItem(STORAGE_KEY_PROFILE);
-			if (savedProfile) {
+			if (savedProfile !== null) {
 				this.profile = JSON.parse(savedProfile);
+			} else {
+				this.profile = { ...mockProfile };
+				this.saveToStorage();
 			}
 
 			// Experiences
 			const savedExperiences = localStorage.getItem(STORAGE_KEY_EXPERIENCES);
-			if (savedExperiences) {
+			if (savedExperiences !== null) {
 				const parsed = JSON.parse(savedExperiences);
-				if (Array.isArray(parsed) && parsed.length > 0) {
+				if (Array.isArray(parsed)) {
 					this.experiences = parsed;
 				}
+			} else {
+				this.experiences = [...mockExperiences];
+				this.saveToStorage();
 			}
 
 			// Skill Pillars
 			const savedPillars = localStorage.getItem(STORAGE_KEY_PILLARS);
-			if (savedPillars) {
+			if (savedPillars !== null) {
 				const parsed = JSON.parse(savedPillars);
-				if (Array.isArray(parsed) && parsed.length > 0) {
+				if (Array.isArray(parsed)) {
 					this.skillPillars = parsed;
 				}
+			} else {
+				this.skillPillars = [...mockSkillPillars];
+				this.saveToStorage();
 			}
 
 			// Messages
 			const savedMessages = localStorage.getItem(STORAGE_KEY_MESSAGES);
-			if (savedMessages) {
+			if (savedMessages !== null) {
 				const parsed = JSON.parse(savedMessages);
 				if (Array.isArray(parsed)) {
 					this.messages = parsed;
 				}
+			} else {
+				this.messages = [...mockContactMessages];
+				this.saveToStorage();
 			}
 		} catch (e) {
 			console.error('Error loading portfolio data from storage:', e);
