@@ -60,8 +60,6 @@
       portfolioStore.profile.stats?.[3]?.label || "Total Pendanaan Diakuisisi",
     email: portfolioStore.profile.socialLinks?.email || "",
     linkedin: portfolioStore.profile.socialLinks?.linkedin || "",
-    behance: portfolioStore.profile.socialLinks?.behance || "",
-    dribbble: portfolioStore.profile.socialLinks?.dribbble || "",
     github: portfolioStore.profile.socialLinks?.github || "",
     instagram: portfolioStore.profile.socialLinks?.instagram || "",
   });
@@ -175,8 +173,6 @@
     const socialLinks = {
       email: formProfile.email,
       linkedin: formProfile.linkedin,
-      behance: formProfile.behance,
-      dribbble: formProfile.dribbble,
       github: formProfile.github,
       instagram: formProfile.instagram,
     };
@@ -641,22 +637,7 @@
               bind:value={formProfile.linkedin}
             />
           </div>
-          <div class="form-group">
-            <label for="prof-dribbble">Dribbble URL</label>
-            <input
-              id="prof-dribbble"
-              type="url"
-              bind:value={formProfile.dribbble}
-            />
-          </div>
-          <div class="form-group">
-            <label for="prof-behance">Behance URL</label>
-            <input
-              id="prof-behance"
-              type="url"
-              bind:value={formProfile.behance}
-            />
-          </div>
+
           <div class="form-group">
             <label for="prof-github">GitHub URL</label>
             <input

@@ -85,6 +85,13 @@ class PortfolioStore {
 					this.profile.name = 'Muhammad Baghiz';
 					localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(this.profile));
 				}
+				if (this.profile && this.profile.socialLinks) {
+					if ('behance' in this.profile.socialLinks || 'dribbble' in this.profile.socialLinks) {
+						delete this.profile.socialLinks.behance;
+						delete this.profile.socialLinks.dribbble;
+						localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(this.profile));
+					}
+				}
 			} else {
 				this.profile = { ...mockProfile };
 				this.saveToStorage();

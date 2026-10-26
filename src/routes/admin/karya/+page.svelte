@@ -637,6 +637,9 @@
 
 	<!-- MAIN CONTENT: TABLE OR GRID VIEW -->
 	{#if viewMode === 'table'}
+		<div class="mobile-table-hint">
+			<span>⇄ Geser tabel ke samping untuk melihat seluruh 8 kolom data</span>
+		</div>
 		<div class="table-wrapper">
 			<table class="cms-table">
 				<thead>
@@ -2041,15 +2044,36 @@
 	}
 
 	/* TABLE VIEW */
+	.mobile-table-hint {
+		display: none;
+		font-size: 12px;
+		font-weight: 600;
+		color: #2563eb;
+		background: #eff6ff;
+		border: 1px solid #bfdbfe;
+		border-radius: 10px;
+		padding: 8px 14px;
+		margin-bottom: 12px;
+		text-align: center;
+	}
+	@media (max-width: 900px) {
+		.mobile-table-hint {
+			display: block;
+		}
+	}
+
 	.table-wrapper {
 		background: #ffffff;
 		border: 1px solid #e2e8f0;
 		border-radius: 16px;
-		overflow: hidden;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
 		box-shadow: 0 2px 12px -2px rgba(10, 22, 40, 0.04);
+		width: 100%;
 	}
 	.cms-table {
 		width: 100%;
+		min-width: 960px;
 		border-collapse: separate;
 		border-spacing: 0;
 		font-size: 13.5px;

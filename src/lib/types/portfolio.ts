@@ -97,10 +97,10 @@ export interface StatItem {
 export interface SocialLinks {
 	email: string;
 	linkedin: string;
-	behance: string;
-	dribbble: string;
 	github: string;
 	instagram: string;
+	behance?: string;
+	dribbble?: string;
 }
 
 export interface UserProfile {

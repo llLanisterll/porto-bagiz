@@ -34,8 +34,6 @@ export const mockProfile: UserProfile = {
 	socialLinks: {
 		email: 'baghiz.design@gmail.com',
 		linkedin: 'https://linkedin.com/in/baghiz-product',
-		behance: 'https://behance.net/baghizdesign',
-		dribbble: 'https://dribbble.com/baghiz',
 		github: 'https://github.com/baghiz-product',
 		instagram: 'https://instagram.com/baghiz.design'
 	},

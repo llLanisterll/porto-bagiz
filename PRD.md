@@ -37,7 +37,7 @@ Aplikasi web Portofolio Digital Bisnis & Desain berbasis **SvelteKit (Svelte 5 R
 
 ### FASE 3: Kontak & Ajak Kerja Sama
 - **Formulir Pesan:** Form interaktif (Nama, Email, Subjek/Jenis Kolaborasi, Pesan) dengan SvelteKit Form Actions dan umpan balik status pengiriman.
-- **Tautan Media Sosial:** Link ke LinkedIn, Behance/Dribbble, Instagram, dan Email.
+- **Tautan Media Sosial:** Link ke LinkedIn, GitHub, Instagram, dan Email.
 - **Tombol Ajak Kerja Sama:** CTA menonjol di Navbar dan seksi bawah halaman.
 
 ### FASE 4: Login Pengelola & Kelola Karya (Admin CMS)

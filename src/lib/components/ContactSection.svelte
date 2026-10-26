@@ -228,15 +228,15 @@
                 </a>
               </li>
             {/if}
-            {#if portfolioStore.profile.socialLinks?.dribbble}
+            {#if portfolioStore.profile.socialLinks?.github}
               <li>
                 <a
-                  href={portfolioStore.profile.socialLinks.dribbble}
+                  href={portfolioStore.profile.socialLinks.github}
                   target="_blank"
                   rel="noopener"
-                  aria-label="Dribbble"
+                  aria-label="GitHub"
                 >
-                  <span>Dr</span>
+                  <span>Gh</span>
                 </a>
               </li>
             {/if}

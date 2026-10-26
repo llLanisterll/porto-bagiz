@@ -379,6 +379,9 @@
         {/if}
       </div>
     {:else}
+      <div class="mobile-table-hint">
+        <span>⇄ Geser tabel ke samping untuk melihat seluruh data</span>
+      </div>
       <div class="table-responsive">
         <table class="cms-table">
           <thead>
@@ -1150,13 +1153,31 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   }
 
+  .mobile-table-hint {
+    display: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+    border-bottom: 1px solid #bfdbfe;
+    padding: 8px 14px;
+    text-align: center;
+  }
+  @media (max-width: 900px) {
+    .mobile-table-hint {
+      display: block;
+    }
+  }
+
   .table-responsive {
     width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .cms-table {
     width: 100%;
+    min-width: 820px;
     border-collapse: collapse;
     text-align: left;
     font-size: 13.5px;
