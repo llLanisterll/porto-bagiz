@@ -100,13 +100,15 @@
 				<div
 					class="service-item"
 					class:is-active={activeIndex === idx}
-					onclick={() => toggleItem(idx)}
-					onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleItem(idx); } }}
-					tabindex="0"
-					role="button"
-					aria-expanded={activeIndex === idx}
 				>
-					<div class="service-header-row">
+					<div
+						class="service-header-row"
+						onclick={() => toggleItem(idx)}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleItem(idx); } }}
+						tabindex="0"
+						role="button"
+						aria-expanded={activeIndex === idx}
+					>
 						<div class="service-title-group">
 							<span class="service-num">{item.num}</span>
 							<h3 class="service-thumb">{item.title}</h3>
@@ -121,7 +123,9 @@
 					</div>
 
 					{#if activeIndex === idx}
-						<div class="service-panel-content">
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div class="service-panel-content" onclick={(e) => e.stopPropagation()}>
 							<div class="service-details-col">
 								<span class="service-tag-pill">{item.tag}</span>
 								<p class="service-desc">{item.desc}</p>

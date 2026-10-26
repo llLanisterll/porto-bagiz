@@ -46,7 +46,7 @@
 		<div class="projects-container">
 			{#each filteredProjects as project, idx (project.id)}
 				<div
-					class="grid-item wow fadeInUp"
+					class="grid-item"
 					class:big={idx % 3 === 0}
 					class:mid={idx % 3 === 1}
 				>

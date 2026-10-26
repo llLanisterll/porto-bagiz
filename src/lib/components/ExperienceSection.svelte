@@ -47,14 +47,16 @@
 				<div
 					class="exp-item"
 					class:is-active={activeIndex === idx}
-					onclick={() => toggleItem(idx)}
-					onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleItem(idx); } }}
-					tabindex="0"
-					role="button"
-					aria-expanded={activeIndex === idx}
 				>
 					<!-- Header Row: Timeline, Role, Company, and Toggle Button -->
-					<div class="exp-header-row">
+					<div
+						class="exp-header-row"
+						onclick={() => toggleItem(idx)}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleItem(idx); } }}
+						tabindex="0"
+						role="button"
+						aria-expanded={activeIndex === idx}
+					>
 						<div class="exp-timeline-col">
 							<span class="exp-period-txt">{item.period}</span>
 							{#if item.isCurrent}
@@ -88,7 +90,9 @@
 
 					<!-- Expanded Panel Content -->
 					{#if activeIndex === idx}
-						<div class="exp-panel-content">
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div class="exp-panel-content" onclick={(e) => e.stopPropagation()}>
 							<!-- Meta Details Strip -->
 							<div class="exp-meta-strip">
 								<div class="meta-item">
@@ -246,7 +250,6 @@
 		padding: 26px 20px;
 		border-radius: 14px;
 		transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-		cursor: pointer;
 		margin-bottom: 4px;
 	}
 	.exp-item:hover {
@@ -263,6 +266,8 @@
 		grid-template-columns: 220px 1fr auto;
 		align-items: center;
 		gap: 24px;
+		cursor: pointer;
+		user-select: none;
 	}
 	@media (max-width: 991px) {
 		.exp-header-row {

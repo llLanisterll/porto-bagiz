@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { mockProfile } from '$lib/data/mockPortfolio';
 	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	import { ArrowUpRight, Send, Check } from 'lucide-svelte';
@@ -34,7 +35,11 @@
 	function scrollTo(e: MouseEvent, targetId: string) {
 		e.preventDefault();
 		const el = document.getElementById(targetId);
-		if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		if (el) {
+			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		} else {
+			goto(`/#${targetId}`);
+		}
 	}
 
 	const contactNav = [
@@ -168,7 +173,7 @@
 						{/each}
 						<li>
 							<a
-								href="/resume"
+								href={mockProfile.resumeUrl}
 								class="contact-nav-link"
 								target="_blank"
 								rel="noopener"

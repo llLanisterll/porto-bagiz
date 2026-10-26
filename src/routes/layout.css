@@ -976,12 +976,23 @@ img {
 }
 .grid-item {
 	grid-column: span 4;
+	animation: fadeInGrid 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .grid-item.big {
 	grid-column: span 7;
 }
 .grid-item.mid {
 	grid-column: span 5;
+}
+@keyframes fadeInGrid {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 @media (max-width: 991px) {
 	.grid-item.big, .grid-item.mid, .grid-item {
@@ -1114,7 +1125,6 @@ img {
 	display: flex;
 	flex-direction: column;
 	transition: all 0.3s ease;
-	cursor: pointer;
 }
 .service-item:hover {
 	background: rgba(10, 22, 40, 0.015);
@@ -1125,6 +1135,8 @@ img {
 	justify-content: space-between;
 	align-items: center;
 	gap: 20px;
+	cursor: pointer;
+	user-select: none;
 }
 .service-thumb {
 	font-family: var(--ff-syne);

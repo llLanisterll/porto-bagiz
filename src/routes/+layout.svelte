@@ -38,21 +38,39 @@
 					}
 				});
 			},
-			{ threshold: 0.02, rootMargin: '120px 0px 50px 0px' }
+			{ threshold: 0.01, rootMargin: '120px 0px 50px 0px' }
 		);
 
 		function observeWow() {
-			document.querySelectorAll('.wow').forEach((el) => observer.observe(el));
+			document.querySelectorAll('.wow:not(.animated)').forEach((el) => observer.observe(el));
 		}
 
 		observeWow();
-		setTimeout(observeWow, 500);
-		setTimeout(observeWow, 1200);
+		setTimeout(observeWow, 400);
+		setTimeout(observeWow, 1000);
+
+		// MutationObserver to observe newly rendered/mounted .wow elements
+		const mutationObserver = new MutationObserver(() => {
+			observeWow();
+		});
+		mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+		// Safety fallback: ensure any element currently in or near viewport is animated
+		const safetyTimer = setTimeout(() => {
+			document.querySelectorAll('.wow:not(.animated)').forEach((el) => {
+				const rect = el.getBoundingClientRect();
+				if (rect.top < window.innerHeight + 300) {
+					el.classList.add('animated');
+				}
+			});
+		}, 1500);
 
 		return () => {
 			clearTimeout(timer);
+			clearTimeout(safetyTimer);
 			window.removeEventListener('scroll', handleScroll);
 			observer.disconnect();
+			mutationObserver.disconnect();
 		};
 	});
 

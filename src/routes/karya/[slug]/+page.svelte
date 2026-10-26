@@ -3,7 +3,7 @@
 	import type { Project } from '$lib/types/portfolio';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { ArrowLeft, ExternalLink, X, Maximize2 } from '@lucide/svelte';
+	import { ArrowLeft, ExternalLink, X, Maximize2 } from 'lucide-svelte';
 
 	let { data }: { data: PageData } = $props();
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { ArrowUpRight, X, Mail, Phone, MapPin } from 'lucide-svelte';
 	import { mockProfile } from '$lib/data/mockPortfolio';
 
@@ -37,6 +38,10 @@
 			e.preventDefault();
 			sidebarOpen = false;
 			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		} else {
+			e.preventDefault();
+			sidebarOpen = false;
+			goto(`/${href}`);
 		}
 	}
 </script>
