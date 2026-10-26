@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
+	import { mockProfile } from '$lib/data/mockPortfolio';
 	import type { UserProfile, StatItem } from '$lib/types/portfolio';
 	import {
 		UserCheck,
@@ -12,7 +13,12 @@
 		Mail,
 		MapPin,
 		Clock,
-		Award
+		Award,
+		UploadCloud,
+		Image as ImageIcon,
+		Trash2,
+		Camera,
+		AlertCircle
 	} from 'lucide-svelte';
 
 	let toastMessage = $state('');
@@ -30,13 +36,14 @@
 		headline: portfolioStore.profile.headline,
 		tagline: portfolioStore.profile.tagline,
 		bio: portfolioStore.profile.bio,
+		avatar: portfolioStore.profile.avatar || mockProfile.avatar,
 		location: portfolioStore.profile.location,
 		availability: portfolioStore.profile.availability,
 		resumeUrl: portfolioStore.profile.resumeUrl,
 		aboutP1: portfolioStore.profile.aboutNarrative?.[0] || '',
 		aboutP2: portfolioStore.profile.aboutNarrative?.[1] || '',
 		aboutP3: portfolioStore.profile.aboutNarrative?.[2] || '',
-		stat0Val: portfolioStore.profile.stats?.[0]?.value || '6+',
+		stat0Val: portfolioStore.profile.stats?.[0]?.value || '4+',
 		stat0Lbl: portfolioStore.profile.stats?.[0]?.label || 'Tahun Pengalaman',
 		stat1Val: portfolioStore.profile.stats?.[1]?.value || '25+',
 		stat1Lbl: portfolioStore.profile.stats?.[1]?.label || 'Proyek Selesai',
@@ -51,6 +58,76 @@
 		github: portfolioStore.profile.socialLinks?.github || '',
 		instagram: portfolioStore.profile.socialLinks?.instagram || ''
 	});
+
+	// Photo Upload Logic
+	let fileInputRef: HTMLInputElement | null = $state(null);
+	let isDragging = $state(false);
+	let uploadError = $state('');
+
+	function processImageFile(file: File) {
+		uploadError = '';
+
+		if (!file.type.startsWith('image/')) {
+			uploadError = 'Format file tidak didukung. Harap pilih gambar bertipe PNG, JPG, JPEG, atau WebP.';
+			return;
+		}
+
+		// Check size: Max 3.5MB for storage in localStorage
+		const maxSizeBytes = 3.5 * 1024 * 1024;
+		if (file.size > maxSizeBytes) {
+			uploadError = 'Ukuran file terlalu besar (maksimal 3.5 MB). Harap pilih foto dengan resolusi lebih ringkas atau kompres gambar.';
+			return;
+		}
+
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			if (typeof e.target?.result === 'string') {
+				formProfile.avatar = e.target.result;
+				showToast('Foto profil baru berhasil dimuat! Klik "Simpan Semua Perubahan" untuk menerapkan.');
+			}
+		};
+		reader.onerror = () => {
+			uploadError = 'Terjadi kesalahan saat membaca file gambar.';
+		};
+		reader.readAsDataURL(file);
+	}
+
+	function handleFileInputChange(e: Event) {
+		const target = e.target as HTMLInputElement;
+		if (target.files && target.files[0]) {
+			processImageFile(target.files[0]);
+		}
+	}
+
+	function handleDragOver(e: DragEvent) {
+		e.preventDefault();
+		isDragging = true;
+	}
+
+	function handleDragLeave(e: DragEvent) {
+		e.preventDefault();
+		isDragging = false;
+	}
+
+	function handleDrop(e: DragEvent) {
+		e.preventDefault();
+		isDragging = false;
+		if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+			processImageFile(e.dataTransfer.files[0]);
+		}
+	}
+
+	function resetToDefaultAvatar() {
+		formProfile.avatar = mockProfile.avatar;
+		uploadError = '';
+		showToast('Foto profil dikembalikan ke foto default bawaan.');
+	}
+
+	function removeAvatar() {
+		formProfile.avatar = '';
+		uploadError = '';
+		showToast('Foto profil dikosongkan. Inisial MB akan digunakan.');
+	}
 
 	function handleSave(e: Event) {
 		e.preventDefault();
@@ -96,6 +173,7 @@
 			headline: formProfile.headline.trim(),
 			tagline: formProfile.tagline.trim(),
 			bio: formProfile.bio.trim(),
+			avatar: formProfile.avatar.trim(),
 			location: formProfile.location.trim(),
 			availability: formProfile.availability.trim(),
 			resumeUrl: formProfile.resumeUrl.trim(),
@@ -104,12 +182,12 @@
 			socialLinks
 		});
 
-		showToast('Profil & narasi tentang saya berhasil diperbarui!');
+		showToast('Profil & foto avatar berhasil diperbarui dan tersinkronisasi ke website!');
 	}
 </script>
 
 <svelte:head>
-	<title>Profil & Tentang — Admin CMS Bagiz</title>
+	<title>Profil & Pengaturan Foto — Admin CMS Bagiz</title>
 </svelte:head>
 
 <div class="profile-admin-container">
@@ -126,11 +204,11 @@
 		<div>
 			<div class="badge-pill">
 				<UserCheck size={13} />
-				<span>KONTEN DINAMIS</span>
+				<span>KONTEN DINAMIS & IDENTITAS</span>
 			</div>
-			<h1 class="page-title">Profil & Tentang Saya</h1>
+			<h1 class="page-title">Profil & Pengaturan Foto</h1>
 			<p class="page-desc">
-				Perbarui biodata utama, headline spesialisasi, narasi tentang saya (#about), angka pencapaian, dan tautan sosial media.
+				Kelola foto profil/artwork hero, biodata utama, headline spesialisasi, narasi tentang saya (#about), angka pencapaian, dan tautan jejaring sosial.
 			</p>
 		</div>
 
@@ -147,11 +225,181 @@
 	</header>
 
 	<form id="profile-form" onsubmit={handleSave} class="profile-cards-stack">
-		<!-- Section 1: Hero & Biodata Utama -->
+		<!-- Section 1: Pengaturan Upload Foto Profil & Artwork Hero -->
+		<div class="form-card highlight-card">
+			<div class="card-header">
+				<div class="card-header-with-badge">
+					<div>
+						<h2 class="card-title">1. Foto Profil & Artwork Hero</h2>
+						<p class="card-desc">
+							Foto ini tampil sebagai cutout siluet pada Hero Banner beranda, thumbnail preview profil, dan navigasi admin.
+						</p>
+					</div>
+					<span class="active-badge-pill">
+						<Sparkles size={12} />
+						<span>Sinkronisasi Live</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="card-body">
+				<div class="avatar-upload-grid">
+					<!-- Left: Avatar Preview -->
+					<div class="avatar-preview-col">
+						<div class="avatar-preview-container">
+							{#if formProfile.avatar}
+								<img
+									src={formProfile.avatar}
+									alt="Pratinjau Foto Profil"
+									class="avatar-preview-img"
+								/>
+							{:else}
+								<div class="avatar-fallback-box">
+									<span>MB</span>
+								</div>
+							{/if}
+
+							<!-- Floating Camera Icon Badge -->
+							<button
+								type="button"
+								class="avatar-camera-btn"
+								onclick={() => fileInputRef?.click()}
+								title="Pilih file foto"
+								aria-label="Pilih foto"
+							>
+								<Camera size={14} />
+							</button>
+						</div>
+
+						<div class="avatar-badges-meta">
+							<span class="avatar-meta-pill">
+								<span class="meta-dot"></span>
+								Hero Section Cutout
+							</span>
+							<span class="avatar-meta-pill">
+								<span class="meta-dot"></span>
+								Admin Monogram
+							</span>
+						</div>
+					</div>
+
+					<!-- Right: Upload Controls & Dropzone -->
+					<div class="avatar-controls-col">
+						<!-- Hidden File Input -->
+						<input
+							type="file"
+							accept="image/png, image/jpeg, image/jpg, image/webp"
+							bind:this={fileInputRef}
+							onchange={handleFileInputChange}
+							class="hidden-file-input"
+							aria-label="Upload file foto profil"
+						/>
+
+						<!-- Drag and Drop Box -->
+						<div
+							class="dropzone-box"
+							class:dragging={isDragging}
+							ondragover={handleDragOver}
+							ondragleave={handleDragLeave}
+							ondrop={handleDrop}
+							onclick={() => fileInputRef?.click()}
+							role="button"
+							tabindex="0"
+							onkeydown={(e) => {
+								if (e.key === 'Enter' || e.key === ' ') fileInputRef?.click();
+							}}
+						>
+							<div class="dropzone-icon-box">
+								<UploadCloud size={24} />
+							</div>
+							<div class="dropzone-content">
+								<p class="dropzone-main-text">
+									<strong>Tarik & lepas foto ke sini</strong>, atau klik untuk memilih file
+								</p>
+								<p class="dropzone-sub-text">
+									Mendukung PNG (latar transparan disarankan), JPG, JPEG, WebP. Maksimal 3.5 MB.
+								</p>
+							</div>
+							<button
+								type="button"
+								class="btn-choose-file"
+								onclick={(e) => {
+									e.stopPropagation();
+									fileInputRef?.click();
+								}}
+							>
+								<ImageIcon size={14} />
+								<span>Pilih dari Perangkat</span>
+							</button>
+						</div>
+
+						{#if uploadError}
+							<div class="upload-error-box">
+								<AlertCircle size={15} />
+								<span>{uploadError}</span>
+							</div>
+						{/if}
+
+						<!-- Direct URL Input Fallback -->
+						<div class="url-input-block">
+							<label for="prof-avatar-url" class="url-input-label">
+								Atau masukkan tautan URL gambar (Unsplash / Cloudinary / Web):
+							</label>
+							<div class="url-input-wrapper">
+								<input
+									id="prof-avatar-url"
+									type="url"
+									bind:value={formProfile.avatar}
+									placeholder="https://images.unsplash.com/photo-..."
+									class="url-text-input"
+								/>
+								{#if formProfile.avatar}
+									<button
+										type="button"
+										class="url-clear-btn"
+										onclick={() => (formProfile.avatar = '')}
+										title="Bersihkan URL"
+									>
+										Hapus
+									</button>
+								{/if}
+							</div>
+						</div>
+
+						<!-- Reset / Remove Action Buttons -->
+						<div class="avatar-quick-actions">
+							<button
+								type="button"
+								class="btn-quick-action"
+								onclick={resetToDefaultAvatar}
+								title="Kembalikan ke foto bawaan Muhammad Bagiz"
+							>
+								<RotateCcw size={13} />
+								<span>Gunakan Foto Bawaan</span>
+							</button>
+
+							{#if formProfile.avatar}
+								<button
+									type="button"
+									class="btn-quick-action danger"
+									onclick={removeAvatar}
+									title="Hapus foto saat ini"
+								>
+									<Trash2 size={13} />
+									<span>Hapus Foto</span>
+								</button>
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Section 2: Hero & Biodata Utama -->
 		<div class="form-card">
 			<div class="card-header">
-				<h2 class="card-title">1. Identitas & Hero Banner</h2>
-				<p class="card-desc">Informasi yang tampil pada bagian teratas website (Hero section).</p>
+				<h2 class="card-title">2. Identitas & Hero Banner</h2>
+				<p class="card-desc">Informasi teks yang tampil pada bagian teratas website (Hero section).</p>
 			</div>
 
 			<div class="card-body">
@@ -181,13 +429,23 @@
 						<input id="prof-avail" type="text" bind:value={formProfile.availability} />
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label for="prof-resume">Tautan File Resume / CV (PDF)</label>
+					<input
+						id="prof-resume"
+						type="text"
+						bind:value={formProfile.resumeUrl}
+						placeholder="/cv-muhammad-bagiz.pdf atau https://..."
+					/>
+				</div>
 			</div>
 		</div>
 
-		<!-- Section 2: Tentang Saya Narasi -->
+		<!-- Section 3: Tentang Saya Narasi -->
 		<div class="form-card">
 			<div class="card-header">
-				<h2 class="card-title">2. Narasi Tentang Saya (Section #about)</h2>
+				<h2 class="card-title">3. Narasi Tentang Saya (Section #about)</h2>
 				<p class="card-desc">Penjelasan komprehensif mengenai profil hibrida UX/UI dan Strategi Bisnis.</p>
 			</div>
 
@@ -214,10 +472,10 @@
 			</div>
 		</div>
 
-		<!-- Section 3: Metrik Kunci -->
+		<!-- Section 4: Metrik Kunci -->
 		<div class="form-card">
 			<div class="card-header">
-				<h2 class="card-title">3. Angka & Metrik Pencapaian</h2>
+				<h2 class="card-title">4. Angka & Metrik Pencapaian</h2>
 				<p class="card-desc">Statistik ringkas yang tampil pada profil dan section tentang saya.</p>
 			</div>
 
@@ -254,10 +512,10 @@
 			</div>
 		</div>
 
-		<!-- Section 4: Jejaring Sosial & Kontak -->
+		<!-- Section 5: Jejaring Sosial & Kontak -->
 		<div class="form-card">
 			<div class="card-header">
-				<h2 class="card-title">4. Tautan Sosial & Kontak</h2>
+				<h2 class="card-title">5. Tautan Sosial & Kontak</h2>
 				<p class="card-desc">Tautan profil profesional yang tercantum di header, footer, dan kontak.</p>
 			</div>
 
@@ -295,7 +553,7 @@
 		<div class="sticky-action-bar">
 			<span class="auto-save-note">
 				<Sparkles size={14} />
-				Perubahan akan langsung disimpan ke penyimpanan lokal browser dan tampil di website.
+				Perubahan foto dan profil akan langsung tersinkronisasi ke Hero section beranda dan topbar admin.
 			</span>
 			<button type="submit" class="btn-primary">
 				<Save size={16} />
@@ -328,6 +586,19 @@
 		gap: 10px;
 		box-shadow: 0 12px 30px rgba(10, 22, 40, 0.25);
 		z-index: 9999;
+		animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	@keyframes slideUp {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	/* Header */
@@ -351,21 +622,23 @@
 		padding: 4px 10px;
 		border-radius: 9999px;
 		margin-bottom: 8px;
+		border: 1px solid #bfdbfe;
 	}
 
 	.page-title {
-		font-size: 24px;
+		font-size: 26px;
 		font-weight: 800;
 		color: #0a1628;
 		margin: 0 0 6px;
-		letter-spacing: -0.01em;
+		letter-spacing: -0.02em;
+		font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
 	}
 
 	.page-desc {
 		font-size: 14px;
 		color: #475569;
 		margin: 0;
-		max-width: 650px;
+		max-width: 680px;
 		line-height: 1.5;
 	}
 
@@ -430,10 +703,36 @@
 		box-shadow: 0 2px 8px rgba(10, 22, 40, 0.02);
 	}
 
+	.form-card.highlight-card {
+		border-color: #bfdbfe;
+		box-shadow: 0 4px 20px rgba(37, 99, 235, 0.05);
+	}
+
 	.card-header {
 		margin-bottom: 20px;
 		padding-bottom: 14px;
 		border-bottom: 1px solid #f1f5f9;
+	}
+
+	.card-header-with-badge {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	.active-badge-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 11.5px;
+		font-weight: 700;
+		color: #2563eb;
+		background: #eff6ff;
+		padding: 4px 10px;
+		border-radius: 9999px;
+		border: 1px solid #dbeafe;
 	}
 
 	.card-title {
@@ -455,6 +754,285 @@
 		gap: 16px;
 	}
 
+	/* Avatar Upload Grid */
+	.avatar-upload-grid {
+		display: grid;
+		grid-template-columns: 200px 1fr;
+		gap: 28px;
+		align-items: start;
+	}
+
+	.avatar-preview-col {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 14px;
+	}
+
+	.avatar-preview-container {
+		width: 150px;
+		height: 150px;
+		border-radius: 24px;
+		background: linear-gradient(135deg, #0a1628 0%, #1e293b 100%);
+		position: relative;
+		overflow: visible;
+		box-shadow: 0 10px 25px rgba(10, 22, 40, 0.15);
+		border: 3px solid #ffffff;
+		outline: 1px solid rgba(10, 22, 40, 0.1);
+	}
+
+	.avatar-preview-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 21px;
+		display: block;
+	}
+
+	.avatar-fallback-box {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 38px;
+		font-weight: 800;
+		color: #ffffff;
+		font-family: 'Syne', sans-serif;
+		letter-spacing: -0.03em;
+	}
+
+	.avatar-camera-btn {
+		position: absolute;
+		bottom: -6px;
+		right: -6px;
+		width: 34px;
+		height: 34px;
+		border-radius: 50%;
+		background: #2563eb;
+		color: #ffffff;
+		border: 2px solid #ffffff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		box-shadow: 0 3px 8px rgba(37, 99, 235, 0.35);
+		transition: all 0.18s ease;
+	}
+
+	.avatar-camera-btn:hover {
+		background: #1d4ed8;
+		transform: scale(1.1);
+	}
+
+	.avatar-badges-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		width: 100%;
+	}
+
+	.avatar-meta-pill {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 11px;
+		font-weight: 600;
+		color: #475569;
+		background: #f8fafc;
+		padding: 4px 8px;
+		border-radius: 6px;
+		border: 1px solid #e2e8f0;
+	}
+
+	.meta-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: #10b981;
+	}
+
+	/* Upload Controls */
+	.avatar-controls-col {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+	}
+
+	.hidden-file-input {
+		display: none;
+	}
+
+	.dropzone-box {
+		border: 2px dashed #cbd5e1;
+		border-radius: 14px;
+		padding: 20px;
+		background: #fafafa;
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.dropzone-box:hover,
+	.dropzone-box.dragging {
+		background: #eff6ff;
+		border-color: #2563eb;
+	}
+
+	.dropzone-icon-box {
+		width: 46px;
+		height: 46px;
+		border-radius: 12px;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		color: #2563eb;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.dropzone-content {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.dropzone-main-text {
+		font-size: 13.5px;
+		color: #0a1628;
+		margin: 0 0 3px;
+	}
+
+	.dropzone-sub-text {
+		font-size: 11.5px;
+		color: #64748b;
+		margin: 0;
+	}
+
+	.btn-choose-file {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		background: #ffffff;
+		border: 1px solid #cbd5e1;
+		color: #0a1628;
+		padding: 8px 14px;
+		border-radius: 8px;
+		font-size: 12.5px;
+		font-weight: 600;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: all 0.15s ease;
+	}
+
+	.btn-choose-file:hover {
+		background: #f1f5f9;
+		border-color: #94a3b8;
+	}
+
+	.upload-error-box {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: #fef2f2;
+		color: #b91c1c;
+		border: 1px solid #fecaca;
+		padding: 8px 12px;
+		border-radius: 8px;
+		font-size: 12px;
+	}
+
+	/* URL Input Block */
+	.url-input-block {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.url-input-label {
+		font-size: 12px;
+		font-weight: 600;
+		color: #64748b;
+	}
+
+	.url-input-wrapper {
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+
+	.url-text-input {
+		width: 100%;
+		padding: 8px 65px 8px 12px;
+		border: 1px solid #cbd5e1;
+		border-radius: 8px;
+		font-size: 13px;
+		color: #0a1628;
+		background: #ffffff;
+		outline: none;
+		transition: all 0.15s ease;
+	}
+
+	.url-text-input:focus {
+		border-color: #2563eb;
+		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+	}
+
+	.url-clear-btn {
+		position: absolute;
+		right: 8px;
+		background: #f1f5f9;
+		border: 1px solid #e2e8f0;
+		color: #64748b;
+		font-size: 11px;
+		font-weight: 600;
+		padding: 3px 8px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.url-clear-btn:hover {
+		background: #e2e8f0;
+		color: #0a1628;
+	}
+
+	/* Quick actions */
+	.avatar-quick-actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	.btn-quick-action {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		color: #475569;
+		padding: 6px 12px;
+		border-radius: 7px;
+		font-size: 12px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.btn-quick-action:hover {
+		background: #f1f5f9;
+		color: #0a1628;
+	}
+
+	.btn-quick-action.danger:hover {
+		background: #fef2f2;
+		color: #ef4444;
+		border-color: #fecaca;
+	}
+
+	/* Form Grids */
 	.form-grid-2 {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -542,6 +1120,14 @@
 	}
 
 	@media (max-width: 900px) {
+		.avatar-upload-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.avatar-preview-col {
+			align-items: flex-start;
+		}
+
 		.form-grid-2,
 		.form-grid-4 {
 			grid-template-columns: 1fr;

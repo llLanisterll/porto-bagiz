@@ -3,14 +3,17 @@
 	import { mockProfile } from '$lib/data/mockPortfolio';
 	import { ArrowUpRight, TrendingUp, Briefcase, Calendar, Download, Sparkles } from 'lucide-svelte';
 
-	let activeFilter = $state<'Semua' | 'Desain' | 'Bisnis' | 'Hybrid'>('Semua');
+	let activeFilter = $state<string>('Semua');
 
-	const filterTabs = [
+	const filterTabs = $derived([
 		{ id: 'Semua', label: 'Semua Karya' },
-		{ id: 'Desain', label: 'Desain Produk' },
-		{ id: 'Bisnis', label: 'Strategi Bisnis' },
-		{ id: 'Hybrid', label: 'Hybrid UX/Biz' }
-	] as const;
+		...portfolioStore.categories
+			.filter((c) => c.isActive)
+			.map((c) => ({
+				id: c.name,
+				label: c.name
+			}))
+	]);
 
 	const allPublishedProjects = $derived(
 		portfolioStore.projects.filter((p) => p.isPublished)

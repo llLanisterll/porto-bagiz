@@ -6,6 +6,7 @@
 	import {
 		LayoutDashboard,
 		FolderKanban,
+		Tags,
 		Briefcase,
 		Layers,
 		UserCheck,
@@ -61,6 +62,7 @@
 
 	const currentPageTitle = $derived.by(() => {
 		const path = page.url.pathname;
+		if (path.includes('/admin/kategori')) return 'Master Kategori Karya';
 		if (path.includes('/admin/karya')) return 'Karya & Studi Kasus';
 		if (path.includes('/admin/pengalaman')) return 'Pengalaman';
 		if (path.includes('/admin/keahlian')) return 'Keahlian & Spesialisasi';
@@ -135,14 +137,25 @@
 					<a
 						href="/admin/karya"
 						class="nav-link"
-						class:active={page.url.pathname.includes('/admin/karya')}
+						class:active={page.url.pathname === '/admin/karya' || page.url.pathname.startsWith('/admin/karya/')}
 					>
 						<FolderKanban size={18} class="nav-icon" />
 						<span class="nav-text">Karya & Proyek</span>
 						<span class="nav-count">{portfolioStore.projects.length}</span>
 					</a>
 
-					<!-- 2. Pengalaman -->
+					<!-- 2. Master Kategori -->
+					<a
+						href="/admin/kategori"
+						class="nav-link"
+						class:active={page.url.pathname.includes('/admin/kategori')}
+					>
+						<Tags size={18} class="nav-icon" />
+						<span class="nav-text">Master Kategori</span>
+						<span class="nav-count">{portfolioStore.categories.length}</span>
+					</a>
+
+					<!-- 3. Pengalaman -->
 					<a
 						href="/admin/pengalaman"
 						class="nav-link"
@@ -153,7 +166,7 @@
 						<span class="nav-count">{portfolioStore.experiences.length}</span>
 					</a>
 
-					<!-- 3. Keahlian & Spesialisasi -->
+					<!-- 4. Keahlian & Spesialisasi -->
 					<a
 						href="/admin/keahlian"
 						class="nav-link"
@@ -164,7 +177,7 @@
 						<span class="nav-count">{portfolioStore.skillPillars.length}</span>
 					</a>
 
-					<!-- 4. Profil & Tentang -->
+					<!-- 5. Profil & Tentang -->
 					<a
 						href="/admin/profil"
 						class="nav-link"
@@ -216,10 +229,18 @@
 			<div class="sidebar-footer">
 				<div class="user-card">
 					<div class="user-avatar">
-						<span>MB</span>
+						{#if portfolioStore.profile.avatar}
+							<img
+								src={portfolioStore.profile.avatar}
+								alt={portfolioStore.profile.name}
+								class="user-avatar-img"
+							/>
+						{:else}
+							<span>MB</span>
+						{/if}
 					</div>
 					<div class="user-info">
-						<span class="user-name">Muhammad Bagiz</span>
+						<span class="user-name">{portfolioStore.profile.name || 'Muhammad Bagiz'}</span>
 						<div class="user-badge-row">
 							<ShieldCheck size={11} />
 							<span>Lead Admin</span>
@@ -547,6 +568,15 @@
 		font-size: 12px;
 		font-weight: 700;
 		flex-shrink: 0;
+		overflow: hidden;
+		border: 1px solid rgba(10, 22, 40, 0.08);
+	}
+
+	.user-avatar-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
 	}
 
 	.user-info {

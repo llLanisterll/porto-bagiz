@@ -3,17 +3,20 @@ import {
 	mockProfile,
 	mockExperiences,
 	mockSkillPillars,
-	mockContactMessages
+	mockContactMessages,
+	mockCategories
 } from '$lib/data/mockPortfolio';
 import type {
 	Project,
 	UserProfile,
 	ExperienceItem,
 	SkillPillar,
-	ContactMessage
+	ContactMessage,
+	CategoryItem
 } from '$lib/types/portfolio';
 
 const STORAGE_KEY_PROJECTS = 'porto_bagiz_projects_v1';
+const STORAGE_KEY_CATEGORIES = 'porto_bagiz_categories_v1';
 const STORAGE_KEY_PROFILE = 'porto_bagiz_profile_v1';
 const STORAGE_KEY_EXPERIENCES = 'porto_bagiz_experiences_v1';
 const STORAGE_KEY_PILLARS = 'porto_bagiz_pillars_v1';
@@ -21,6 +24,7 @@ const STORAGE_KEY_MESSAGES = 'porto_bagiz_messages_v1';
 
 class PortfolioStore {
 	projects = $state<Project[]>(mockProjects);
+	categories = $state<CategoryItem[]>(mockCategories);
 	profile = $state<UserProfile>(mockProfile);
 	experiences = $state<ExperienceItem[]>(mockExperiences);
 	skillPillars = $state<SkillPillar[]>(mockSkillPillars);
@@ -41,6 +45,15 @@ class PortfolioStore {
 				const parsed = JSON.parse(savedProjects);
 				if (Array.isArray(parsed) && parsed.length > 0) {
 					this.projects = parsed;
+				}
+			}
+
+			// Categories
+			const savedCategories = localStorage.getItem(STORAGE_KEY_CATEGORIES);
+			if (savedCategories) {
+				const parsed = JSON.parse(savedCategories);
+				if (Array.isArray(parsed) && parsed.length > 0) {
+					this.categories = parsed;
 				}
 			}
 
@@ -87,6 +100,7 @@ class PortfolioStore {
 		if (typeof window === 'undefined') return;
 		try {
 			localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(this.projects));
+			localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(this.categories));
 			localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(this.profile));
 			localStorage.setItem(STORAGE_KEY_EXPERIENCES, JSON.stringify(this.experiences));
 			localStorage.setItem(STORAGE_KEY_PILLARS, JSON.stringify(this.skillPillars));
@@ -94,6 +108,56 @@ class PortfolioStore {
 		} catch (e) {
 			console.error('Error saving portfolio data to storage:', e);
 		}
+	}
+
+	// ==================== CATEGORY CRUD ====================
+	addCategory(newCat: Omit<CategoryItem, 'id'>) {
+		const id = `cat-${Date.now()}`;
+		const category: CategoryItem = {
+			...newCat,
+			id,
+			createdAt: newCat.createdAt || new Date().toISOString()
+		};
+		this.categories.push(category);
+		this.saveToStorage();
+		return category;
+	}
+
+	updateCategory(id: string, updates: Partial<CategoryItem>) {
+		const index = this.categories.findIndex((c) => c.id === id);
+		if (index !== -1) {
+			const oldName = this.categories[index].name;
+			this.categories[index] = { ...this.categories[index], ...updates };
+			// If category name updated, also update projects using this category
+			if (updates.name && updates.name !== oldName) {
+				this.projects.forEach((p) => {
+					if (p.category === oldName) {
+						p.category = updates.name!;
+					}
+				});
+			}
+			this.saveToStorage();
+			return this.categories[index];
+		}
+		return null;
+	}
+
+	deleteCategory(id: string) {
+		this.categories = this.categories.filter((c) => c.id !== id);
+		this.saveToStorage();
+	}
+
+	toggleCategoryActive(id: string) {
+		const c = this.categories.find((item) => item.id === id);
+		if (c) {
+			c.isActive = !c.isActive;
+			this.saveToStorage();
+		}
+	}
+
+	resetCategories() {
+		this.categories = [...mockCategories];
+		this.saveToStorage();
 	}
 
 	// ==================== PROFILE METHODS ====================
@@ -264,6 +328,7 @@ class PortfolioStore {
 	// ==================== RESET ====================
 	resetToDefaults() {
 		this.projects = [...mockProjects];
+		this.categories = [...mockCategories];
 		this.profile = { ...mockProfile };
 		this.experiences = [...mockExperiences];
 		this.skillPillars = [...mockSkillPillars];

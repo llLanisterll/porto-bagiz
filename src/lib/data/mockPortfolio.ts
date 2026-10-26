@@ -1,4 +1,37 @@
-import type { Project, Skill, VolunteerExperience, UserProfile } from '#lib/types/portfolio';
+import type { Project, Skill, VolunteerExperience, UserProfile, CategoryItem } from '#lib/types/portfolio';
+
+export const mockCategories: CategoryItem[] = [
+	{
+		id: 'cat-desain',
+		name: 'Desain',
+		slug: 'desain',
+		description: 'UI/UX, Design System Skalabel, Arsitektur Antarmuka & Aksesibilitas WCAG',
+		color: '#2563eb',
+		displayOrder: 1,
+		isActive: true,
+		createdAt: '2026-01-01T00:00:00Z'
+	},
+	{
+		id: 'cat-bisnis',
+		name: 'Bisnis',
+		slug: 'bisnis',
+		description: 'Strategi Produk, Validasi Pasar, Unit Economics, Model Monetisasi & SaaS',
+		color: '#10b981',
+		displayOrder: 2,
+		isActive: true,
+		createdAt: '2026-01-01T00:00:00Z'
+	},
+	{
+		id: 'cat-hybrid',
+		name: 'Hybrid',
+		slug: 'hybrid',
+		description: 'Sinergi Desain Antarmuka, Optimasi Konversi, Gamifikasi & Pertumbuhan Komersial',
+		color: '#8b5cf6',
+		displayOrder: 3,
+		isActive: true,
+		createdAt: '2026-01-01T00:00:00Z'
+	}
+];
 
 export const mockProfile: UserProfile = {
 	name: 'Muhammad Bagiz',

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { mockProfile } from '$lib/data/mockPortfolio';
+	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	import { ArrowUpRight, Sparkles } from 'lucide-svelte';
 
 	function scrollTo(e: MouseEvent, targetId: string) {
@@ -51,12 +51,12 @@
 
 				<!-- Giant Syne Title -->
 				<h1 class="hero-title wow fadeInUp">
-					{mockProfile.name}
+					{portfolioStore.profile.name}
 				</h1>
 
 				<!-- Subtitle Bio Description -->
 				<p class="intro-info wow fadeInUp">
-					{mockProfile.bio}
+					{portfolioStore.profile.bio}
 				</p>
 
 				<!-- Primary Action Buttons -->
@@ -71,7 +71,7 @@
 					</a>
 
 					<a
-						href={mockProfile.resumeUrl}
+						href={portfolioStore.profile.resumeUrl}
 						class="bttn bttn-secondary"
 						target="_blank"
 						rel="noopener"
@@ -96,22 +96,22 @@
 
 					<ul class="social-media">
 						<li>
-							<a href={mockProfile.socialLinks.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+							<a href={portfolioStore.profile.socialLinks?.linkedin || '#'} target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
 							</a>
 						</li>
 						<li>
-							<a href={mockProfile.socialLinks.dribbble} target="_blank" rel="noopener" aria-label="Dribbble" title="Dribbble">
+							<a href={portfolioStore.profile.socialLinks?.dribbble || '#'} target="_blank" rel="noopener" aria-label="Dribbble" title="Dribbble">
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/><path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/><path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/></svg>
 							</a>
 						</li>
 						<li>
-							<a href={mockProfile.socialLinks.behance} target="_blank" rel="noopener" aria-label="Behance" title="Behance">
+							<a href={portfolioStore.profile.socialLinks?.behance || '#'} target="_blank" rel="noopener" aria-label="Behance" title="Behance">
 								<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M7.8 13.4c-1.3 0-1.8.8-1.9 1.8h3.7c0-1-.6-1.8-1.8-1.8zm11.5-1.9h-4.3c0-.9.6-1.4 1.5-1.4.7 0 1.2.3 1.4.8h1.4c-.3-1.3-1.4-2-2.8-2-1.9 0-3 1.4-3 3.3s1.1 3.3 3.1 3.3c1.7 0 2.8-.9 3-2.5h-1.4c-.2.7-.8 1.1-1.6 1.1-1 0-1.6-.6-1.6-1.6h5.7c.1-.4.1-.7.1-1zm-1.8-3.4h-2.9v-.9h2.9v.9zM2.8 8h4.6c2.1 0 3.3 1 3.3 2.5 0 .9-.5 1.7-1.4 2.1 1.2.4 1.7 1.3 1.7 2.4 0 1.8-1.4 2.8-3.6 2.8H2.8V8zm2.4 3.7h2c.8 0 1.3-.4 1.3-1.1 0-.7-.5-1-1.3-1h-2v2.1zm0 4.2h2.2c.9 0 1.5-.4 1.5-1.2 0-.8-.6-1.2-1.5-1.2H5.2v2.4z"/></svg>
 							</a>
 						</li>
 						<li>
-							<a href={mockProfile.socialLinks.instagram} target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+							<a href={portfolioStore.profile.socialLinks?.instagram || '#'} target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
 							</a>
 						</li>
@@ -124,8 +124,8 @@
 				<div class="profile-pic-container">
 					<div class="profile-shape-bg">
 						<img
-							src={mockProfile.avatar}
-							alt={mockProfile.name}
+							src={portfolioStore.profile.avatar}
+							alt={portfolioStore.profile.name}
 							class="profile-img"
 							loading="eager"
 						/>

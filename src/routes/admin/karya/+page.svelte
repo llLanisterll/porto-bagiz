@@ -134,12 +134,20 @@
 		}
 	}
 
-	// Category counts
-	const categoryCounts = $derived({
-		Semua: portfolioStore.projects.length,
-		Desain: portfolioStore.projects.filter((p) => p.category === 'Desain').length,
-		Bisnis: portfolioStore.projects.filter((p) => p.category === 'Bisnis').length,
-		Hybrid: portfolioStore.projects.filter((p) => p.category === 'Hybrid').length
+	// Category counts & list
+	const filterCategories = $derived([
+		'Semua',
+		...portfolioStore.categories.map((c) => c.name)
+	]);
+
+	const categoryCounts = $derived.by(() => {
+		const counts: Record<string, number> = {
+			Semua: portfolioStore.projects.length
+		};
+		portfolioStore.categories.forEach((c) => {
+			counts[c.name] = portfolioStore.projects.filter((p) => p.category === c.name).length;
+		});
+		return counts;
 	});
 
 	// Filtered & Sorted project list
@@ -545,7 +553,7 @@
 
 			<!-- Category Pills -->
 			<div class="filter-group">
-				{#each ['Semua', 'Desain', 'Bisnis', 'Hybrid'] as cat}
+				{#each filterCategories as cat}
 					<button
 						class="cat-filter-btn"
 						class:active={categoryFilter === cat}
@@ -553,7 +561,7 @@
 					>
 						<span>{cat}</span>
 						<span class="cat-count">
-							{categoryCounts[cat as keyof typeof categoryCounts] || 0}
+							{categoryCounts[cat] ?? 0}
 						</span>
 					</button>
 				{/each}
@@ -1106,9 +1114,9 @@
 								<div class="form-group">
 									<label for="form-category" class="field-label">Kategori Karya *</label>
 									<select id="form-category" class="input-select" bind:value={formData.category}>
-										<option value="Desain">Desain (Product & UI/UX Design)</option>
-										<option value="Bisnis">Bisnis (Strategi, Growth & Riset)</option>
-										<option value="Hybrid">Hybrid (Desain + Analisis Bisnis)</option>
+										{#each portfolioStore.categories as cat}
+											<option value={cat.name}>{cat.name} {cat.description ? `— ${cat.description.slice(0, 42)}...` : ''}</option>
+										{/each}
 									</select>
 								</div>
 

@@ -1,5 +1,16 @@
-export type ProjectCategory = 'Desain' | 'Bisnis' | 'Hybrid';
-export type FilterCategory = 'Semua' | ProjectCategory;
+export type ProjectCategory = 'Desain' | 'Bisnis' | 'Hybrid' | string;
+export type FilterCategory = 'Semua' | string;
+
+export interface CategoryItem {
+	id: string;
+	name: string;
+	slug: string;
+	description?: string;
+	color: string;
+	displayOrder: number;
+	isActive: boolean;
+	createdAt?: string;
+}
 
 export type SkillCategory = 'Desain' | 'Bisnis';
 export type SkillLevel = 'Pemula' | 'Menengah' | 'Mahir' | 'Ahli';
