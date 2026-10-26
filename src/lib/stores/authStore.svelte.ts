@@ -55,6 +55,10 @@ class AuthStore {
 				const parsed = JSON.parse(saved);
 				if (parsed && parsed.email) {
 					this.user = parsed;
+					if (this.user && this.user.name === 'Muhammad baghiz') {
+						this.user.name = 'Muhammad Baghiz';
+						localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(this.user));
+					}
 					this.isAuthenticated = true;
 					return;
 				}

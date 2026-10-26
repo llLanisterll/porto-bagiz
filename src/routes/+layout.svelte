@@ -96,7 +96,7 @@
   <div class="container-preloader">
     <div class="animation-preloader">
       <div class="main-logo">
-        <h2>B<span class="txt-navy">a</span>giz</h2>
+        <h2>B<span class="txt-navy">a</span>ghiz</h2>
       </div>
     </div>
     <div class="loader-section section-left"></div>

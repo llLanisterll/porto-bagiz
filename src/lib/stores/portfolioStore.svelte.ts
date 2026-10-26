@@ -81,6 +81,10 @@ class PortfolioStore {
 			const savedProfile = localStorage.getItem(STORAGE_KEY_PROFILE);
 			if (savedProfile !== null) {
 				this.profile = JSON.parse(savedProfile);
+				if (this.profile && this.profile.name === 'Muhammad baghiz') {
+					this.profile.name = 'Muhammad Baghiz';
+					localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(this.profile));
+				}
 			} else {
 				this.profile = { ...mockProfile };
 				this.saveToStorage();

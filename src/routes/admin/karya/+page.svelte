@@ -2720,10 +2720,18 @@
 		display: flex;
 		border-bottom: 1px solid #e2e8f0;
 		background: #ffffff;
-		padding: 0 20px;
+		padding: 0 16px;
 		gap: 6px;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+	.modal-tabs::-webkit-scrollbar {
+		display: none;
 	}
 	.modal-tab-btn {
+		flex-shrink: 0;
+		white-space: nowrap;
 		display: inline-flex;
 		align-items: center;
 		gap: 7px;
@@ -3219,6 +3227,51 @@
 		}
 		.form-grid-2, .form-grid-3, .switches-grid, .metrics-grid {
 			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.stats-cards-row {
+			grid-template-columns: 1fr;
+		}
+		.page-header {
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.header-actions {
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.header-actions :global(.btn-primary) {
+			width: 100%;
+			justify-content: center;
+		}
+		.filter-bar {
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.modal-panel {
+			max-height: 94vh;
+			margin: 8px;
+			width: calc(100% - 16px);
+			border-radius: 16px;
+		}
+		.modal-header {
+			padding: 14px 16px;
+		}
+		.modal-footer {
+			padding: 12px 16px;
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.footer-buttons {
+			width: 100%;
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.footer-buttons button {
+			width: 100%;
+			justify-content: center;
 		}
 	}
 </style>

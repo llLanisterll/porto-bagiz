@@ -399,4 +399,20 @@
     border-color: #ffffff;
     transform: translateY(-4px);
   }
+
+  @media (max-width: 576px) {
+    .submit-bttn {
+      width: 100%;
+      justify-content: center;
+      padding: 15px 24px;
+    }
+    .contact-social-pills {
+      gap: 10px;
+    }
+    .contact-social-pills li a {
+      width: 46px;
+      height: 46px;
+      font-size: 14px;
+    }
+  }
 </style>

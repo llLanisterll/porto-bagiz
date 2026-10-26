@@ -570,11 +570,6 @@
     color: #ffffff;
   }
 
-  .nav-arrow {
-    font-size: 12px;
-    opacity: 0.6;
-  }
-
   /* Footer User Card */
   .sidebar-footer {
     padding: 14px;
@@ -845,6 +840,24 @@
 
     .live-indicator-pill {
       display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .crumb-root,
+    :global(.crumb-sep) {
+      display: none;
+    }
+    .crumb-current {
+      font-size: 13px;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .preview-site-btn {
+      padding: 5px 10px;
+      font-size: 11.5px;
     }
   }
 </style>

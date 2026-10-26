@@ -53,8 +53,9 @@
       <a class="logo" href="#home" onclick={(e) => scrollTo(e, "#home")}>
         {#if portfolioStore.profile.name}
           {@const parts = portfolioStore.profile.name.trim().split(" ")}
-          {@const lastName =
+          {@const rawLastName =
             parts.length > 1 ? parts[parts.length - 1] : parts[0]}
+          {@const lastName = rawLastName.charAt(0).toUpperCase() + rawLastName.slice(1)}
           <span>{lastName.slice(0, 1)}</span><span class="logo-accent"
             >{lastName.slice(1, 2)}</span
           ><span>{lastName.slice(2)}</span>

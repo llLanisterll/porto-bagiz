@@ -40,6 +40,15 @@ section[id] {
 	scroll-margin-top: 100px;
 }
 
+@media (max-width: 991px) {
+	html {
+		scroll-padding-top: 76px;
+	}
+	section[id] {
+		scroll-margin-top: 76px;
+	}
+}
+
 body {
 	font-family: var(--ff-manrope);
 	background-color: var(--clr-white);
@@ -275,6 +284,25 @@ img {
 	right: 0;
 }
 
+@media (max-width: 576px) {
+	.section-title {
+		gap: 14px;
+		margin-bottom: 16px;
+	}
+	.section-title h3 {
+		font-size: clamp(24px, 6vw, 32px);
+	}
+	.section-title span {
+		width: 48px;
+		max-width: 60px;
+	}
+	.section-title span::after {
+		width: 8px;
+		height: 8px;
+		top: -3px;
+	}
+}
+
 /* ==========================================================================
    PRELOADER (Textio Split Shutter Animation)
    ========================================================================== */
@@ -384,6 +412,15 @@ img {
 .progress-wrap:hover .progress-arrow {
 	transform: translateY(-2px);
 	color: var(--clr-accent);
+}
+
+@media (max-width: 576px) {
+	.progress-wrap {
+		bottom: 20px;
+		right: 20px;
+		width: 44px;
+		height: 44px;
+	}
 }
 
 /* ==========================================================================
@@ -681,6 +718,18 @@ img {
 	flex-wrap: wrap;
 	margin-bottom: 28px;
 }
+@media (max-width: 480px) {
+	.hero .btn-wrapper {
+		flex-direction: column;
+		align-items: stretch;
+		width: 100%;
+		gap: 12px;
+	}
+	.hero .btn-wrapper .bttn {
+		width: 100%;
+		padding: 14px 24px;
+	}
+}
 
 .hero-social-row {
 	display: flex;
@@ -884,7 +933,8 @@ img {
 	}
 }
 
-.about .year-exp-txt span {
+.about .year-exp-txt > span.exp-number,
+.about .year-exp-txt > span:first-child {
 	font-family: var(--ff-syne);
 	font-size: clamp(72px, 8.5vw, 120px);
 	font-weight: 700;

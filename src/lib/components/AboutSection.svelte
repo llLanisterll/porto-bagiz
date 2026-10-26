@@ -41,8 +41,8 @@
 			<div class="about-left-col wow fadeInLeft">
 				<div class="year-exp">
 					<div class="year-exp-txt">
-						<span>{portfolioStore.profile.stats?.[0]?.value || '4+'}</span>
-						<h4>{portfolioStore.profile.stats?.[0]?.label || 'Tahun'}<br />Pengalaman Teruji</h4>
+						<span class="exp-number">{portfolioStore.profile.stats?.[0]?.value || '4+'}</span>
+						<h4>{portfolioStore.profile.stats?.[0]?.label || 'Tahun Pengalaman'}</h4>
 					</div>
 				</div>
 

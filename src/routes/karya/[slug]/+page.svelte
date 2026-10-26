@@ -24,6 +24,17 @@
   <meta name="description" content={project.summary} />
 </svelte:head>
 
+<style>
+  :global(:root) {
+    --bg-dark: #f8fafc;
+    --text-white: #0a1628;
+    --text-body: #475569;
+    --text-light: #64748b;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+  }
+</style>
+
 <Navbar />
 
 <main

@@ -1304,4 +1304,24 @@
       align-items: stretch;
     }
   }
+
+  @media (max-width: 576px) {
+    .header-actions {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .header-actions .btn-preview-link,
+    .header-actions .btn-primary {
+      width: 100%;
+      justify-content: center;
+    }
+    .form-card {
+      padding: 20px 16px;
+    }
+    .avatar-preview-container {
+      width: 120px;
+      height: 120px;
+    }
+  }
 </style>

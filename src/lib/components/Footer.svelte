@@ -126,4 +126,21 @@
   .back-to-top:hover {
     color: #ffffff;
   }
+
+  @media (max-width: 768px) {
+    .footer-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      padding-bottom: 30px;
+    }
+    .footer-links {
+      gap: 16px;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
 </style>

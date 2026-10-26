@@ -635,4 +635,20 @@
 		color: var(--clr-white);
 		border-color: var(--clr-navy);
 	}
+
+	@media (max-width: 576px) {
+		.exp-cta-card {
+			padding: 24px 20px;
+		}
+		.cta-actions {
+			width: 100%;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 12px;
+		}
+		.cta-actions :global(.bttn) {
+			width: 100%;
+			justify-content: center;
+		}
+	}
 </style>

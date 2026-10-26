@@ -271,6 +271,28 @@
 		border: 1px solid rgba(10, 22, 40, 0.06);
 		flex-wrap: wrap;
 	}
+	@media (max-width: 768px) {
+		.filter-bar-wrap {
+			overflow-x: auto;
+			padding-bottom: 6px;
+			-webkit-overflow-scrolling: touch;
+			margin-left: -4px;
+			margin-right: -4px;
+			padding-left: 4px;
+			padding-right: 4px;
+			scrollbar-width: none;
+		}
+		.filter-bar-wrap::-webkit-scrollbar {
+			display: none;
+		}
+		.filter-pills-nav {
+			flex-wrap: nowrap;
+			white-space: nowrap;
+		}
+		.filter-tab-btn {
+			flex-shrink: 0;
+		}
+	}
 	.filter-tab-btn {
 		padding: 8px 18px;
 		border-radius: 999px;
