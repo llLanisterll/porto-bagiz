@@ -39,7 +39,8 @@
 		Briefcase,
 		User,
 		Calendar,
-		TrendingUp
+		TrendingUp,
+		UploadCloud
 	} from 'lucide-svelte';
 
 	// Filters and Views
@@ -73,6 +74,114 @@
 
 	// Delete confirmation modal state
 	let isDeleteModalOpen = $state(false);
+
+	// Cover Image Upload State & Handlers
+	let coverFileInputRef: HTMLInputElement | null = $state(null);
+	let isCoverDragging = $state(false);
+	let coverUploadError = $state('');
+	let isCoverCompressing = $state(false);
+
+	function processCoverFile(file: File) {
+		coverUploadError = '';
+		if (!file.type.startsWith('image/')) {
+			coverUploadError = 'Format file tidak didukung. Harap pilih file gambar (PNG, JPG, JPEG, atau WebP).';
+			return;
+		}
+
+		if (file.size > 12 * 1024 * 1024) {
+			coverUploadError = 'Ukuran file terlalu besar (maksimal 12 MB). Harap pilih gambar dengan resolusi lebih ringkas.';
+			return;
+		}
+
+		isCoverCompressing = true;
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			const rawDataUrl = e.target?.result as string;
+			const img = new Image();
+			img.onload = () => {
+				try {
+					// Resize & compress to optimize storage (max 1400px width/height)
+					const maxDim = 1400;
+					let width = img.width;
+					let height = img.height;
+					if (width > maxDim || height > maxDim) {
+						if (width > height) {
+							height = Math.round((height * maxDim) / width);
+							width = maxDim;
+						} else {
+							width = Math.round((width * maxDim) / height);
+							height = maxDim;
+						}
+					}
+					const canvas = document.createElement('canvas');
+					canvas.width = width;
+					canvas.height = height;
+					const ctx = canvas.getContext('2d');
+					if (ctx) {
+						ctx.drawImage(img, 0, 0, width, height);
+						const compressed = canvas.toDataURL('image/jpeg', 0.85);
+						formData.thumbnail = compressed;
+					} else {
+						formData.thumbnail = rawDataUrl;
+					}
+					showToast('Gambar cover karya berhasil diunggah!', 'success');
+				} catch (err) {
+					console.error('Compress error:', err);
+					formData.thumbnail = rawDataUrl;
+				} finally {
+					isCoverCompressing = false;
+				}
+			};
+			img.onerror = () => {
+				isCoverCompressing = false;
+				coverUploadError = 'Gagal memproses gambar. Silakan coba file gambar lain.';
+			};
+			img.src = rawDataUrl;
+		};
+		reader.onerror = () => {
+			isCoverCompressing = false;
+			coverUploadError = 'Terjadi kesalahan saat membaca file gambar.';
+		};
+		reader.readAsDataURL(file);
+	}
+
+	function handleCoverFileInputChange(e: Event) {
+		const target = e.target as HTMLInputElement;
+		if (target.files && target.files[0]) {
+			processCoverFile(target.files[0]);
+			target.value = '';
+		}
+	}
+
+	function handleCoverDragOver(e: DragEvent) {
+		e.preventDefault();
+		isCoverDragging = true;
+	}
+
+	function handleCoverDragLeave(e: DragEvent) {
+		e.preventDefault();
+		isCoverDragging = false;
+	}
+
+	function handleCoverDrop(e: DragEvent) {
+		e.preventDefault();
+		isCoverDragging = false;
+		if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+			processCoverFile(e.dataTransfer.files[0]);
+		}
+	}
+
+	function triggerCoverFilePicker() {
+		if (coverFileInputRef) {
+			coverFileInputRef.click();
+		}
+	}
+
+	function removeCoverImage() {
+		formData.thumbnail = '';
+		coverUploadError = '';
+		showToast('Gambar cover karya dikosongkan.', 'info');
+	}
 	let projectToDelete: Project | null = $state(null);
 
 	// Reset confirmation modal state
@@ -201,13 +310,14 @@
 		isEditMode = false;
 		currentEditId = null;
 		activeFormTab = 'dasar';
+		coverUploadError = '';
 		formData = {
 			title: '',
 			slug: '',
 			subtitle: '',
 			category: portfolioStore.categories[0]?.name || 'Umum',
 			summary: '',
-			thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+			thumbnail: '',
 			role: 'Lead Product Designer',
 			duration: '3 Bulan',
 			toolsInput: 'Figma, Design System, Prototyping',
@@ -236,6 +346,7 @@
 		isEditMode = true;
 		currentEditId = project.id;
 		activeFormTab = 'dasar';
+		coverUploadError = '';
 		formData = {
 			title: project.title,
 			slug: project.slug,
@@ -294,14 +405,20 @@
 			metrics.push({ label: formData.metric2Label, value: formData.metric2Value });
 		}
 
+		if (!formData.thumbnail) {
+			activeFormTab = 'media';
+			showToast('Harap unggah gambar cover karya terlebih dahulu.', 'error');
+			return;
+		}
+
 		const projectPayload = {
 			title: formData.title,
 			slug: formData.slug || generateSlug(formData.title),
 			subtitle: formData.subtitle,
 			category: formData.category,
 			summary: formData.summary,
-			thumbnail: formData.thumbnail || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-			images: [formData.thumbnail || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80'],
+			thumbnail: formData.thumbnail,
+			images: [formData.thumbnail],
 			role: formData.role,
 			duration: formData.duration,
 			tools: tools.length > 0 ? tools : ['Figma'],
@@ -1194,16 +1311,107 @@
 						<div class="tab-pane">
 							<div class="media-preview-section">
 								<div class="media-input-col">
+									<!-- Cover Image Upload Field -->
 									<div class="form-group">
-										<label for="form-thumbnail" class="field-label">URL Cover / Thumbnail (HTTPS)</label>
+										<label for="cover-file-input" class="field-label">
+											Unggah Gambar Cover Karya
+											<span class="required-indicator">*</span>
+										</label>
+
+										<!-- Hidden File Input -->
 										<input
-											id="form-thumbnail"
-											type="url"
-											class="input-text"
-											bind:value={formData.thumbnail}
-											placeholder="https://images.unsplash.com/..."
+											id="cover-file-input"
+											type="file"
+											accept="image/png, image/jpeg, image/jpg, image/webp"
+											class="sr-only"
+											bind:this={coverFileInputRef}
+											onchange={handleCoverFileInputChange}
 										/>
-										<span class="field-hint">Gunakan tautan gambar resolusi tinggi (16:9 disarankan).</span>
+
+										{#if coverUploadError}
+											<div class="cover-error-alert" role="alert">
+												<AlertTriangle size={15} />
+												<span>{coverUploadError}</span>
+											</div>
+										{/if}
+
+										<!-- Upload Dropzone -->
+										<div
+											class="cover-dropzone"
+											class:dragging={isCoverDragging}
+											class:has-file={Boolean(formData.thumbnail)}
+											ondragover={handleCoverDragOver}
+											ondragleave={handleCoverDragLeave}
+											ondrop={handleCoverDrop}
+											role="button"
+											tabindex="0"
+											onclick={triggerCoverFilePicker}
+											onkeydown={(e) => {
+												if (e.key === 'Enter' || e.key === ' ') {
+													e.preventDefault();
+													triggerCoverFilePicker();
+												}
+											}}
+										>
+											{#if isCoverCompressing}
+												<div class="dropzone-loading">
+													<div class="loading-spinner"></div>
+													<span class="loading-text">Memproses & mengompresi gambar...</span>
+												</div>
+											{:else if formData.thumbnail}
+												<div class="dropzone-preview-wrap">
+													<div class="preview-mini-thumb">
+														<img src={formData.thumbnail} alt="Cover Preview" class="mini-thumb-img" />
+													</div>
+													<div class="preview-info-col">
+														<div class="preview-badge-status">
+															<CheckCircle2 size={13} />
+															<span>Gambar Cover Terpilih</span>
+														</div>
+														<div class="preview-hint-actions">
+															Klik untuk ganti atau seret file baru ke sini
+														</div>
+													</div>
+													<button
+														type="button"
+														class="btn-remove-cover"
+														title="Hapus gambar cover"
+														onclick={(e) => {
+															e.stopPropagation();
+															removeCoverImage();
+														}}
+													>
+														<Trash2 size={14} />
+														<span>Hapus</span>
+													</button>
+												</div>
+											{:else}
+												<div class="dropzone-empty-wrap">
+													<div class="dropzone-icon-circle">
+														<UploadCloud size={22} />
+													</div>
+													<div class="dropzone-text-group">
+														<div class="dropzone-primary-text">
+															<strong>Pilih file gambar cover</strong> atau seret ke sini
+														</div>
+														<div class="dropzone-sub-text">
+															PNG, JPG, JPEG, WebP (Rasio 16:9 disarankan)
+														</div>
+													</div>
+													<button
+														type="button"
+														class="btn-browse-file"
+														onclick={(e) => {
+															e.stopPropagation();
+															triggerCoverFilePicker();
+														}}
+													>
+														<UploadCloud size={13} />
+														<span>Jelajahi Gambar</span>
+													</button>
+												</div>
+											{/if}
+										</div>
 									</div>
 
 									<div class="form-group">
@@ -1234,15 +1442,19 @@
 								<div class="live-preview-box">
 									<div class="preview-header-label">Pratinjau Cover Visual</div>
 									<div class="preview-img-frame">
-										<img
-											src={formData.thumbnail || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80'}
-											alt="Thumbnail preview"
-											class="preview-img"
-											onerror={(e) => {
-												(e.currentTarget as HTMLImageElement).src =
-													'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80';
-											}}
-										/>
+										{#if formData.thumbnail}
+											<img
+												src={formData.thumbnail}
+												alt="Thumbnail preview"
+												class="preview-img"
+											/>
+										{:else}
+											<div class="preview-empty-state">
+												<ImageIcon size={32} class="empty-preview-icon" />
+												<span class="empty-preview-label">Belum ada cover diunggah</span>
+												<span class="empty-preview-hint">Silakan unggah gambar di samping</span>
+											</div>
+										{/if}
 										<div class="preview-overlay">
 											<span class="cat-pill {formData.category.toLowerCase()}">
 												{formData.category}
@@ -2951,6 +3163,227 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	/* Cover Image Upload Component */
+	.cover-dropzone {
+		border: 2px dashed #cbd5e1;
+		border-radius: 12px;
+		background: #f8fafc;
+		padding: 16px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 130px;
+		outline: none;
+	}
+	.cover-dropzone:hover {
+		border-color: #3b82f6;
+		background: #f1f5f9;
+	}
+	.cover-dropzone.dragging {
+		border-color: #2563eb;
+		background: #eff6ff;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+	}
+	.cover-dropzone.has-file {
+		border-style: solid;
+		border-color: #bfdbfe;
+		background: #eff6ff;
+		padding: 12px 14px;
+	}
+
+	.dropzone-empty-wrap {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 6px;
+	}
+	.dropzone-icon-circle {
+		width: 42px;
+		height: 42px;
+		border-radius: 50%;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		color: #2563eb;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+	}
+	.dropzone-text-group {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.dropzone-primary-text {
+		font-size: 13px;
+		color: #334155;
+	}
+	.dropzone-primary-text strong {
+		color: #2563eb;
+	}
+	.dropzone-sub-text {
+		font-size: 11px;
+		color: #64748b;
+	}
+	.btn-browse-file {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		margin-top: 4px;
+		padding: 5px 12px;
+		font-size: 11.5px;
+		font-weight: 600;
+		color: #2563eb;
+		background: #ffffff;
+		border: 1px solid #bfdbfe;
+		border-radius: 7px;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+	.btn-browse-file:hover {
+		background: #2563eb;
+		color: #ffffff;
+		border-color: #2563eb;
+	}
+
+	.dropzone-preview-wrap {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		width: 100%;
+	}
+	.preview-mini-thumb {
+		width: 68px;
+		height: 48px;
+		border-radius: 8px;
+		overflow: hidden;
+		flex-shrink: 0;
+		border: 1px solid #bfdbfe;
+		background: #0f172a;
+	}
+	.mini-thumb-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.preview-info-col {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.preview-badge-status {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 12.5px;
+		font-weight: 700;
+		color: #1e40af;
+	}
+	.preview-hint-actions {
+		font-size: 11px;
+		color: #64748b;
+	}
+	.btn-remove-cover {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		padding: 6px 10px;
+		font-size: 11.5px;
+		font-weight: 600;
+		color: #ef4444;
+		background: #ffffff;
+		border: 1px solid #fecaca;
+		border-radius: 7px;
+		cursor: pointer;
+		transition: all 0.15s ease;
+		flex-shrink: 0;
+	}
+	.btn-remove-cover:hover {
+		background: #fef2f2;
+		border-color: #ef4444;
+	}
+
+	.cover-error-alert {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 12px;
+		font-size: 12px;
+		color: #b91c1c;
+		background: #fef2f2;
+		border: 1px solid #fecaca;
+		border-radius: 8px;
+		margin-bottom: 8px;
+	}
+
+	.dropzone-loading {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		color: #2563eb;
+		font-size: 12.5px;
+		font-weight: 600;
+	}
+	.loading-spinner {
+		width: 18px;
+		height: 18px;
+		border: 2px solid #bfdbfe;
+		border-top-color: #2563eb;
+		border-radius: 50%;
+		animation: spin 0.8s linear infinite;
+	}
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
+
+	.preview-empty-state {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 4px;
+		color: #94a3b8;
+		padding: 16px;
+		text-align: center;
+		background: #1e293b;
+	}
+	:global(.empty-preview-icon) {
+		color: #64748b;
+		margin-bottom: 2px;
+	}
+	.empty-preview-label {
+		font-size: 12px;
+		font-weight: 600;
+		color: #cbd5e1;
+	}
+	.empty-preview-hint {
+		font-size: 10.5px;
+		color: #64748b;
+	}
+	.required-indicator {
+		color: #ef4444;
+		margin-left: 2px;
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
 	}
 
 	/* Switches Grid */
