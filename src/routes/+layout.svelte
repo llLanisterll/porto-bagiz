@@ -1,123 +1,132 @@
 <script lang="ts">
-	import './layout.css';
-	import type { LayoutProps } from './$types';
-	import { onMount } from 'svelte';
-	import { ArrowUp } from 'lucide-svelte';
+  import "./layout.css";
+  import type { LayoutProps } from "./$types";
+  import { onMount } from "svelte";
+  import { ArrowUp } from "lucide-svelte";
 
-	let { children }: LayoutProps = $props();
+  let { children }: LayoutProps = $props();
 
-	let loaded = $state(false);
-	let scrollProgress = $state(0);
-	let isProgressActive = $state(false);
+  let loaded = $state(false);
+  let scrollProgress = $state(0);
+  let isProgressActive = $state(false);
 
-	onMount(() => {
-		// Preloader dismiss
-		const timer = setTimeout(() => {
-			loaded = true;
-		}, 750);
+  onMount(() => {
+    // Preloader dismiss
+    const timer = setTimeout(() => {
+      loaded = true;
+    }, 750);
 
-		// Circular scroll progress calculation
-		function handleScroll() {
-			const scrollTop = window.scrollY || document.documentElement.scrollTop;
-			const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-			const progress = docHeight > 0 ? (scrollTop / docHeight) * 307.919 : 0;
-			scrollProgress = Math.max(0, 307.919 - progress);
-			isProgressActive = scrollTop > 250;
-		}
+    // Circular scroll progress calculation
+    function handleScroll() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 307.919 : 0;
+      scrollProgress = Math.max(0, 307.919 - progress);
+      isProgressActive = scrollTop > 250;
+    }
 
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
-		// Intersection Observer for Textio WOW animations
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('animated');
-						observer.unobserve(entry.target);
-					}
-				});
-			},
-			{ threshold: 0.01, rootMargin: '120px 0px 50px 0px' }
-		);
+    // Intersection Observer for Textio WOW animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animated");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.01, rootMargin: "120px 0px 50px 0px" },
+    );
 
-		function observeWow() {
-			document.querySelectorAll('.wow:not(.animated)').forEach((el) => observer.observe(el));
-		}
+    function observeWow() {
+      document
+        .querySelectorAll(".wow:not(.animated)")
+        .forEach((el) => observer.observe(el));
+    }
 
-		observeWow();
-		setTimeout(observeWow, 400);
-		setTimeout(observeWow, 1000);
+    observeWow();
+    setTimeout(observeWow, 400);
+    setTimeout(observeWow, 1000);
 
-		// MutationObserver to observe newly rendered/mounted .wow elements
-		const mutationObserver = new MutationObserver(() => {
-			observeWow();
-		});
-		mutationObserver.observe(document.body, { childList: true, subtree: true });
+    // MutationObserver to observe newly rendered/mounted .wow elements
+    const mutationObserver = new MutationObserver(() => {
+      observeWow();
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
 
-		// Safety fallback: ensure any element currently in or near viewport is animated
-		const safetyTimer = setTimeout(() => {
-			document.querySelectorAll('.wow:not(.animated)').forEach((el) => {
-				const rect = el.getBoundingClientRect();
-				if (rect.top < window.innerHeight + 300) {
-					el.classList.add('animated');
-				}
-			});
-		}, 1500);
+    // Safety fallback: ensure any element currently in or near viewport is animated
+    const safetyTimer = setTimeout(() => {
+      document.querySelectorAll(".wow:not(.animated)").forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 300) {
+          el.classList.add("animated");
+        }
+      });
+    }, 1500);
 
-		return () => {
-			clearTimeout(timer);
-			clearTimeout(safetyTimer);
-			window.removeEventListener('scroll', handleScroll);
-			observer.disconnect();
-			mutationObserver.disconnect();
-		};
-	});
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(safetyTimer);
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
+  });
 
-	function scrollToTop() {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	}
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 </script>
 
 <svelte:head>
-	<title>Muhammad Bagiz • Lead Product Designer & Business Strategist</title>
-	<meta
-		name="description"
-		content="Portofolio Muhammad Bagiz — Lead Product Designer & Business Strategist. Menghubungkan estetika antarmuka dengan dampak strategi bisnis terukur."
-	/>
+  <title>Muhammad baghiz • Lead Product Designer & Business Strategist</title>
+  <meta
+    name="description"
+    content="Portofolio Muhammad baghiz — Lead Product Designer & Business Strategist. Menghubungkan estetika antarmuka dengan dampak strategi bisnis terukur."
+  />
 </svelte:head>
 
 <!-- Textio Split Curtain Preloader -->
 <div id="preloader" class:loaded>
-	<div class="container-preloader">
-		<div class="animation-preloader">
-			<div class="main-logo">
-				<h2>B<span class="txt-navy">a</span>giz</h2>
-			</div>
-		</div>
-		<div class="loader-section section-left"></div>
-		<div class="loader-section section-right"></div>
-	</div>
+  <div class="container-preloader">
+    <div class="animation-preloader">
+      <div class="main-logo">
+        <h2>B<span class="txt-navy">a</span>giz</h2>
+      </div>
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+  </div>
 </div>
 
 <!-- Textio Signature Circular Progress Bar (.progress-wrap) -->
 <button
-	type="button"
-	class="progress-wrap"
-	class:active-progress={isProgressActive}
-	onclick={scrollToTop}
-	title="Kembali ke atas"
-	aria-label="Kembali ke atas"
+  type="button"
+  class="progress-wrap"
+  class:active-progress={isProgressActive}
+  onclick={scrollToTop}
+  title="Kembali ke atas"
+  aria-label="Kembali ke atas"
 >
-	<svg class="progress-circle" width="100%" height="100%" viewBox="-1 -1 102 102">
-		<path
-			d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
-			style="stroke-dasharray: 307.919, 307.919; stroke-dashoffset: {scrollProgress};"
-		></path>
-	</svg>
-	<span class="progress-arrow">
-		<ArrowUp size={16} />
-	</span>
+  <svg
+    class="progress-circle"
+    width="100%"
+    height="100%"
+    viewBox="-1 -1 102 102"
+  >
+    <path
+      d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
+      style="stroke-dasharray: 307.919, 307.919; stroke-dashoffset: {scrollProgress};"
+    ></path>
+  </svg>
+  <span class="progress-arrow">
+    <ArrowUp size={16} />
+  </span>
 </button>
 
 {@render children()}

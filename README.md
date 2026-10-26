@@ -1,12 +1,13 @@
-# Muhammad Bagiz — Portfolio & Admin CMS
+# Muhammad baghiz — Portfolio & Admin CMS
 
-Website portofolio profesional dan Admin Content Management System (CMS) untuk **Muhammad Bagiz** (Lead UX/UI Designer & Business Strategist).
+Website portofolio profesional dan Admin Content Management System (CMS) untuk **Muhammad baghiz** (Lead UX/UI Designer & Business Strategist).
 
 ---
 
 ## 🚀 Fitur Utama
 
 ### 1. **Public Portfolio**
+
 - **Hero Section**: Headline profesional, statistik karir, dan CTA interaktif.
 - **Profil & Filosofi**: Kisah karir, pendekatan desain human-centric, dan prinsip kerja.
 - **Karya Terpilih (Portfolio Showcase)**: Galeri proyek UX/UI dengan filter kategori, modal detail studi kasus, dan galeri interaktif.
@@ -15,6 +16,7 @@ Website portofolio profesional dan Admin Content Management System (CMS) untuk *
 - **Kontak & Inquiry**: Form kontak terintegrasi dan direct channels (LinkedIn, Email, WhatsApp).
 
 ### 2. **Admin CMS Dashboard (`/admin`)**
+
 - **Sistem Autentikasi**: Proteksi login admin dengan session persistence (`localStorage`).
 - **Sidebar Navigasi Moderen**: Tab navigasi terorganisir untuk tiap bagian dinamis:
   - 📊 **Ringkasan**: Overview metrik, status sistem, dan aksi cepat.
@@ -39,20 +41,24 @@ Website portofolio profesional dan Admin Content Management System (CMS) untuk *
 ## 💻 Panduan Instalasi & Menjalankan Lokal
 
 1. **Clone Repository**:
+
    ```bash
-   git clone https://github.com/llLanisterll/porto-bagiz.git
-   cd "Porto Bagiz"
+   git clone https://github.com/llLanisterll/porto-baghiz.git
+   cd "Porto baghiz"
    ```
 
 2. **Install Dependensi**:
+
    ```bash
    npm install
    ```
 
 3. **Jalankan Development Server**:
+
    ```bash
    npm run dev
    ```
+
    Akses website di `http://localhost:5173` dan dashboard admin di `http://localhost:5173/admin`.
 
 4. **Build untuk Production**:
@@ -63,6 +69,6 @@ Website portofolio profesional dan Admin Content Management System (CMS) untuk *
 ---
 
 ## 👤 Author & Lisensi
-- **Muhammad Bagiz** — Lead UX/UI Designer & Business Strategist
-- Developed with SvelteKit & Modern Web Design Standards.
 
+- **Muhammad baghiz** — Lead UX/UI Designer & Business Strategist
+- Developed with SvelteKit & Modern Web Design Standards.

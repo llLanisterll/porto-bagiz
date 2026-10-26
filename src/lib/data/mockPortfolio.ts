@@ -12,7 +12,7 @@ import type {
 export const mockCategories: CategoryItem[] = [];
 
 export const mockProfile: UserProfile = {
-	name: 'Muhammad Bagiz',
+	name: 'Muhammad baghiz',
 	tagline: 'Bridging Design Aesthetics with Business Impact',
 	headline: 'Product Designer & Business Strategist',
 	bio: 'Menggabungkan keahlian desain antarmuka berbasis empati pengguna dengan analisis strategi bisnis yang terukur untuk melahirkan produk digital bernilai tinggi.',
@@ -32,12 +32,12 @@ export const mockProfile: UserProfile = {
 		{ label: 'Total Pendanaan Diakuisisi', value: '$0', description: 'Dukungan Riset & Pitch Deck' }
 	],
 	socialLinks: {
-		email: 'bagiz.design@gmail.com',
-		linkedin: 'https://linkedin.com/in/bagiz-product',
-		behance: 'https://behance.net/bagizdesign',
-		dribbble: 'https://dribbble.com/bagiz',
-		github: 'https://github.com/bagiz-product',
-		instagram: 'https://instagram.com/bagiz.design'
+		email: 'baghiz.design@gmail.com',
+		linkedin: 'https://linkedin.com/in/baghiz-product',
+		behance: 'https://behance.net/baghizdesign',
+		dribbble: 'https://dribbble.com/baghiz',
+		github: 'https://github.com/baghiz-product',
+		instagram: 'https://instagram.com/baghiz.design'
 	},
 	education: []
 };

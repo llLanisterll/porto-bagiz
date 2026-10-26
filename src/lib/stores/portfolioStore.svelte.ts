@@ -15,12 +15,12 @@ import type {
 	CategoryItem
 } from '$lib/types/portfolio';
 
-const STORAGE_KEY_PROJECTS = 'porto_bagiz_projects_v2';
-const STORAGE_KEY_CATEGORIES = 'porto_bagiz_categories_v2';
-const STORAGE_KEY_PROFILE = 'porto_bagiz_profile_v2';
-const STORAGE_KEY_EXPERIENCES = 'porto_bagiz_experiences_v2';
-const STORAGE_KEY_PILLARS = 'porto_bagiz_pillars_v2';
-const STORAGE_KEY_MESSAGES = 'porto_bagiz_messages_v2';
+const STORAGE_KEY_PROJECTS = 'porto_baghiz_projects_v2';
+const STORAGE_KEY_CATEGORIES = 'porto_baghiz_categories_v2';
+const STORAGE_KEY_PROFILE = 'porto_baghiz_profile_v2';
+const STORAGE_KEY_EXPERIENCES = 'porto_baghiz_experiences_v2';
+const STORAGE_KEY_PILLARS = 'porto_baghiz_pillars_v2';
+const STORAGE_KEY_MESSAGES = 'porto_baghiz_messages_v2';
 
 class PortfolioStore {
 	projects = $state<Project[]>(mockProjects);
@@ -40,17 +40,17 @@ class PortfolioStore {
 	loadFromStorage() {
 		try {
 			// One-time cleanup of v1 dummy data if migrating
-			if (localStorage.getItem('porto_bagiz_projects_v1') !== null) {
-				localStorage.removeItem('porto_bagiz_projects_v1');
-				localStorage.removeItem('porto_bagiz_categories_v1');
-				localStorage.removeItem('porto_bagiz_experiences_v1');
-				localStorage.removeItem('porto_bagiz_pillars_v1');
-				localStorage.removeItem('porto_bagiz_messages_v1');
-				const oldProf = localStorage.getItem('porto_bagiz_profile_v1');
+			if (localStorage.getItem('porto_baghiz_projects_v1') !== null) {
+				localStorage.removeItem('porto_baghiz_projects_v1');
+				localStorage.removeItem('porto_baghiz_categories_v1');
+				localStorage.removeItem('porto_baghiz_experiences_v1');
+				localStorage.removeItem('porto_baghiz_pillars_v1');
+				localStorage.removeItem('porto_baghiz_messages_v1');
+				const oldProf = localStorage.getItem('porto_baghiz_profile_v1');
 				if (oldProf && !localStorage.getItem(STORAGE_KEY_PROFILE)) {
 					localStorage.setItem(STORAGE_KEY_PROFILE, oldProf);
 				}
-				localStorage.removeItem('porto_bagiz_profile_v1');
+				localStorage.removeItem('porto_baghiz_profile_v1');
 			}
 
 			// Projects

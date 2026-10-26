@@ -1,4 +1,5 @@
-const STORAGE_KEY_AUTH = 'porto_bagiz_auth_v1';
+const STORAGE_KEY_AUTH = 'porto_baghiz_auth_v1';
+const STORAGE_KEY_CREDS = 'porto_baghiz_admin_creds_v1';
 
 export interface AdminUser {
 	email: string;
@@ -6,15 +7,26 @@ export interface AdminUser {
 	role: 'superadmin' | 'editor';
 }
 
+export interface AdminCredentials {
+	email: string;
+	password: string;
+}
+
+const DEFAULT_CREDS: AdminCredentials = {
+	email: 'admin@baghiz.design',
+	password: 'admin123'
+};
+
 const DEFAULT_ADMIN: AdminUser = {
-	email: 'admin@bagiz.design',
-	name: 'Muhammad Bagiz',
+	email: 'admin@baghiz.design',
+	name: 'Muhammad baghiz',
 	role: 'superadmin'
 };
 
 class AuthStore {
 	isAuthenticated = $state(true);
 	user = $state<AdminUser | null>(DEFAULT_ADMIN);
+	credentials = $state<AdminCredentials>(DEFAULT_CREDS);
 	initialized = $state(false);
 
 	constructor() {
@@ -25,6 +37,19 @@ class AuthStore {
 
 	loadFromStorage() {
 		try {
+			// 1. Load custom credentials if already saved
+			const savedCreds = localStorage.getItem(STORAGE_KEY_CREDS);
+			if (savedCreds) {
+				const parsedCreds = JSON.parse(savedCreds);
+				if (parsedCreds && parsedCreds.email && parsedCreds.password) {
+					this.credentials = parsedCreds;
+				}
+			} else {
+				this.credentials = { ...DEFAULT_CREDS };
+				localStorage.setItem(STORAGE_KEY_CREDS, JSON.stringify(this.credentials));
+			}
+
+			// 2. Load active session
 			const saved = localStorage.getItem(STORAGE_KEY_AUTH);
 			if (saved) {
 				const parsed = JSON.parse(saved);
@@ -34,10 +59,15 @@ class AuthStore {
 					return;
 				}
 			}
-			// Default to demo admin so dashboard is always immediately usable
-			this.user = DEFAULT_ADMIN;
+
+			// Default to active session
+			this.user = {
+				email: this.credentials.email,
+				name: 'Muhammad baghiz',
+				role: 'superadmin'
+			};
 			this.isAuthenticated = true;
-			localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(DEFAULT_ADMIN));
+			localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(this.user));
 		} catch (e) {
 			console.error('Error loading auth from storage:', e);
 			this.user = DEFAULT_ADMIN;
@@ -49,29 +79,20 @@ class AuthStore {
 
 	login(email: string, password: string): { success: boolean; message?: string } {
 		const cleanEmail = email.trim().toLowerCase();
-		// Demo credentials or any registered admin
-		if (
-			(cleanEmail === 'admin@bagiz.design' || cleanEmail === 'bagiz.design@gmail.com') &&
-			password.length >= 6
-		) {
-			const user: AdminUser = {
-				email: cleanEmail,
-				name: 'Muhammad Bagiz',
-				role: 'superadmin'
-			};
-			this.user = user;
-			this.isAuthenticated = true;
-			if (typeof window !== 'undefined') {
-				localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(user));
-			}
-			return { success: true };
-		}
+		const currentCredEmail = (this.credentials.email || '').trim().toLowerCase();
+		const currentPassword = this.credentials.password;
 
-		// Also allow quick test login if password is at least 6 characters
-		if (cleanEmail.includes('@') && password === 'admin123') {
+		// Match against configured admin credentials (or fallback backup credentials)
+		const isEmailMatch =
+			cleanEmail === currentCredEmail ||
+			cleanEmail === 'admin@baghiz.design' ||
+			cleanEmail === 'baghiz.design@gmail.com';
+		const isPasswordMatch = password === currentPassword || password === 'admin123';
+
+		if (isEmailMatch && isPasswordMatch) {
 			const user: AdminUser = {
 				email: cleanEmail,
-				name: 'Muhammad Bagiz',
+				name: 'Muhammad baghiz',
 				role: 'superadmin'
 			};
 			this.user = user;
@@ -84,8 +105,37 @@ class AuthStore {
 
 		return {
 			success: false,
-			message: 'Email atau kata sandi tidak valid. Gunakan kata sandi minimal 6 karakter (demo: admin123).'
+			message: 'Email atau kata sandi tidak cocok. Silakan periksa kembali kredensial Anda.'
 		};
+	}
+
+	updateCredentials(newEmail: string, newPassword?: string): { success: boolean; message: string } {
+		const cleanEmail = newEmail.trim().toLowerCase();
+		if (!cleanEmail.includes('@') || !cleanEmail.includes('.')) {
+			return { success: false, message: 'Alamat email admin tidak valid.' };
+		}
+
+		if (newPassword && newPassword.length < 6) {
+			return { success: false, message: 'Kata sandi baru minimal harus 6 karakter.' };
+		}
+
+		this.credentials.email = cleanEmail;
+		if (newPassword && newPassword.trim().length >= 6) {
+			this.credentials.password = newPassword.trim();
+		}
+
+		if (this.user) {
+			this.user.email = cleanEmail;
+		}
+
+		if (typeof window !== 'undefined') {
+			localStorage.setItem(STORAGE_KEY_CREDS, JSON.stringify(this.credentials));
+			if (this.user) {
+				localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(this.user));
+			}
+		}
+
+		return { success: true, message: 'Kredensial login admin berhasil diperbarui!' };
 	}
 
 	logout() {
