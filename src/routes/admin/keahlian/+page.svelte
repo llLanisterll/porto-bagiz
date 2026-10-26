@@ -167,7 +167,7 @@
 </script>
 
 <svelte:head>
-  <title>Kelola Keahlian — Admin CMS baghiz</title>
+  <title>Kelola Keahlian — Admin CMS Baghiz</title>
 </svelte:head>
 
 <div class="skills-admin-container">

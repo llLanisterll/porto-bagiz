@@ -103,7 +103,7 @@
 </script>
 
 <svelte:head>
-  <title>Pesan Masuk — Admin CMS baghiz</title>
+  <title>Pesan Masuk — Admin CMS Baghiz</title>
 </svelte:head>
 
 <div class="messages-admin-container">
@@ -271,7 +271,7 @@
               </button>
 
               <a
-                href="mailto:{msg.email}?subject=Tanggapan%20Inquiry%20Portofolio%20Muhammad%20baghiz&body=Halo%20{encodeURIComponent(
+                href="mailto:{msg.email}?subject=Tanggapan%20Inquiry%20Portofolio%20Muhammad%20Baghiz&body=Halo%20{encodeURIComponent(
                   msg.name,
                 )},%0D%0A%0D%0ATerima%20kasih%20telah%20menghubungi%20saya.%0D%0A%0D%0A"
                 class="action-btn reply"

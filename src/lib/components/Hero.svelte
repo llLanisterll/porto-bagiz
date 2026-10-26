@@ -45,7 +45,7 @@
         class="contact-me-arrow"
         href="#contact"
         onclick={(e) => scrollTo(e, "contact")}
-        aria-label="Hubungi Muhammad baghiz"
+        aria-label="Hubungi Muhammad Baghiz"
       >
         <ArrowUpRight size={22} />
       </a>

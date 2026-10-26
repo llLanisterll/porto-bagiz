@@ -1,6 +1,6 @@
-# Muhammad baghiz — Portfolio & Admin CMS
+# Muhammad Baghiz — Portfolio & Admin CMS
 
-Website portofolio profesional dan Admin Content Management System (CMS) untuk **Muhammad baghiz** (Lead UX/UI Designer & Business Strategist).
+Website portofolio profesional dan Admin Content Management System (CMS) untuk **Muhammad Baghiz** (Lead UX/UI Designer & Business Strategist).
 
 ---
 
@@ -43,8 +43,8 @@ Website portofolio profesional dan Admin Content Management System (CMS) untuk *
 1. **Clone Repository**:
 
    ```bash
-   git clone https://github.com/llLanisterll/porto-baghiz.git
-   cd "Porto baghiz"
+   git clone https://github.com/llLanisterll/porto-bagiz.git
+   cd "Porto Bagiz"
    ```
 
 2. **Install Dependensi**:
@@ -62,6 +62,7 @@ Website portofolio profesional dan Admin Content Management System (CMS) untuk *
    Akses website di `http://localhost:5173` dan dashboard admin di `http://localhost:5173/admin`.
 
 4. **Build untuk Production**:
+
    ```bash
    npm run build
    ```
@@ -70,5 +71,5 @@ Website portofolio profesional dan Admin Content Management System (CMS) untuk *
 
 ## 👤 Author & Lisensi
 
-- **Muhammad baghiz** — Lead UX/UI Designer & Business Strategist
+- **Muhammad Baghiz** — Lead UX/UI Designer & Business Strategist
 - Developed with SvelteKit & Modern Web Design Standards.

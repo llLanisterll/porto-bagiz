@@ -25,7 +25,7 @@
   let toastMessage = $state("");
   let toastTimer: any = null;
 
-  let adminLoginEmail = $state(authStore.credentials.email || 'admin@bagiz.design');
+  let adminLoginEmail = $state(authStore.credentials.email || 'admin@baghiz.design');
   let adminNewPassword = $state('');
 
   function showToast(msg: string) {
@@ -214,7 +214,7 @@
 </script>
 
 <svelte:head>
-  <title>Profil & Pengaturan Foto — Admin CMS baghiz</title>
+  <title>Profil & Pengaturan Foto — Admin CMS {portfolioStore.profile.name || 'Muhammad Baghiz'}</title>
 </svelte:head>
 
 <div class="profile-admin-container">
@@ -404,7 +404,7 @@
                 type="button"
                 class="btn-quick-action"
                 onclick={resetToDefaultAvatar}
-                title="Kembalikan ke foto bawaan Muhammad baghiz"
+                title="Kembalikan ke foto bawaan Muhammad Baghiz"
               >
                 <RotateCcw size={13} />
                 <span>Gunakan Foto Bawaan</span>

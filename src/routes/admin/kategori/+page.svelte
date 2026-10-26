@@ -230,7 +230,7 @@
 </script>
 
 <svelte:head>
-  <title>Master Kategori — Admin CMS baghiz</title>
+  <title>Master Kategori — Admin CMS Baghiz</title>
 </svelte:head>
 
 <div class="kategori-admin-container">

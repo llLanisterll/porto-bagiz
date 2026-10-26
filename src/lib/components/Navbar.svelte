@@ -59,7 +59,7 @@
             >{lastName.slice(1, 2)}</span
           ><span>{lastName.slice(2)}</span>
         {:else}
-          <span>B</span><span class="logo-accent">a</span><span>giz</span>
+          <span>B</span><span class="logo-accent">a</span><span>ghiz</span>
         {/if}
       </a>
     </div>

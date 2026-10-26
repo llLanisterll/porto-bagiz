@@ -19,7 +19,7 @@
               >.</span
             >
           {:else}
-            baghiz<span class="txt-accent">.</span>
+            BAGHIZ<span class="txt-accent">.</span>
           {/if}
         </a>
         <p class="footer-meta">
@@ -42,7 +42,7 @@
     <div class="footer-bottom">
       <p class="copyright-txt">
         © {year}
-        {portfolioStore.profile.name || "Muhammad baghiz"}. Dirancang presisi
+        {portfolioStore.profile.name || "Muhammad Baghiz"}. Dirancang presisi
         terinspirasi dari Textio Portfolio.
       </p>
       <a href="#top" class="back-to-top" onclick={scrollToTop}>

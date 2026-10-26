@@ -76,7 +76,7 @@
 <svelte:head>
   <title
     >Admin CMS Panel — Portofolio {portfolioStore.profile.name ||
-      "Muhammad baghiz"}</title
+      "Muhammad Baghiz"}</title
   >
 </svelte:head>
 
@@ -117,7 +117,7 @@
             </div>
             <span class="brand-sub"
               >Portofolio {portfolioStore.profile.name ||
-                "Muhammad baghiz"}</span
+                "Muhammad Baghiz"}</span
             >
           </div>
         </a>
@@ -270,7 +270,7 @@
           </div>
           <div class="user-info">
             <span class="user-name"
-              >{portfolioStore.profile.name || "Muhammad baghiz"}</span
+              >{portfolioStore.profile.name || "Muhammad Baghiz"}</span
             >
             <div class="user-badge-row">
               <ShieldCheck size={11} />

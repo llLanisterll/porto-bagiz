@@ -93,7 +93,7 @@
 </script>
 
 <svelte:head>
-  <title>Ringkasan Dashboard — Admin CMS baghiz</title>
+  <title>Ringkasan Dashboard — Admin CMS {portfolioStore.profile.name || 'Muhammad Baghiz'}</title>
 </svelte:head>
 
 <div class="overview-container">
@@ -126,7 +126,7 @@
       <h1 class="welcome-title">
         Selamat Datang, {portfolioStore.profile.name
           ? portfolioStore.profile.name.split(" ")[0]
-          : "baghiz"}
+          : "Baghiz"}
       </h1>
       <p class="welcome-desc">
         Kelola seluruh konten portofolio Anda secara real-time. Setiap

@@ -12,7 +12,7 @@ import type {
 export const mockCategories: CategoryItem[] = [];
 
 export const mockProfile: UserProfile = {
-	name: 'Muhammad baghiz',
+	name: 'Muhammad Baghiz',
 	tagline: 'Bridging Design Aesthetics with Business Impact',
 	headline: 'Product Designer & Business Strategist',
 	bio: 'Menggabungkan keahlian desain antarmuka berbasis empati pengguna dengan analisis strategi bisnis yang terukur untuk melahirkan produk digital bernilai tinggi.',

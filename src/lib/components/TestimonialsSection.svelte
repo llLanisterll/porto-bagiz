@@ -12,7 +12,7 @@
 
   const testimonials: Testimonial[] = [
     {
-      text: "baghiz adalah profil hibrida yang sangat langka. Ia tidak hanya merancang antarmuka dompet digital kami menjadi sangat intuitif, tetapi juga menyusun strategi retensi berbasis unit economics yang meningkatkan konversi pengguna baru kami hingga 42%.",
+      text: "Baghiz adalah profil hibrida yang sangat langka. Ia tidak hanya merancang antarmuka dompet digital kami menjadi sangat intuitif, tetapi juga menyusun strategi retensi berbasis unit economics yang meningkatkan konversi pengguna baru kami hingga 42%.",
       name: "Budi Santoso",
       role: "VP of Product",
       company: "NexaPay Financial",
@@ -21,7 +21,7 @@
       metricHighlight: "+42% Konversi Pengguna",
     },
     {
-      text: "Design system multi-brand yang dibangun baghiz memangkas siklus rilis fitur tim engineering kami dari 3 minggu menjadi 4 hari kerja. Konsistensi visual dan dokumentasi Figma Variables-nya luar biasa rapi.",
+      text: "Design system multi-brand yang dibangun Baghiz memangkas siklus rilis fitur tim engineering kami dari 3 minggu menjadi 4 hari kerja. Konsistensi visual dan dokumentasi Figma Variables-nya luar biasa rapi.",
       name: "Sari Dewi",
       role: "Head of Design & Brand",
       company: "Aura Commerce Group",
@@ -30,7 +30,7 @@
       metricHighlight: "55% Efisiensi Delivery",
     },
     {
-      text: "Kemampuan baghiz menyusun riset pasar, pemodelan finansial SaaS, dan pitch deck investasi menjadi kunci sukses kami mengamankan $1.4M ARR serta kemitraan dengan 8 korporasi FMCG terkemuka.",
+      text: "Kemampuan Baghiz menyusun riset pasar, pemodelan finansial SaaS, dan pitch deck investasi menjadi kunci sukses kami mengamankan $1.4M ARR serta kemitraan dengan 8 korporasi FMCG terkemuka.",
       name: "Rizky Pratama",
       role: "Chief Operating Officer",
       company: "Velo Logistics B2B",

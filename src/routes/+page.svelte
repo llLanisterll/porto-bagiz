@@ -15,13 +15,13 @@
 
 <svelte:head>
   <title
-    >{portfolioStore.profile.name || "Muhammad baghiz"} • {portfolioStore
+    >{portfolioStore.profile.name || "Muhammad Baghiz"} • {portfolioStore
       .profile.headline || "Lead UX/UI Designer & Business Strategist"}</title
   >
   <meta
     name="description"
     content={portfolioStore.profile.bio ||
-      "Portfolio Muhammad baghiz — Lead UX/UI Designer & Business Strategist. Desain produk terukur terinspirasi dari estetika modern Textio dengan palet navy elegan."}
+      "Portfolio Muhammad Baghiz — Lead UX/UI Designer & Business Strategist. Desain produk terukur terinspirasi dari estetika modern Textio dengan palet navy elegan."}
   />
 </svelte:head>
 

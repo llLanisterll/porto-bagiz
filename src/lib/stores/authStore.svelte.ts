@@ -19,7 +19,7 @@ const DEFAULT_CREDS: AdminCredentials = {
 
 const DEFAULT_ADMIN: AdminUser = {
 	email: 'admin@baghiz.design',
-	name: 'Muhammad baghiz',
+	name: 'Muhammad Baghiz',
 	role: 'superadmin'
 };
 
@@ -63,7 +63,7 @@ class AuthStore {
 			// Default to active session
 			this.user = {
 				email: this.credentials.email,
-				name: 'Muhammad baghiz',
+				name: 'Muhammad Baghiz',
 				role: 'superadmin'
 			};
 			this.isAuthenticated = true;
@@ -92,7 +92,7 @@ class AuthStore {
 		if (isEmailMatch && isPasswordMatch) {
 			const user: AdminUser = {
 				email: cleanEmail,
-				name: 'Muhammad baghiz',
+				name: 'Muhammad Baghiz',
 				role: 'superadmin'
 			};
 			this.user = user;

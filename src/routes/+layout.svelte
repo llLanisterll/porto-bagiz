@@ -84,10 +84,10 @@
 </script>
 
 <svelte:head>
-  <title>Muhammad baghiz • Lead Product Designer & Business Strategist</title>
+  <title>Muhammad Baghiz • Lead Product Designer & Business Strategist</title>
   <meta
     name="description"
-    content="Portofolio Muhammad baghiz — Lead Product Designer & Business Strategist. Menghubungkan estetika antarmuka dengan dampak strategi bisnis terukur."
+    content="Portofolio Muhammad Baghiz — Lead Product Designer & Business Strategist. Menghubungkan estetika antarmuka dengan dampak strategi bisnis terukur."
   />
 </svelte:head>
 

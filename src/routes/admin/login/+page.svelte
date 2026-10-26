@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-  <title>Masuk Admin CMS — Muhammad Bagiz</title>
+  <title>Masuk Admin CMS — Muhammad Baghiz</title>
 </svelte:head>
 
 <div class="login-page">
@@ -53,7 +53,6 @@
   <div class="modal-wrapper">
     <!-- Top Back Link -->
     <div class="top-nav">
-      baghiz
       <a href="/" class="back-link">
         <ArrowLeft size={14} />
         <span>Kembali ke Beranda</span>
@@ -68,8 +67,8 @@
     <div class="login-card">
       <!-- Brand Header -->
       <div class="card-header">
-        <a href="/" class="logo" title="Portofolio Muhammad Bagiz">
-          <span>B</span><span class="logo-accent">a</span><span>giz</span>
+        <a href="/" class="logo" title="Portofolio Muhammad Baghiz">
+          <span>B</span><span class="logo-accent">a</span><span>ghiz</span>
         </a>
         <div class="badge-row">
           <span class="studio-badge">Admin Studio</span>
@@ -81,7 +80,7 @@
         </p>
       </div>
 
-      <!-- Error Alert -->baghiz
+      <!-- Error Alert -->
       {#if errorMsg}
         <div class="alert-box" role="alert">
           <ShieldAlert size={16} class="alert-icon" />
@@ -187,7 +186,7 @@
 
     <!-- Bottom Copyright -->
     <div class="page-footer">
-      <p>© 2026 Muhammad Bagiz. Lead UX/UI Designer & Business Strategist.</p>
+      <p>© 2026 Muhammad Baghiz. Lead UX/UI Designer & Business Strategist.</p>
     </div>
   </div>
 </div>
@@ -200,7 +199,7 @@
     min-height: 100vh;
     background-color: #f8fafc;
     font-family:
-      "Plus Jbaghiza Sans",
+      "Plus Jakarta Sans",
       -apple-system,
       BlinkMacSystemFont,
       "Segoe UI",

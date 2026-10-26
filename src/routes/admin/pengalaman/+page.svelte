@@ -165,7 +165,7 @@
 </script>
 
 <svelte:head>
-  <title>Kelola Pengalaman — Admin CMS baghiz</title>
+  <title>Kelola Pengalaman — Admin CMS Baghiz</title>
 </svelte:head>
 
 <div class="exp-admin-container">

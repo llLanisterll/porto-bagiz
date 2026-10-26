@@ -36,7 +36,7 @@
 </script>
 
 <svelte:head>
-  <title>Pemulihan Kata Sandi — Muhammad baghiz</title>
+  <title>Pemulihan Kata Sandi — Muhammad Baghiz</title>
 </svelte:head>
 
 <div class="reset-page">
@@ -59,8 +59,8 @@
     <div class="reset-card">
       <!-- Header -->
       <div class="card-header">
-        <a href="/" class="logo" title="Portofolio Muhammad baghiz">
-          <span>B</span><span class="logo-accent">a</span><span>giz</span>
+        <a href="/" class="logo" title="Portofolio Muhammad Baghiz">
+          <span>B</span><span class="logo-accent">a</span><span>ghiz</span>
         </a>
         <div class="badge-row">
           <span class="security-badge">Pemulihan Akses</span>
@@ -137,7 +137,7 @@
 
     <!-- Bottom Copyright -->
     <div class="page-footer">
-      <p>© 2026 Muhammad baghiz. Lead UX/UI Designer & Business Strategist.</p>
+      <p>© 2026 Muhammad Baghiz. Lead UX/UI Designer & Business Strategist.</p>
     </div>
   </div>
 </div>
