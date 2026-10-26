@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { ArrowUpRight, X, Mail, Phone, MapPin } from 'lucide-svelte';
-	import { mockProfile } from '$lib/data/mockPortfolio';
+	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 
 	let sticky = $state(false);
 	let sidebarOpen = $state(false);
@@ -51,7 +51,13 @@
 		<!-- Brand Logo (Textio Typography) -->
 		<div class="main-logo">
 			<a class="logo" href="#home" onclick={(e) => scrollTo(e, '#home')}>
-				<span>B</span><span class="logo-accent">a</span><span>giz</span>
+				{#if portfolioStore.profile.name}
+					{@const parts = portfolioStore.profile.name.trim().split(' ')}
+					{@const lastName = parts.length > 1 ? parts[parts.length - 1] : parts[0]}
+					<span>{lastName.slice(0, 1)}</span><span class="logo-accent">{lastName.slice(1, 2)}</span><span>{lastName.slice(2)}</span>
+				{:else}
+					<span>B</span><span class="logo-accent">a</span><span>giz</span>
+				{/if}
 			</a>
 		</div>
 
@@ -106,11 +112,19 @@
 		</button>
 
 		<div class="side-logo">
-			<h4 class="logo">B<span class="logo-accent">a</span>giz</h4>
+			<h4 class="logo">
+				{#if portfolioStore.profile.name}
+					{@const parts = portfolioStore.profile.name.trim().split(' ')}
+					{@const lastName = parts.length > 1 ? parts[parts.length - 1] : parts[0]}
+					<span>{lastName.slice(0, 1)}</span><span class="logo-accent">{lastName.slice(1, 2)}</span><span>{lastName.slice(2)}</span>
+				{:else}
+					<span>B</span><span class="logo-accent">a</span><span>giz</span>
+				{/if}
+			</h4>
 		</div>
 
 		<p class="side-desc">
-			Lead Product Designer & Business Strategist. Menghubungkan riset pengguna berbasis empati dengan arsitektur produk yang terbukti melipatgandakan metrik bisnis.
+			{portfolioStore.profile.headline || 'Product Designer & Business Strategist'}. {portfolioStore.profile.bio || 'Menghubungkan riset pengguna dengan arsitektur produk yang terbukti.'}
 		</p>
 
 		<!-- Mobile Nav Links -->
@@ -132,7 +146,7 @@
 				</div>
 				<div>
 					<span class="widget-label">LOKASI</span>
-					<div class="widget-val">Jakarta, Indonesia (Remote)</div>
+					<div class="widget-val">{portfolioStore.profile.location || 'Indonesia'}</div>
 				</div>
 			</div>
 
@@ -142,7 +156,9 @@
 				</div>
 				<div>
 					<span class="widget-label">EMAIL RESMI</span>
-					<a href="mailto:{mockProfile.socialLinks.email}" class="widget-val">{mockProfile.socialLinks.email}</a>
+					<a href="mailto:{portfolioStore.profile.socialLinks?.email || 'bagiz.design@gmail.com'}" class="widget-val">
+						{portfolioStore.profile.socialLinks?.email || 'bagiz.design@gmail.com'}
+					</a>
 				</div>
 			</div>
 
@@ -151,8 +167,8 @@
 					<Phone size={16} />
 				</div>
 				<div>
-					<span class="widget-label">TELEPON / WA</span>
-					<span class="widget-val">+62 812-3456-7890</span>
+					<span class="widget-label">KETERSEDIAAN</span>
+					<span class="widget-val">{portfolioStore.profile.availability || 'Tersedia untuk Proyek'}</span>
 				</div>
 			</div>
 		</div>

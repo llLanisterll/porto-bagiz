@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-	<title>{project.title} — Muhammad Bagiz</title>
+	<title>{project.title} — {data.profile?.name || 'Muhammad Bagiz'}</title>
 	<meta name="description" content={project.summary} />
 </svelte:head>
 

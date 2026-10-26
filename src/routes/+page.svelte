@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import SkillsSlider from '$lib/components/SkillsSlider.svelte';
@@ -13,10 +14,10 @@
 </script>
 
 <svelte:head>
-	<title>Muhammad Bagiz • Lead UX/UI Designer & Business Strategist</title>
+	<title>{portfolioStore.profile.name || 'Muhammad Bagiz'} • {portfolioStore.profile.headline || 'Lead UX/UI Designer & Business Strategist'}</title>
 	<meta
 		name="description"
-		content="Portfolio Muhammad Bagiz — Lead UX/UI Designer & Business Strategist. Desain produk terukur terinspirasi dari estetika modern Textio dengan palet navy elegan."
+		content={portfolioStore.profile.bio || 'Portfolio Muhammad Bagiz — Lead UX/UI Designer & Business Strategist. Desain produk terukur terinspirasi dari estetika modern Textio dengan palet navy elegan.'}
 	/>
 </svelte:head>
 

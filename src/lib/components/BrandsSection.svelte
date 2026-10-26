@@ -1,39 +1,47 @@
 <script lang="ts">
-	const brands = [
-		'BANK MANDIRI',
-		'TELKOM INDONESIA',
-		'GOTO GROUP',
-		'ASTRA DIGITAL',
-		'FLIP ID',
-		'SIRCLO OMNICHANNEL',
-		'BRI VENTURES',
-		'MODALKUKU',
-		'MAJOO INDONESIA',
-		'RUANGGURU'
-	];
+	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 
-	// Duplicate for smooth infinite track
-	const loopBrands = [...brands, ...brands];
+	// Extract unique companies from user experiences
+	const dynamicBrands = $derived(
+		Array.from(
+			new Set(
+				portfolioStore.experiences
+					.map((e) => e.company?.trim().toUpperCase())
+					.filter(Boolean)
+			)
+		)
+	);
+
+	// Duplicate for smooth infinite track if brands exist
+	const loopBrands = $derived(
+		dynamicBrands.length > 0
+			? (dynamicBrands.length < 5
+				? [...dynamicBrands, ...dynamicBrands, ...dynamicBrands, ...dynamicBrands]
+				: [...dynamicBrands, ...dynamicBrands])
+			: []
+	);
 </script>
 
-<section class="brands">
-	<div class="container">
-		<h5 class="brands-title wow fadeInUp">
-			Lebih dari 30+ Perusahaan & Startup Mempercayai Kolaborasi Kami
-		</h5>
-	</div>
-
-	<div class="brands-marquee-wrapper" aria-hidden="true">
-		<div class="brands-track">
-			{#each loopBrands as brand, idx (idx)}
-				<div class="brand-item">
-					<span class="brand-pill">{brand}</span>
-					<span class="brand-dot">/</span>
-				</div>
-			{/each}
+{#if loopBrands.length > 0}
+	<section class="brands">
+		<div class="container">
+			<h5 class="brands-title wow fadeInUp">
+				Dipercaya Melalui Rekam Jejak Kolaborasi Profesional
+			</h5>
 		</div>
-	</div>
-</section>
+
+		<div class="brands-marquee-wrapper" aria-hidden="true">
+			<div class="brands-track">
+				{#each loopBrands as brand, idx (idx)}
+					<div class="brand-item">
+						<span class="brand-pill">{brand}</span>
+						<span class="brand-dot">/</span>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</section>
+{/if}
 
 <style>
 	.brands {

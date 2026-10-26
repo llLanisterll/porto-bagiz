@@ -16,12 +16,20 @@
 		Flame,
 		Mail,
 		RotateCcw,
-		Check
+		Check,
+		Tags,
+		Download,
+		UploadCloud,
+		AlertTriangle
 	} from 'lucide-svelte';
 
 	// Reset confirmation modal state
 	let isResetModalOpen = $state(false);
 	let resetSuccess = $state(false);
+
+	// Toast notification
+	let toastMessage = $state('');
+	let importError = $state('');
 
 	function handleReset() {
 		portfolioStore.resetToDefaults();
@@ -30,11 +38,52 @@
 		setTimeout(() => (resetSuccess = false), 3500);
 	}
 
+	// Backup Export & Import Handlers
+	let fileInputImport: HTMLInputElement | null = $state(null);
+
+	function handleExportBackup() {
+		const jsonString = portfolioStore.exportBackupData();
+		const blob = new Blob([jsonString], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		const dateStr = new Date().toISOString().slice(0, 10);
+		a.href = url;
+		a.download = `backup-portofolio-bagiz-${dateStr}.json`;
+		a.click();
+		URL.revokeObjectURL(url);
+		toastMessage = 'File cadangan JSON berhasil diunduh!';
+		setTimeout(() => (toastMessage = ''), 3500);
+	}
+
+	function handleImportFile(e: Event) {
+		const target = e.target as HTMLInputElement;
+		if (target.files && target.files[0]) {
+			const file = target.files[0];
+			const reader = new FileReader();
+			reader.onload = (evt) => {
+				const content = evt.target?.result as string;
+				const res = portfolioStore.importBackupData(content);
+				if (res.success) {
+					toastMessage = res.message;
+					setTimeout(() => (toastMessage = ''), 3500);
+				} else {
+					importError = res.message;
+					setTimeout(() => (importError = ''), 4000);
+				}
+			};
+			reader.readAsText(file);
+			target.value = '';
+		}
+	}
+
 	const featuredProjectsCount = $derived(
 		portfolioStore.projects.filter((p) => p.isFeatured).length
 	);
 	const publishedProjectsCount = $derived(
 		portfolioStore.projects.filter((p) => p.isPublished).length
+	);
+	const activeCategoriesCount = $derived(
+		portfolioStore.categories.filter((c) => c.isActive).length
 	);
 	const unreadMessagesCount = $derived(
 		portfolioStore.messages.filter((m) => !m.isRead).length
@@ -48,6 +97,18 @@
 </svelte:head>
 
 <div class="overview-container">
+	{#if toastMessage}
+		<div class="alert-banner success">
+			<CheckCircle2 size={16} />
+			<span>{toastMessage}</span>
+		</div>
+	{/if}
+	{#if importError}
+		<div class="alert-banner error">
+			<AlertTriangle size={16} />
+			<span>{importError}</span>
+		</div>
+	{/if}
 	{#if resetSuccess}
 		<div class="alert-banner">
 			<CheckCircle2 size={16} />
@@ -62,7 +123,7 @@
 				<Sparkles size={13} />
 				<span>Panel Pengelola Portofolio</span>
 			</div>
-			<h1 class="welcome-title">Selamat Datang, Bagiz</h1>
+			<h1 class="welcome-title">Selamat Datang, {portfolioStore.profile.name ? portfolioStore.profile.name.split(' ')[0] : 'Bagiz'}</h1>
 			<p class="welcome-desc">
 				Kelola seluruh konten portofolio Anda secara real-time. Setiap penambahan atau perubahan konten di sidebar langsung tersinkronisasi dan tampil di website publik.
 			</p>
@@ -71,10 +132,29 @@
 					<Plus size={16} />
 					<span>Kelola Karya</span>
 				</a>
+				<a href="/admin/kategori" class="btn-secondary">
+					<Tags size={15} />
+					<span>Kategori ({portfolioStore.categories.length})</span>
+				</a>
 				<a href="/admin/pesan" class="btn-secondary">
 					<MessageSquare size={15} />
 					<span>Kotak Masuk {#if unreadMessagesCount > 0}({unreadMessagesCount} Baru){/if}</span>
 				</a>
+				<button class="btn-ghost" onclick={handleExportBackup} title="Unduh cadangan data lengkap (JSON)">
+					<Download size={14} />
+					<span>Ekspor JSON</span>
+				</button>
+				<button class="btn-ghost" onclick={() => fileInputImport?.click()} title="Pulihkan data dari file JSON cadangan">
+					<UploadCloud size={14} />
+					<span>Impor JSON</span>
+				</button>
+				<input
+					type="file"
+					accept=".json,application/json"
+					bind:this={fileInputImport}
+					style="display: none;"
+					onchange={handleImportFile}
+				/>
 				<button class="btn-ghost" onclick={() => (isResetModalOpen = true)}>
 					<RotateCcw size={14} />
 					<span>Reset Bawaan</span>
@@ -126,7 +206,23 @@
 			</div>
 		</a>
 
-		<!-- KPI 2: Pengalaman -->
+		<!-- KPI 2: Master Kategori -->
+		<a href="/admin/kategori" class="kpi-card">
+			<div class="kpi-top">
+				<div class="kpi-icon-wrap indigo">
+					<Tags size={20} />
+				</div>
+				<span class="kpi-tag">{activeCategoriesCount} Aktif</span>
+			</div>
+			<div class="kpi-number">{portfolioStore.categories.length}</div>
+			<div class="kpi-label">Master Kategori</div>
+			<div class="kpi-footer">
+				<span>{portfolioStore.categories.length > 0 ? portfolioStore.categories.map((c) => c.name).slice(0, 2).join(', ') : 'Belum ada kategori'}</span>
+				<ArrowRight size={14} class="kpi-arrow" />
+			</div>
+		</a>
+
+		<!-- KPI 3: Pengalaman -->
 		<a href="/admin/pengalaman" class="kpi-card">
 			<div class="kpi-top">
 				<div class="kpi-icon-wrap emerald">
@@ -290,7 +386,7 @@
 				</div>
 				<h3 class="hub-card-title">Profil, Tentang & Sosial</h3>
 				<p class="hub-card-desc">
-					Perbarui nama, headline spesialis, narasi tentang saya, angka pengalaman (6+ Tahun), ketersediaan proyek, dan tautan jejaring sosial (LinkedIn, Dribbble, GitHub, Email).
+					Perbarui nama, headline spesialis, narasi tentang saya, angka pengalaman, ketersediaan proyek, dan tautan jejaring sosial.
 				</p>
 				<div class="hub-preview-pills">
 					<span class="mini-pill">{portfolioStore.profile.name}</span>
@@ -299,6 +395,36 @@
 				<div class="hub-card-actions">
 					<a href="/admin/profil" class="hub-link-btn">
 						<span>Edit Profil</span>
+						<ArrowRight size={14} />
+					</a>
+				</div>
+			</div>
+
+			<!-- Hub Card 5: Master Kategori -->
+			<div class="hub-card">
+				<div class="hub-card-header">
+					<div class="hub-badge-wrap">
+						<Tags size={18} />
+						<span>05. MASTER KATEGORI</span>
+					</div>
+					<span class="hub-count-pill">{portfolioStore.categories.length} Kategori</span>
+				</div>
+				<h3 class="hub-card-title">Taksonomi & Filter Karya</h3>
+				<p class="hub-card-desc">
+					Kelola klasifikasi bidang karya, status aktif pada bilah filter beranda, dan deskripsi fokus masing-masing kategori.
+				</p>
+				<div class="hub-preview-pills">
+					{#if portfolioStore.categories.length === 0}
+						<span class="mini-pill empty">Belum ada kategori ditambahkan</span>
+					{:else}
+						{#each portfolioStore.categories.slice(0, 3) as cat}
+							<span class="mini-pill">{cat.name}</span>
+						{/each}
+					{/if}
+				</div>
+				<div class="hub-card-actions">
+					<a href="/admin/kategori" class="hub-link-btn">
+						<span>Kelola Kategori</span>
 						<ArrowRight size={14} />
 					</a>
 				</div>
@@ -405,6 +531,12 @@
 		border-radius: 12px;
 		font-size: 13.5px;
 		font-weight: 600;
+	}
+
+	.alert-banner.error {
+		background: #fef2f2;
+		border-color: #fecaca;
+		color: #991b1b;
 	}
 
 	/* ==================== WELCOME CARD ==================== */
@@ -598,7 +730,7 @@
 	/* ==================== KPI GRID ==================== */
 	.kpi-grid {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(5, 1fr);
 		gap: 18px;
 	}
 
@@ -640,6 +772,10 @@
 	.kpi-icon-wrap.blue {
 		background: #eff6ff;
 		color: #2563eb;
+	}
+	.kpi-icon-wrap.indigo {
+		background: #eef2ff;
+		color: #4f46e5;
 	}
 	.kpi-icon-wrap.emerald {
 		background: #ecfdf5;
@@ -1124,6 +1260,12 @@
 	}
 
 	/* Responsive */
+	@media (max-width: 1300px) {
+		.kpi-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
 	@media (max-width: 1100px) {
 		.kpi-grid {
 			grid-template-columns: repeat(2, 1fr);

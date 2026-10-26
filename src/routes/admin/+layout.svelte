@@ -73,7 +73,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin CMS Panel — Portofolio Muhammad Bagiz</title>
+	<title>Admin CMS Panel — Portofolio {portfolioStore.profile.name || 'Muhammad Bagiz'}</title>
 </svelte:head>
 
 <div class="admin-app">
@@ -93,7 +93,7 @@
 			<div class="sidebar-header">
 				<a href="/admin" class="sidebar-brand">
 					<div class="brand-monogram">
-						<span>MB</span>
+						<span>{portfolioStore.profile.name ? portfolioStore.profile.name.split(' ').filter(Boolean).map((n) => n[0]).slice(0, 2).join('').toUpperCase() : 'MB'}</span>
 						<span class="live-dot" title="Tersinkronisasi Real-time"></span>
 					</div>
 					<div class="brand-meta">
@@ -101,7 +101,7 @@
 							<span class="brand-title">Admin CMS</span>
 							<span class="brand-pill">Pro v2.5</span>
 						</div>
-						<span class="brand-sub">Portofolio Muhammad Bagiz</span>
+						<span class="brand-sub">Portofolio {portfolioStore.profile.name || 'Muhammad Bagiz'}</span>
 					</div>
 				</a>
 
@@ -236,7 +236,7 @@
 								class="user-avatar-img"
 							/>
 						{:else}
-							<span>MB</span>
+							<span>{portfolioStore.profile.name ? portfolioStore.profile.name.split(' ').filter(Boolean).map((n) => n[0]).slice(0, 2).join('').toUpperCase() : 'MB'}</span>
 						{/if}
 					</div>
 					<div class="user-info">

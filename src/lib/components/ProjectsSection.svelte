@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
-	import { mockProfile } from '$lib/data/mockPortfolio';
 	import { ArrowUpRight, TrendingUp, Briefcase, Calendar, Download, Sparkles, FolderKanban } from 'lucide-svelte';
 
 	let activeFilter = $state<string>('Semua');
@@ -203,7 +202,12 @@
 						<span>Diskusikan Peluang Kolaborasi</span>
 						<ArrowUpRight size={16} />
 					</a>
-					<a href={mockProfile.resumeUrl} class="bttn bttn-outline" target="_blank" rel="noopener">
+					<a
+						href={portfolioStore.profile.resumeUrl || '#contact'}
+						class="bttn bttn-outline"
+						target={portfolioStore.profile.resumeUrl ? '_blank' : undefined}
+						rel="noopener"
+					>
 						<Download size={16} />
 						<span>Unduh CV Eksekutif (PDF)</span>
 					</a>

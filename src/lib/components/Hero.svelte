@@ -71,9 +71,9 @@
 					</a>
 
 					<a
-						href={portfolioStore.profile.resumeUrl}
+						href={portfolioStore.profile.resumeUrl || '#contact'}
 						class="bttn bttn-secondary"
-						target="_blank"
+						target={portfolioStore.profile.resumeUrl ? '_blank' : undefined}
 						rel="noopener"
 					>
 						<span>Download CV</span>
@@ -140,7 +140,7 @@
 					<!-- Subtle floating badge -->
 					<div class="hero-float-badge">
 						<span class="badge-dot"></span>
-						<span>Tersedia untuk Kolaborasi</span>
+						<span>{portfolioStore.profile.availability || 'Tersedia untuk Kolaborasi'}</span>
 					</div>
 				</div>
 			</div>
@@ -148,7 +148,7 @@
 
 		<!-- Textio Ghost Outline Profession Text -->
 		<span class="profession wow fadeInUp">
-			UI UX & PRODUCT DESIGNER
+			{portfolioStore.profile.headline ? portfolioStore.profile.headline.toUpperCase() : 'UI UX & PRODUCT DESIGNER'}
 		</span>
 	</div>
 </section>

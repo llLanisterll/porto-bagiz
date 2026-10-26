@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	const year = new Date().getFullYear();
 
 	function scrollToTop(e: MouseEvent) {
@@ -12,10 +13,15 @@
 		<div class="footer-wrapper">
 			<div class="footer-left">
 				<a href="/" class="footer-logo">
-					BAGIZ<span class="txt-accent">.</span>
+					{#if portfolioStore.profile.name}
+						{@const parts = portfolioStore.profile.name.trim().split(' ')}
+						{parts[parts.length - 1].toUpperCase()}<span class="txt-accent">.</span>
+					{:else}
+						BAGIZ<span class="txt-accent">.</span>
+					{/if}
 				</a>
 				<p class="footer-meta">
-					Lead UX/UI Designer & Business Strategist. Menghubungkan estetika antarmuka dengan dampak finansial terukur.
+					{portfolioStore.profile.headline || 'Lead UX/UI Designer & Business Strategist'}. {portfolioStore.profile.bio || 'Menghubungkan estetika antarmuka dengan dampak finansial terukur.'}
 				</p>
 			</div>
 
@@ -26,13 +32,13 @@
 				<a href="#keahlian">Keahlian</a>
 				<a href="#contact">Kontak</a>
 				<span class="dot-sep">•</span>
-				<a href="/admin/login" class="admin-link">Admin Portal</a>
+				<a href="/login" class="admin-link">Admin Portal</a>
 			</div>
 		</div>
 
 		<div class="footer-bottom">
 			<p class="copyright-txt">
-				© {year} Muhammad Bagiz. Dirancang presisi terinspirasi dari Textio Portfolio.
+				© {year} {portfolioStore.profile.name || 'Muhammad Bagiz'}. Dirancang presisi terinspirasi dari Textio Portfolio.
 			</p>
 			<a href="#top" class="back-to-top" onclick={scrollToTop}>
 				<span>Kembali ke Atas ↑</span>

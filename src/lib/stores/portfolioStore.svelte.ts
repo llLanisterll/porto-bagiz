@@ -357,6 +357,54 @@ class PortfolioStore {
 		this.saveToStorage();
 	}
 
+	// ==================== BACKUP & RESTORE ====================
+	exportBackupData(): string {
+		const backup = {
+			version: '2.5',
+			exportedAt: new Date().toISOString(),
+			profile: this.profile,
+			categories: this.categories,
+			projects: this.projects,
+			experiences: this.experiences,
+			skillPillars: this.skillPillars,
+			messages: this.messages
+		};
+		return JSON.stringify(backup, null, 2);
+	}
+
+	importBackupData(jsonString: string): { success: boolean; message: string } {
+		try {
+			const data = JSON.parse(jsonString);
+			if (!data || typeof data !== 'object') {
+				return { success: false, message: 'Format data JSON tidak valid.' };
+			}
+
+			if (data.profile && typeof data.profile === 'object') {
+				this.profile = { ...mockProfile, ...data.profile };
+			}
+			if (Array.isArray(data.categories)) {
+				this.categories = data.categories;
+			}
+			if (Array.isArray(data.projects)) {
+				this.projects = data.projects;
+			}
+			if (Array.isArray(data.experiences)) {
+				this.experiences = data.experiences;
+			}
+			if (Array.isArray(data.skillPillars)) {
+				this.skillPillars = data.skillPillars;
+			}
+			if (Array.isArray(data.messages)) {
+				this.messages = data.messages;
+			}
+
+			this.saveToStorage();
+			return { success: true, message: 'Data cadangan berhasil diimpor dan diterapkan!' };
+		} catch (e: any) {
+			return { success: false, message: `Gagal membaca file JSON: ${e?.message || 'Error tidak diketahui'}` };
+		}
+	}
+
 	// ==================== RESET ====================
 	resetToDefaults() {
 		this.projects = [...mockProjects];

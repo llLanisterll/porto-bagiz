@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { mockProfile } from '$lib/data/mockPortfolio';
+	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	import { ArrowUpRight, CheckCircle2 } from 'lucide-svelte';
 
 	function scrollTo(e: MouseEvent, targetId: string) {
@@ -9,6 +9,14 @@
 			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}
 	}
+
+	const narrativeParagraphs = $derived(
+		portfolioStore.profile.aboutNarrative?.filter(Boolean) || []
+	);
+
+	const statsList = $derived(
+		portfolioStore.profile.stats?.filter((s) => s.value && s.value !== '0' && s.value !== '$0') || []
+	);
 </script>
 
 <section id="about" class="about">
@@ -21,7 +29,11 @@
 
 		<!-- Big Statement Headline -->
 		<h3 class="about-info wow fadeInUp">
-			Saya adalah Lead UX/UI Designer & Business Strategist dengan pengalaman lebih dari <span class="txt-accent">6+ tahun</span>. Berpengalaman mendesain produk digital terukur untuk startup hingga enterprise, menghubungkan estetika interaksi dengan profitabilitas bisnis nyata.
+			{#if narrativeParagraphs.length > 0}
+				{narrativeParagraphs[0]}
+			{:else}
+				Saya adalah <span class="txt-accent">{portfolioStore.profile.headline || 'Product Designer & Business Strategist'}</span>. {portfolioStore.profile.bio || 'Menghubungkan estetika interaksi dengan profitabilitas bisnis nyata.'}
+			{/if}
 		</h3>
 
 		<div class="about-row">
@@ -29,24 +41,33 @@
 			<div class="about-left-col wow fadeInLeft">
 				<div class="year-exp">
 					<div class="year-exp-txt">
-						<span>6+</span>
-						<h4>Tahun<br />Pengalaman Teruji</h4>
+						<span>{portfolioStore.profile.stats?.[0]?.value || '4+'}</span>
+						<h4>{portfolioStore.profile.stats?.[0]?.label || 'Tahun'}<br />Pengalaman Teruji</h4>
 					</div>
 				</div>
 
 				<div class="about-points">
-					<div class="point-item">
-						<CheckCircle2 size={18} class="point-icon" />
-						<span>Spesialisasi Enterprise Design System & Multi-brand Scalability</span>
-					</div>
-					<div class="point-item">
-						<CheckCircle2 size={18} class="point-icon" />
-						<span>Riset Funnel Konversi & Optimasi Retensi Berbasis Data</span>
-					</div>
-					<div class="point-item">
-						<CheckCircle2 size={18} class="point-icon" />
-						<span>Kolaborasi Erat dengan Tim Engineering & Manajemen Produk</span>
-					</div>
+					{#if narrativeParagraphs.length > 1}
+						{#each narrativeParagraphs.slice(1) as point}
+							<div class="point-item">
+								<CheckCircle2 size={18} class="point-icon" />
+								<span>{point}</span>
+							</div>
+						{/each}
+					{:else}
+						<div class="point-item">
+							<CheckCircle2 size={18} class="point-icon" />
+							<span>Spesialisasi Enterprise Design System & Multi-brand Scalability</span>
+						</div>
+						<div class="point-item">
+							<CheckCircle2 size={18} class="point-icon" />
+							<span>Riset Funnel Konversi & Optimasi Retensi Berbasis Data</span>
+						</div>
+						<div class="point-item">
+							<CheckCircle2 size={18} class="point-icon" />
+							<span>Kolaborasi Erat dengan Tim Engineering & Manajemen Produk</span>
+						</div>
+					{/if}
 				</div>
 
 				<a
@@ -72,6 +93,21 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- 4 Dynamic Metric KPI Cards -->
+		{#if statsList.length > 0}
+			<div class="about-stats-grid wow fadeInUp">
+				{#each statsList as stat}
+					<div class="about-stat-item">
+						<span class="stat-value">{stat.value}</span>
+						<span class="stat-label">{stat.label}</span>
+						{#if stat.description}
+							<span class="stat-desc">{stat.description}</span>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		{/if}
 	</div>
 </section>
 
@@ -89,14 +125,72 @@
 	}
 	.point-item {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		gap: 12px;
 		font-size: 15px;
 		font-weight: 600;
 		color: #1e293b;
+		line-height: 1.5;
 	}
 	:global(.point-icon) {
 		color: var(--clr-accent);
 		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	/* Dynamic 4-Metric Grid */
+	.about-stats-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+		margin-top: 50px;
+		padding-top: 40px;
+		border-top: 1px solid rgba(10, 22, 40, 0.08);
+	}
+	@media (max-width: 991px) {
+		.about-stats-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 16px;
+		}
+	}
+	@media (max-width: 575px) {
+		.about-stats-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+	.about-stat-item {
+		background: #ffffff;
+		border: 1px solid rgba(10, 22, 40, 0.08);
+		border-radius: 16px;
+		padding: 24px 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		box-shadow: 0 4px 16px rgba(10, 22, 40, 0.02);
+		transition: all 0.3s ease;
+	}
+	.about-stat-item:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 28px rgba(10, 22, 40, 0.06);
+		border-color: rgba(37, 99, 235, 0.3);
+	}
+	.stat-value {
+		font-family: var(--ff-syne);
+		font-size: 32px;
+		font-weight: 800;
+		color: var(--clr-navy);
+		line-height: 1;
+		letter-spacing: -0.02em;
+	}
+	.stat-label {
+		font-family: var(--ff-syne);
+		font-size: 13.5px;
+		font-weight: 700;
+		color: #0f172a;
+	}
+	.stat-desc {
+		font-size: 12.5px;
+		color: #64748b;
+		line-height: 1.4;
 	}
 </style>

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { mockProfile } from '$lib/data/mockPortfolio';
 	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	import { ArrowUpRight, Send, Check } from 'lucide-svelte';
 
@@ -49,14 +48,18 @@
 		{ num: '04', title: 'KEAHLIAN & SPESIALISASI', target: 'keahlian' }
 	];
 
-	const marqueeItems = [
+	const contactEmail = $derived(
+		portfolioStore.profile.socialLinks?.email || 'bagiz.design@gmail.com'
+	);
+
+	const marqueeItems = $derived([
 		'LET’S TALK',
-		mockProfile.socialLinks.email.toUpperCase(),
+		contactEmail.toUpperCase(),
 		'WORK INQUIRIES',
 		'DISCUSS PROJECTS',
 		'INNOVATE TOGETHER'
-	];
-	const loopMarquee = [...marqueeItems, ...marqueeItems, ...marqueeItems];
+	]);
+	const loopMarquee = $derived([...marqueeItems, ...marqueeItems, ...marqueeItems]);
 </script>
 
 <section id="contact" class="contact">
@@ -114,11 +117,20 @@
 							required
 						>
 							<option value="" disabled selected>Pilih Layanan Kolaborasi...</option>
-							<option value="ui-ux">UI/UX & Product Design End-to-End</option>
-							<option value="design-system">Enterprise Design System & Token Ops</option>
-							<option value="product-strategy">Product Strategy & Monetization</option>
-							<option value="pitch-deck">Pitch Deck & Strategic Storytelling</option>
-							<option value="sprint-audit">Sprint Audit & UX Heuristic Review</option>
+							{#if portfolioStore.categories.length > 0}
+								{#each portfolioStore.categories as cat}
+									<option value={cat.name}>{cat.name}</option>
+								{/each}
+							{:else if portfolioStore.skillPillars.length > 0}
+								{#each portfolioStore.skillPillars as pil}
+									<option value={pil.title}>{pil.title}</option>
+								{/each}
+							{:else}
+								<option value="UI/UX & Product Design End-to-End">UI/UX & Product Design End-to-End</option>
+								<option value="Enterprise Design System & Token Ops">Enterprise Design System & Token Ops</option>
+								<option value="Product Strategy & Monetization">Product Strategy & Monetization</option>
+								<option value="Pitch Deck & Strategic Storytelling">Pitch Deck & Strategic Storytelling</option>
+							{/if}
 						</select>
 					</div>
 
@@ -173,12 +185,12 @@
 						{/each}
 						<li>
 							<a
-								href={mockProfile.resumeUrl}
+								href={portfolioStore.profile.resumeUrl || '#contact'}
 								class="contact-nav-link"
-								target="_blank"
+								target={portfolioStore.profile.resumeUrl ? '_blank' : undefined}
 								rel="noopener"
 							>
-								<span class="link-num">06</span>
+								<span class="link-num">05</span>
 								<span class="link-txt">UNDUH RESUME (PDF)</span>
 								<ArrowUpRight size={20} class="link-arrow" />
 							</a>
@@ -190,23 +202,29 @@
 				<div class="contact-socials-wrapper">
 					<h6 class="socials-label">TERHUBUNG DI MEDIA SOSIAL:</h6>
 					<ul class="contact-social-pills">
+						{#if portfolioStore.profile.socialLinks?.linkedin}
+							<li>
+								<a href={portfolioStore.profile.socialLinks.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn">
+									<span>In</span>
+								</a>
+							</li>
+						{/if}
+						{#if portfolioStore.profile.socialLinks?.dribbble}
+							<li>
+								<a href={portfolioStore.profile.socialLinks.dribbble} target="_blank" rel="noopener" aria-label="Dribbble">
+									<span>Dr</span>
+								</a>
+							</li>
+						{/if}
+						{#if portfolioStore.profile.socialLinks?.instagram}
+							<li>
+								<a href={portfolioStore.profile.socialLinks.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+									<span>Ig</span>
+								</a>
+							</li>
+						{/if}
 						<li>
-							<a href={mockProfile.socialLinks.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn">
-								<span>In</span>
-							</a>
-						</li>
-						<li>
-							<a href={mockProfile.socialLinks.dribbble} target="_blank" rel="noopener" aria-label="Dribbble">
-								<span>Dr</span>
-							</a>
-						</li>
-						<li>
-							<a href={mockProfile.socialLinks.instagram} target="_blank" rel="noopener" aria-label="Instagram">
-								<span>Ig</span>
-							</a>
-						</li>
-						<li>
-							<a href="mailto:{mockProfile.socialLinks.email}" aria-label="Email">
+							<a href="mailto:{contactEmail}" aria-label="Email">
 								<span>@</span>
 							</a>
 						</li>

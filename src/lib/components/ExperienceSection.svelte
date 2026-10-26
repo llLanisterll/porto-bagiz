@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { ArrowUpRight, Check, Plus, Minus, Briefcase, Calendar, MapPin, Building2, Download } from 'lucide-svelte';
-	import { mockProfile } from '$lib/data/mockPortfolio';
 	import { portfolioStore } from '$lib/stores/portfolioStore.svelte';
 	import type { ExperienceItem } from '$lib/types/portfolio';
 
@@ -37,7 +36,7 @@
 				Rekam Jejak Karir & Kepemimpinan Desain Produk Terukur
 			</h4>
 			<p class="exp-lead">
-				Pengalaman lebih dari 6+ tahun memimpin perancangan produk digital bernilai jutaan pengguna, mengorkestrasi sistem desain skala enterprise, serta merumuskan strategi monetisasi dan pertumbuhan komersial berkelanjutan.
+				Pengalaman lebih dari {portfolioStore.profile.stats?.[0]?.value || '4+'} tahun memimpin perancangan produk digital bernilai jutaan pengguna, mengorkestrasi sistem desain skala enterprise, serta merumuskan strategi monetisasi dan pertumbuhan komersial berkelanjutan.
 			</p>
 		</div>
 
@@ -194,8 +193,8 @@
 				<div class="cta-actions">
 					<a
 						class="bttn bttn-primary"
-						href={mockProfile.resumeUrl}
-						target="_blank"
+						href={portfolioStore.profile.resumeUrl || '#contact'}
+						target={portfolioStore.profile.resumeUrl ? '_blank' : undefined}
 						rel="noopener"
 					>
 						<Download size={18} />
