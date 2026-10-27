@@ -246,8 +246,8 @@
     position: absolute;
     bottom: -15px;
     left: 20px;
-    background: #ffffff;
-    border: 1px solid rgba(10, 22, 40, 0.1);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
     border-radius: 999px;
     padding: 8px 18px;
     display: inline-flex;
@@ -256,8 +256,11 @@
     font-family: var(--ff-syne);
     font-size: 13px;
     font-weight: 700;
-    color: #0a1628;
+    color: var(--text-heading);
     box-shadow: 0 8px 24px rgba(10, 22, 40, 0.12);
+  }
+  :global(html.dark) .hero-float-badge {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   }
   .badge-dot {
     width: 8px;

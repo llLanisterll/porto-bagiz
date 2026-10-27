@@ -32,6 +32,25 @@
     --text-light: #64748b;
     --accent: #2563eb;
     --accent-hover: #1d4ed8;
+    --karya-card-bg: #ffffff;
+    --karya-border: rgba(15, 30, 56, 0.08);
+    --karya-tag-bg: #f1f5f9;
+    --karya-tag-text: #334155;
+    --karya-tag-hover: #e2e8f0;
+  }
+
+  :global(html.dark) {
+    --bg-dark: #060c18;
+    --text-white: #f8fafc;
+    --text-body: #cbd5e1;
+    --text-light: #94a3b8;
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --karya-card-bg: #0b1426;
+    --karya-border: rgba(255, 255, 255, 0.1);
+    --karya-tag-bg: #111e38;
+    --karya-tag-text: #93c5fd;
+    --karya-tag-hover: #17284b;
   }
 </style>
 
@@ -88,7 +107,7 @@
       style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:48px"
     >
       <div
-        style="background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px;padding:20px"
+        style="background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px;padding:20px"
       >
         <div
           style="font-size:11px;color:var(--text-light);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px"
@@ -100,7 +119,7 @@
         </div>
       </div>
       <div
-        style="background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px;padding:20px"
+        style="background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px;padding:20px"
       >
         <div
           style="font-size:11px;color:var(--text-light);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px"
@@ -112,7 +131,7 @@
         </div>
       </div>
       <div
-        style="background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px;padding:20px"
+        style="background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px;padding:20px"
       >
         <div
           style="font-size:11px;color:var(--text-light);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px"
@@ -125,7 +144,7 @@
       </div>
       {#if project.publishedAt}
         <div
-          style="background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px;padding:20px"
+          style="background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px;padding:20px"
         >
           <div
             style="font-size:11px;color:var(--text-light);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px"
@@ -150,7 +169,7 @@
         <div style="display:flex;flex-wrap:wrap;gap:10px">
           {#each project.tools as tech}
             <span
-              style="font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px;background:#f1f5f9;border:1px solid rgba(15,30,56,0.08);color:#334155"
+              style="font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px;background:var(--karya-tag-bg);border:1px solid var(--karya-border);color:var(--karya-tag-text)"
               >{tech}</span
             >
           {/each}
@@ -169,7 +188,7 @@
         <div style="display:grid;gap:20px">
           {#if project.caseStudy.background}
             <div
-              style="padding:24px;background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px"
+              style="padding:24px;background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px"
             >
               <h3
                 style="font-size:15px;font-weight:700;color:var(--text-white);margin-bottom:10px"
@@ -183,7 +202,7 @@
           {/if}
           {#if project.caseStudy.problem}
             <div
-              style="padding:24px;background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px"
+              style="padding:24px;background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px"
             >
               <h3
                 style="font-size:15px;font-weight:700;color:var(--text-white);margin-bottom:10px"
@@ -197,7 +216,7 @@
           {/if}
           {#if project.caseStudy.solution}
             <div
-              style="padding:24px;background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px"
+              style="padding:24px;background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px"
             >
               <h3
                 style="font-size:15px;font-weight:700;color:var(--text-white);margin-bottom:10px"
@@ -211,7 +230,7 @@
           {/if}
           {#if project.caseStudy.process?.length}
             <div
-              style="padding:24px;background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px"
+              style="padding:24px;background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px"
             >
               <h3
                 style="font-size:15px;font-weight:700;color:var(--text-white);margin-bottom:14px"
@@ -237,7 +256,7 @@
           {/if}
           {#if project.caseStudy.impact}
             <div
-              style="padding:24px;background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:14px"
+              style="padding:24px;background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:14px"
             >
               <h3
                 style="font-size:15px;font-weight:700;color:var(--text-white);margin-bottom:10px"
@@ -266,7 +285,7 @@
         >
           {#each project.metrics as metric}
             <div
-              style="padding:24px;background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 2px 10px rgba(15,30,56,0.03);border-radius:16px;text-align:center"
+              style="padding:24px;background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 2px 10px rgba(0,0,0,0.04);border-radius:16px;text-align:center"
             >
               <div
                 style="font-size:28px;font-weight:800;color:var(--text-white);margin-bottom:6px;font-family:'Outfit',sans-serif"
@@ -302,7 +321,7 @@
         >
           {#each project.images as img}
             <button
-              style="border-radius:14px;overflow:hidden;border:1px solid rgba(15,30,56,0.08);box-shadow:0 4px 15px rgba(15,30,56,0.04);padding:0;cursor:pointer;position:relative;aspect-ratio:16/10;display:block;width:100%;background:#f1f5f9"
+              style="border-radius:14px;overflow:hidden;border:1px solid var(--karya-border);box-shadow:0 4px 15px rgba(0,0,0,0.06);padding:0;cursor:pointer;position:relative;aspect-ratio:16/10;display:block;width:100%;background:var(--karya-card-bg)"
               onclick={() => openLightbox(img)}
               title="Klik untuk memperbesar gambar"
             >
@@ -326,7 +345,7 @@
     <!-- External links -->
     {#if project.links && Object.values(project.links).some(Boolean)}
       <div
-        style="padding:32px;background:#ffffff;border:1px solid rgba(15,30,56,0.08);box-shadow:0 4px 20px rgba(15,30,56,0.04);border-radius:18px"
+        style="padding:32px;background:var(--karya-card-bg);border:1px solid var(--karya-border);box-shadow:0 4px 20px rgba(0,0,0,0.04);border-radius:18px"
       >
         <h2
           style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:18px"
@@ -339,11 +358,11 @@
               href={project.links.figma}
               target="_blank"
               rel="noopener noreferrer"
-              style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:#f1f5f9;border:1px solid rgba(15,30,56,0.1);color:#0a1628;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s"
+              style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:var(--karya-tag-bg);border:1px solid var(--karya-border);color:var(--text-white);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s"
               onmouseenter={(e) =>
-                ((e.currentTarget as HTMLElement).style.background = "#e2e8f0")}
+                ((e.currentTarget as HTMLElement).style.background = "var(--karya-tag-hover)")}
               onmouseleave={(e) =>
-                ((e.currentTarget as HTMLElement).style.background = "#f1f5f9")}
+                ((e.currentTarget as HTMLElement).style.background = "var(--karya-tag-bg)")}
             >
               Figma Prototype <ExternalLink size={14} />
             </a>
@@ -369,11 +388,11 @@
               href={project.links.pitchDeck}
               target="_blank"
               rel="noopener noreferrer"
-              style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:#f1f5f9;border:1px solid rgba(15,30,56,0.1);color:#0a1628;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s"
+              style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:var(--karya-tag-bg);border:1px solid var(--karya-border);color:var(--text-white);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s"
               onmouseenter={(e) =>
-                ((e.currentTarget as HTMLElement).style.background = "#e2e8f0")}
+                ((e.currentTarget as HTMLElement).style.background = "var(--karya-tag-hover)")}
               onmouseleave={(e) =>
-                ((e.currentTarget as HTMLElement).style.background = "#f1f5f9")}
+                ((e.currentTarget as HTMLElement).style.background = "var(--karya-tag-bg)")}
             >
               Pitch Deck & Dokumen <ExternalLink size={14} />
             </a>
@@ -383,11 +402,11 @@
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:#f1f5f9;border:1px solid rgba(15,30,56,0.1);color:#0a1628;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s"
+              style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:var(--karya-tag-bg);border:1px solid var(--karya-border);color:var(--text-white);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s"
               onmouseenter={(e) =>
-                ((e.currentTarget as HTMLElement).style.background = "#e2e8f0")}
+                ((e.currentTarget as HTMLElement).style.background = "var(--karya-tag-hover)")}
               onmouseleave={(e) =>
-                ((e.currentTarget as HTMLElement).style.background = "#f1f5f9")}
+                ((e.currentTarget as HTMLElement).style.background = "var(--karya-tag-bg)")}
             >
               GitHub Repository <ExternalLink size={14} />
             </a>

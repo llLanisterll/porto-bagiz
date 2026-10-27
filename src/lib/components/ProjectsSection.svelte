@@ -220,8 +220,8 @@
 <style>
 	.projects-section {
 		padding: 95px 0 105px 0;
-		background: #ffffff;
-		border-top: 1px solid rgba(10, 22, 40, 0.06);
+		background: var(--bg-page);
+		border-top: 1px solid var(--border-subtle);
 		position: relative;
 	}
 
@@ -245,12 +245,12 @@
 		font-family: var(--ff-syne);
 		font-size: clamp(24px, 3.2vw, 38px);
 		font-weight: 700;
-		color: var(--clr-navy);
+		color: var(--text-heading);
 		line-height: 1.25;
 		letter-spacing: -0.015em;
 	}
 	.projects-lead {
-		color: var(--clr-gray);
+		color: var(--text-muted);
 		font-size: 16px;
 		line-height: 1.65;
 	}
@@ -264,11 +264,11 @@
 	}
 	.filter-pills-nav {
 		display: inline-flex;
-		background: #f1f5f9;
+		background: var(--bg-surface-elevated);
 		padding: 6px;
 		border-radius: 999px;
 		gap: 6px;
-		border: 1px solid rgba(10, 22, 40, 0.06);
+		border: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
 	}
 	@media (max-width: 768px) {
@@ -401,8 +401,8 @@
 
 	/* Card Base */
 	.portfolio-card {
-		background: #ffffff;
-		border: 1px solid rgba(10, 22, 40, 0.08);
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
 		border-radius: 22px;
 		overflow: hidden;
 		transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -556,7 +556,7 @@
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
-		background: #ffffff;
+		background: var(--bg-card);
 	}
 
 	.card-meta-row {
@@ -565,7 +565,7 @@
 		justify-content: space-between;
 		gap: 12px;
 		font-size: 12px;
-		color: #64748b;
+		color: var(--text-muted);
 		font-weight: 600;
 		margin-bottom: 12px;
 	}
@@ -584,7 +584,7 @@
 		font-family: var(--ff-syne);
 		font-size: 21px;
 		font-weight: 700;
-		color: var(--clr-navy);
+		color: var(--text-heading);
 		line-height: 1.35;
 		margin-bottom: 10px;
 		letter-spacing: -0.01em;
@@ -596,7 +596,7 @@
 
 	.card-summary {
 		font-size: 14.5px;
-		color: #475569;
+		color: var(--text-secondary);
 		line-height: 1.6;
 		margin-bottom: 18px;
 		display: -webkit-box;
@@ -613,9 +613,9 @@
 		gap: 10px;
 		margin-bottom: 20px;
 		padding: 12px 14px;
-		background: #f8fafc;
+		background: var(--bg-surface-elevated);
 		border-radius: 12px;
-		border: 1px solid rgba(10, 22, 40, 0.05);
+		border: 1px solid var(--border-subtle);
 	}
 	.stat-box {
 		display: flex;
@@ -630,7 +630,7 @@
 	}
 	.stat-label {
 		font-size: 11px;
-		color: #64748b;
+		color: var(--text-muted);
 		font-weight: 600;
 	}
 
@@ -642,7 +642,7 @@
 		gap: 12px;
 		margin-top: auto;
 		padding-top: 16px;
-		border-top: 1px solid rgba(10, 22, 40, 0.06);
+		border-top: 1px solid var(--border-subtle);
 	}
 	.tools-chips-list {
 		display: flex;
@@ -655,15 +655,15 @@
 		font-weight: 600;
 		padding: 4px 9px;
 		border-radius: 6px;
-		background: #f1f5f9;
-		color: #334155;
-		border: 1px solid rgba(10, 22, 40, 0.06);
+		background: var(--bg-surface-elevated);
+		color: var(--text-secondary);
+		border: 1px solid var(--border-subtle);
 	}
 	.tool-tag-more {
 		font-size: 11px;
 		font-weight: 700;
 		padding: 4px 6px;
-		color: #64748b;
+		color: var(--text-muted);
 	}
 
 	.card-arrow-link {
@@ -673,7 +673,7 @@
 		font-size: 13px;
 		font-weight: 700;
 		font-family: var(--ff-syne);
-		color: var(--clr-navy);
+		color: var(--text-heading);
 		transition: all 0.25s ease;
 		flex-shrink: 0;
 	}
@@ -690,8 +690,8 @@
 	/* Bottom Executive Action Banner */
 	.projects-bottom-banner {
 		margin-top: 55px;
-		background: #f8fafc;
-		border: 1px solid rgba(10, 22, 40, 0.08);
+		background: var(--bg-surface);
+		border: 1px solid var(--border-subtle);
 		border-radius: 20px;
 		padding: 36px 40px;
 		box-shadow: 0 10px 30px rgba(10, 22, 40, 0.02);
@@ -727,14 +727,14 @@
 		font-family: var(--ff-syne);
 		font-size: 22px;
 		font-weight: 700;
-		color: var(--clr-navy);
+		color: var(--text-heading);
 		line-height: 1.35;
 		margin-bottom: 8px;
 		letter-spacing: -0.01em;
 	}
 	.banner-desc {
 		font-size: 14.5px;
-		color: #64748b;
+		color: var(--text-muted);
 		line-height: 1.6;
 	}
 	.banner-actions {
@@ -747,5 +747,113 @@
 		.banner-actions {
 			flex-direction: row;
 		}
+	}
+
+	/* Dark mode styling */
+	:global(html.dark) .projects-section {
+		background: var(--bg-page);
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .projects-headline {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .projects-lead {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .filter-pills-nav {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .filter-tab-btn {
+		color: #94a3b8;
+	}
+	:global(html.dark) .filter-tab-btn:hover {
+		color: #f8fafc;
+	}
+	:global(html.dark) .filter-tab-btn.active {
+		background: var(--btn-primary-bg);
+		color: #ffffff;
+		box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+	}
+	:global(html.dark) .tab-badge {
+		background: rgba(255, 255, 255, 0.1);
+		color: #cbd5e1;
+	}
+	:global(html.dark) .portfolio-card {
+		background: var(--bg-surface);
+		border-color: var(--border-subtle);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+	}
+	:global(html.dark) .portfolio-card:hover {
+		border-color: rgba(59, 130, 246, 0.45);
+		box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+	}
+	:global(html.dark) .card-body {
+		background: var(--bg-surface);
+	}
+	:global(html.dark) .card-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .card-summary {
+		color: var(--text-secondary);
+	}
+	:global(html.dark) .card-meta-row {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .card-stats-grid {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .stat-label {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .card-footer-row {
+		border-top-color: var(--border-subtle);
+	}
+	:global(html.dark) .tool-tag {
+		background: var(--bg-surface-elevated);
+		color: #cbd5e1;
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .tool-tag-more {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .card-arrow-link {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .cat-pill {
+		background: rgba(11, 20, 38, 0.92);
+		color: #f8fafc;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	:global(html.dark) .media-hover-cta {
+		background: #0f1c34;
+		color: #f8fafc;
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
+	:global(html.dark) .projects-bottom-banner {
+		background: var(--bg-surface);
+		border-color: var(--border-subtle);
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+	}
+	:global(html.dark) .banner-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .banner-desc {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .empty-showcase-box {
+		background: var(--bg-surface);
+		border-color: var(--border-medium);
+	}
+	:global(html.dark) .empty-showcase-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .empty-showcase-desc {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .empty-showcase-icon {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-medium);
 	}
 </style>

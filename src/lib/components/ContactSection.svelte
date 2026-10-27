@@ -400,6 +400,27 @@
     transform: translateY(-4px);
   }
 
+  :global(html.dark) .submit-bttn {
+    background: var(--btn-primary-bg, #3b82f6);
+    color: #ffffff;
+    border-color: var(--btn-primary-bg, #3b82f6);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+  }
+  :global(html.dark) .submit-bttn:hover {
+    background: var(--btn-primary-hover-bg, #60a5fa);
+    border-color: var(--btn-primary-hover-bg, #60a5fa);
+    color: #060c18;
+  }
+  :global(html.dark) .loading-spinner {
+    border-color: #ffffff;
+    border-top-color: transparent;
+  }
+  :global(html.dark) .contact-social-pills li a:hover {
+    background: var(--clr-accent);
+    color: #ffffff;
+    border-color: var(--clr-accent);
+  }
+
   @media (max-width: 576px) {
     .submit-bttn {
       width: 100%;

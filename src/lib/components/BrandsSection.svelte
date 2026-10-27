@@ -46,15 +46,15 @@
 <style>
 	.brands {
 		padding: 70px 0;
-		background: #ffffff;
-		border-bottom: 1px solid rgba(10, 22, 40, 0.08);
+		background: var(--bg-page);
+		border-bottom: 1px solid var(--border-subtle);
 		overflow: hidden;
 	}
 	.brands-title {
 		font-family: var(--ff-syne);
 		font-size: 14px;
 		font-weight: 700;
-		color: var(--clr-gray);
+		color: var(--text-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
 		text-align: center;
@@ -82,8 +82,8 @@
 		font-family: var(--ff-syne);
 		font-size: clamp(20px, 2.5vw, 30px);
 		font-weight: 800;
-		color: var(--clr-navy);
-		opacity: 0.4;
+		color: var(--text-heading);
+		opacity: 0.45;
 		letter-spacing: 0.04em;
 		transition: all 0.3s ease;
 		cursor: default;
@@ -94,8 +94,19 @@
 		transform: scale(1.05);
 	}
 	.brand-dot {
-		color: rgba(10, 22, 40, 0.15);
+		color: var(--border-medium);
 		font-weight: 700;
 		font-size: 20px;
+	}
+
+	:global(html.dark) .brands {
+		background: var(--bg-page);
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .brand-pill {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .brand-dot {
+		color: rgba(255, 255, 255, 0.15);
 	}
 </style>

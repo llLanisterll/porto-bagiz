@@ -217,7 +217,7 @@
 <style>
 	.experience-section {
 		padding: 95px 0 100px 0;
-		background: var(--clr-white);
+		background: var(--bg-page);
 		position: relative;
 	}
 
@@ -240,12 +240,12 @@
 		font-family: var(--ff-syne);
 		font-size: clamp(24px, 3.2vw, 38px);
 		font-weight: 700;
-		color: var(--clr-navy);
+		color: var(--text-heading);
 		line-height: 1.25;
 		letter-spacing: -0.015em;
 	}
 	.exp-lead {
-		color: var(--clr-gray);
+		color: var(--text-muted);
 		font-size: 16px;
 		line-height: 1.65;
 	}
@@ -253,11 +253,11 @@
 	/* Accordion wrapper */
 	.exp-item-wrapper {
 		margin-top: 36px;
-		border-top: 1px solid rgba(10, 22, 40, 0.12);
+		border-top: 1px solid var(--border-subtle);
 	}
 
 	.exp-item {
-		border-bottom: 1px solid rgba(10, 22, 40, 0.12);
+		border-bottom: 1px solid var(--border-subtle);
 		padding: 26px 20px;
 		border-radius: 14px;
 		transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -267,7 +267,7 @@
 		background: rgba(10, 22, 40, 0.02);
 	}
 	.exp-item.is-active {
-		background: #f8fafc;
+		background: var(--bg-surface-subtle);
 		border-color: rgba(37, 99, 235, 0.25);
 		box-shadow: 0 10px 30px rgba(10, 22, 40, 0.04);
 	}
@@ -275,8 +275,8 @@
 	/* Empty State */
 	.empty-experience-wrap {
 		padding: 72px 24px;
-		background: #f8fafc;
-		border: 1px dashed rgba(10, 22, 40, 0.15);
+		background: var(--bg-surface-subtle);
+		border: 1px dashed var(--border-medium);
 		border-radius: 20px;
 		text-align: center;
 		display: flex;
@@ -288,8 +288,8 @@
 		width: 64px;
 		height: 64px;
 		border-radius: 16px;
-		background: #ffffff;
-		border: 1px solid rgba(10, 22, 40, 0.08);
+		background: var(--bg-surface-elevated);
+		border: 1px solid var(--border-subtle);
 		color: #10b981;
 		display: flex;
 		align-items: center;
@@ -301,12 +301,12 @@
 		font-family: var(--ff-syne);
 		font-size: 20px;
 		font-weight: 700;
-		color: #0a1628;
+		color: var(--text-heading);
 		margin: 0 0 8px;
 	}
 	.empty-exp-desc {
 		font-size: 14.5px;
-		color: #64748b;
+		color: var(--text-muted);
 		max-width: 520px;
 		margin: 0;
 		line-height: 1.6;
@@ -412,27 +412,27 @@
 		width: 48px;
 		height: 48px;
 		border-radius: 50%;
-		border: 1px solid rgba(10, 22, 40, 0.15);
+		border: 1px solid var(--border-medium);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: var(--clr-navy);
-		background: #ffffff;
+		color: var(--text-heading);
+		background: var(--bg-surface-elevated);
 		transition: all 0.3s ease;
 		flex-shrink: 0;
 	}
 	.exp-item:hover .exp-toggle-btn,
 	.exp-item.is-active .exp-toggle-btn {
-		background: var(--clr-navy);
+		background: var(--btn-primary-bg, #0a1628);
 		color: #ffffff;
-		border-color: var(--clr-navy);
+		border-color: var(--btn-primary-bg, #0a1628);
 	}
 
 	/* Expanded Panel */
 	.exp-panel-content {
 		margin-top: 24px;
 		padding-top: 24px;
-		border-top: 1px dashed rgba(10, 22, 40, 0.12);
+		border-top: 1px dashed var(--border-subtle);
 		animation: fadeIn 0.35s ease;
 		display: flex;
 		flex-direction: column;
@@ -445,8 +445,8 @@
 		gap: 20px;
 		flex-wrap: wrap;
 		padding: 10px 16px;
-		background: #ffffff;
-		border: 1px solid rgba(10, 22, 40, 0.08);
+		background: var(--bg-surface-elevated);
+		border: 1px solid var(--border-subtle);
 		border-radius: 10px;
 	}
 	.meta-item {
@@ -454,7 +454,7 @@
 		align-items: center;
 		gap: 6px;
 		font-size: 13.5px;
-		color: #475569;
+		color: var(--text-secondary);
 		font-weight: 500;
 	}
 	:global(.meta-icon) {
@@ -465,7 +465,7 @@
 	.exp-desc {
 		font-size: 16px;
 		line-height: 1.65;
-		color: #334155;
+		color: var(--text-secondary);
 		margin: 0;
 		max-width: 980px;
 	}
@@ -482,7 +482,7 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.06em;
-		color: var(--clr-navy);
+		color: var(--text-heading);
 	}
 	.achievements-list {
 		list-style: none;
@@ -503,7 +503,7 @@
 		gap: 10px;
 		font-size: 14.5px;
 		line-height: 1.55;
-		color: var(--clr-navy);
+		color: var(--text-primary);
 		font-weight: 500;
 	}
 	.check-box {
@@ -525,7 +525,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding-top: 14px;
-		border-top: 1px solid rgba(10, 22, 40, 0.06);
+		border-top: 1px solid var(--border-subtle);
 		gap: 20px;
 		flex-wrap: wrap;
 	}
@@ -538,7 +538,7 @@
 	.tools-lead {
 		font-size: 13px;
 		font-weight: 700;
-		color: #64748b;
+		color: var(--text-muted);
 	}
 	.tools-chips-wrap {
 		display: flex;
@@ -550,9 +550,9 @@
 		font-family: var(--ff-syne);
 		font-size: 11.5px;
 		font-weight: 600;
-		background: #ffffff;
-		border: 1px solid rgba(10, 22, 40, 0.1);
-		color: #334155;
+		background: var(--bg-surface-elevated);
+		border: 1px solid var(--border-subtle);
+		color: var(--text-primary);
 		padding: 3px 10px;
 		border-radius: 6px;
 	}
@@ -578,13 +578,13 @@
 	}
 	.bttn-case-study.outline {
 		background: transparent;
-		color: var(--clr-navy);
-		border: 1px solid rgba(10, 22, 40, 0.2);
+		color: var(--text-heading);
+		border: 1px solid var(--border-medium);
 	}
 	.bttn-case-study.outline:hover {
-		background: var(--clr-navy);
-		color: var(--clr-white);
-		border-color: var(--clr-navy);
+		background: var(--btn-primary-bg, #0a1628);
+		color: #ffffff;
+		border-color: var(--btn-primary-bg, #0a1628);
 	}
 
 	/* Bottom CTA Card */
@@ -592,8 +592,8 @@
 		margin-top: 60px;
 	}
 	.exp-cta-card {
-		background: #f8fafc;
-		border: 1px solid rgba(10, 22, 40, 0.08);
+		background: var(--bg-surface-subtle);
+		border: 1px solid var(--border-subtle);
 		border-radius: 20px;
 		padding: 40px;
 		display: flex;
@@ -609,12 +609,12 @@
 		font-family: var(--ff-syne);
 		font-size: clamp(20px, 2.2vw, 26px);
 		font-weight: 700;
-		color: var(--clr-navy);
+		color: var(--text-heading);
 		margin-bottom: 8px;
 	}
 	.cta-card-desc {
 		font-size: 15px;
-		color: #475569;
+		color: var(--text-muted);
 		line-height: 1.6;
 		margin: 0;
 	}
@@ -627,13 +627,13 @@
 
 	.bttn-outline {
 		background: transparent;
-		color: var(--clr-navy);
-		border: 1px solid rgba(10, 22, 40, 0.2);
+		color: var(--text-heading);
+		border: 1px solid var(--border-medium);
 	}
 	.bttn-outline:hover {
-		background: var(--clr-navy);
-		color: var(--clr-white);
-		border-color: var(--clr-navy);
+		background: var(--btn-primary-bg, #0a1628);
+		color: #ffffff;
+		border-color: var(--btn-primary-bg, #0a1628);
 	}
 
 	@media (max-width: 576px) {
@@ -650,5 +650,126 @@
 			width: 100%;
 			justify-content: center;
 		}
+	}
+
+	/* Dark mode styling */
+	:global(html.dark) .experience-section {
+		background: var(--bg-page);
+	}
+	:global(html.dark) .exp-headline {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .exp-lead {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .exp-item-wrapper,
+	:global(html.dark) .exp-item {
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .exp-item:hover {
+		background: rgba(255, 255, 255, 0.03);
+	}
+	:global(html.dark) .exp-item.is-active {
+		background: var(--bg-surface);
+		border-color: rgba(59, 130, 246, 0.35);
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+	}
+	:global(html.dark) .exp-period-txt {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .exp-role-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .exp-company-name {
+		color: var(--text-secondary);
+	}
+	:global(html.dark) .exp-badge-pill {
+		background: var(--bg-surface-elevated);
+		color: #93c5fd;
+	}
+	:global(html.dark) .exp-status-pill {
+		background: var(--bg-surface-elevated);
+		color: #cbd5e1;
+	}
+	:global(html.dark) .exp-status-pill.current {
+		background: rgba(59, 130, 246, 0.2);
+		color: #60a5fa;
+		border-color: rgba(59, 130, 246, 0.4);
+	}
+	:global(html.dark) .exp-toggle-btn {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-medium);
+		color: var(--text-primary);
+	}
+	:global(html.dark) .exp-item:hover .exp-toggle-btn,
+	:global(html.dark) .exp-item.is-active .exp-toggle-btn {
+		background: var(--btn-primary-bg);
+		color: #ffffff;
+		border-color: var(--btn-primary-bg);
+	}
+	:global(html.dark) .exp-panel-content {
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .exp-meta-strip {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-subtle);
+		color: var(--text-secondary);
+	}
+	:global(html.dark) .exp-desc {
+		color: var(--text-secondary);
+	}
+	:global(html.dark) .tool-tag {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-subtle);
+		color: var(--text-primary);
+	}
+	:global(html.dark) .exp-cta-card {
+		background: var(--bg-surface);
+		border-color: var(--border-subtle);
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+	}
+	:global(html.dark) .cta-card-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .cta-card-desc {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .achievements-label {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .achievements-list li {
+		color: var(--text-primary);
+	}
+	:global(html.dark) .bttn-case-study.outline {
+		color: #f8fafc;
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+	:global(html.dark) .bttn-case-study.outline:hover {
+		background: var(--btn-primary-bg);
+		color: #ffffff;
+		border-color: var(--btn-primary-bg);
+	}
+	:global(html.dark) .bttn-outline {
+		color: #f8fafc;
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+	:global(html.dark) .bttn-outline:hover {
+		background: var(--btn-primary-bg);
+		color: #ffffff;
+		border-color: var(--btn-primary-bg);
+	}
+	:global(html.dark) .empty-experience-wrap {
+		background: var(--bg-surface);
+		border-color: var(--border-medium);
+	}
+	:global(html.dark) .empty-exp-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .empty-exp-desc {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .empty-exp-icon {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-medium);
 	}
 </style>

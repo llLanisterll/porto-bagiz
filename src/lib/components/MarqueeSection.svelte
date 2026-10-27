@@ -56,10 +56,10 @@
 
 <style>
 	.marquee {
-		border-top: 1px solid rgba(10, 22, 40, 0.08);
-		border-bottom: 1px solid rgba(10, 22, 40, 0.08);
+		border-top: 1px solid var(--border-subtle);
+		border-bottom: 1px solid var(--border-subtle);
 		padding: 44px 0;
-		background: #ffffff;
+		background: var(--bg-page);
 		user-select: none;
 	}
 	.marquee-star {
@@ -67,5 +67,10 @@
 		color: var(--clr-accent);
 		opacity: 0.8;
 		padding: 0 10px;
+	}
+
+	:global(html.dark) .marquee {
+		background: var(--bg-page);
+		border-color: var(--border-subtle);
 	}
 </style>

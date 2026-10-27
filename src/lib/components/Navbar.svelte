@@ -3,6 +3,7 @@
   import { goto } from "$app/navigation";
   import { ArrowUpRight, X, Mail, Phone, MapPin } from "lucide-svelte";
   import { portfolioStore } from "$lib/stores/portfolioStore.svelte";
+  import ThemeToggle from "$lib/components/ThemeToggle.svelte";
 
   let sticky = $state(false);
   let sidebarOpen = $state(false);
@@ -81,8 +82,10 @@
       </ul>
     </nav>
 
-    <!-- Right Component: Let's Talk CTA & Hamburger -->
+    <!-- Right Component: Theme Toggle, Let's Talk CTA & Hamburger -->
     <div class="menu-components">
+      <ThemeToggle />
+
       <a
         class="lets-talk"
         href="#contact"
@@ -111,14 +114,17 @@
 <!-- Textio Offcanvas Sidebar Menu (.subside-barmenu) -->
 <div class="subside-barmenu" class:active={sidebarOpen}>
   <div class="subside-inner">
-    <button
-      type="button"
-      class="sidebar-close-btn"
-      onclick={closeSidebar}
-      aria-label="Tutup menu sidebar"
-    >
-      <X size={20} />
-    </button>
+    <div class="sidebar-top-bar">
+      <ThemeToggle compact showLabel />
+      <button
+        type="button"
+        class="sidebar-close-btn"
+        onclick={closeSidebar}
+        aria-label="Tutup menu sidebar"
+      >
+        <X size={20} />
+      </button>
+    </div>
 
     <div class="side-logo">
       <h4 class="logo">
@@ -231,7 +237,7 @@
     height: 100vh;
     background: #ffffff;
     z-index: 100000;
-    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
     box-shadow: -10px 0 30px rgba(10, 22, 40, 0.15);
     overflow-y: auto;
   }
@@ -240,13 +246,19 @@
   }
 
   .subside-inner {
-    padding: 32px 24px;
+    padding: 28px 24px;
     display: flex;
     flex-direction: column;
   }
 
+  .sidebar-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
   .sidebar-close-btn {
-    align-self: flex-end;
     width: 38px;
     height: 38px;
     border-radius: 8px;
@@ -257,11 +269,54 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease;
   }
   .sidebar-close-btn:hover {
     transform: scale(1.05);
+  }
+
+  :global(html.dark) .subside-barmenu {
+    background: #0b1528;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+  }
+
+  :global(html.dark) .sidebar-close-btn {
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  :global(html.dark) .side-logo .logo {
+    color: #f8fafc;
+  }
+
+  :global(html.dark) .side-desc {
+    color: #94a3b8;
+  }
+
+  :global(html.dark) .side-nav ul {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global(html.dark) .side-nav li a {
+    color: #f8fafc;
+  }
+
+  :global(html.dark) .side-nav li a:hover {
+    color: var(--clr-accent);
+  }
+
+  :global(html.dark) .contact-icon-box {
+    background: #111e38;
+    color: #f8fafc;
+  }
+
+  :global(html.dark) .widget-val {
+    color: #f8fafc;
+  }
+
+  :global(html.dark) .sidebar-backdrop {
+    background: rgba(0, 0, 0, 0.7);
   }
 
   .side-logo .logo {

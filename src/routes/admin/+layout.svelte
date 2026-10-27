@@ -20,6 +20,7 @@
     ArrowUpRight,
     Sparkles,
   } from "lucide-svelte";
+  import ThemeToggle from "$lib/components/ThemeToggle.svelte";
 
   let { children } = $props();
 
@@ -319,6 +320,8 @@
             <span class="indicator-dot"></span>
             <span class="indicator-text">Tersinkronisasi Real-time</span>
           </div>
+
+          <ThemeToggle compact />
 
           <a href="/" target="_blank" rel="noopener" class="preview-site-btn">
             <span>Lihat Website</span>
@@ -859,5 +862,100 @@
       padding: 5px 10px;
       font-size: 11.5px;
     }
+  }
+
+  /* Admin Dark Mode Styles */
+  :global(html.dark body) {
+    background-color: #060c18;
+    color: #f8fafc;
+  }
+  :global(html.dark) .admin-app {
+    background-color: #060c18;
+    color: #f8fafc;
+  }
+  :global(html.dark) .admin-sidebar {
+    background: #0b1426;
+    border-right-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 2px 0 16px -4px rgba(0, 0, 0, 0.5);
+  }
+  :global(html.dark) .sidebar-header {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  :global(html.dark) .brand-title {
+    color: #f8fafc;
+  }
+  :global(html.dark) .brand-sub {
+    color: #94a3b8;
+  }
+  :global(html.dark) .nav-link {
+    color: #cbd5e1;
+  }
+  :global(html.dark) .nav-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+  }
+  :global(html.dark) .nav-link.active {
+    background: #111e38;
+    color: #60a5fa;
+  }
+  :global(html.dark) .nav-count {
+    background: #111e38;
+    color: #94a3b8;
+  }
+  :global(html.dark) .user-card {
+    background: #0e192e;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  :global(html.dark) .sidebar-footer {
+    background: #080f1d;
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+  :global(html.dark) .user-name {
+    color: #f8fafc;
+  }
+  :global(html.dark) .logout-icon-btn {
+    color: #94a3b8;
+  }
+  :global(html.dark) .logout-icon-btn:hover {
+    background: #1e293b;
+    color: #ef4444;
+  }
+  :global(html.dark) .sync-status-pill {
+    background: #0e192e;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+  }
+  :global(html.dark) .admin-topbar {
+    background: #0b1426;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+  }
+  :global(html.dark) .crumb-root {
+    color: #94a3b8;
+  }
+  :global(html.dark) .crumb-current {
+    color: #f8fafc;
+  }
+  :global(html.dark) .mobile-menu-btn {
+    color: #f8fafc;
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+  :global(html.dark) .live-indicator-pill {
+    background: #0e192e;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+  }
+  :global(html.dark) .preview-site-btn {
+    background: #111e38;
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #f8fafc;
+  }
+  :global(html.dark) .preview-site-btn:hover {
+    background: #17284b;
+    border-color: #60a5fa;
+  }
+  :global(html.dark) .admin-auth-main {
+    background-color: #060c18;
+    color: #f8fafc;
   }
 </style>

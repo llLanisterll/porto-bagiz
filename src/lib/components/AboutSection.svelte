@@ -129,7 +129,7 @@
 		gap: 12px;
 		font-size: 15px;
 		font-weight: 600;
-		color: #1e293b;
+		color: var(--text-primary);
 		line-height: 1.5;
 	}
 	:global(.point-icon) {
@@ -145,7 +145,7 @@
 		gap: 20px;
 		margin-top: 50px;
 		padding-top: 40px;
-		border-top: 1px solid rgba(10, 22, 40, 0.08);
+		border-top: 1px solid var(--border-subtle);
 	}
 	@media (max-width: 991px) {
 		.about-stats-grid {
@@ -159,8 +159,8 @@
 		}
 	}
 	.about-stat-item {
-		background: #ffffff;
-		border: 1px solid rgba(10, 22, 40, 0.08);
+		background: var(--bg-surface);
+		border: 1px solid var(--border-subtle);
 		border-radius: 16px;
 		padding: 24px 20px;
 		display: flex;
@@ -178,7 +178,7 @@
 		font-family: var(--ff-syne);
 		font-size: 32px;
 		font-weight: 800;
-		color: var(--clr-navy);
+		color: var(--clr-accent);
 		line-height: 1;
 		letter-spacing: -0.02em;
 	}
@@ -186,11 +186,21 @@
 		font-family: var(--ff-syne);
 		font-size: 13.5px;
 		font-weight: 700;
-		color: #0f172a;
+		color: var(--text-heading);
 	}
 	.stat-desc {
 		font-size: 12.5px;
-		color: #64748b;
+		color: var(--text-muted);
 		line-height: 1.4;
+	}
+
+	:global(html.dark) .about-stat-item {
+		background: var(--bg-surface);
+		border-color: var(--border-subtle);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+	}
+	:global(html.dark) .about-stat-item:hover {
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+		border-color: rgba(59, 130, 246, 0.45);
 	}
 </style>

@@ -154,4 +154,11 @@
 		background: rgba(37, 99, 235, 0.12);
 		color: var(--clr-accent);
 	}
+
+	:global(html.dark) .pricing-headline {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .pricing-sub {
+		color: var(--text-muted);
+	}
 </style>

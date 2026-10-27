@@ -309,8 +309,8 @@
 		gap: 14px;
 		margin-bottom: 28px;
 		padding: 18px 0;
-		border-top: 1px solid rgba(10, 22, 40, 0.08);
-		border-bottom: 1px solid rgba(10, 22, 40, 0.08);
+		border-top: 1px solid var(--border-subtle);
+		border-bottom: 1px solid var(--border-subtle);
 		transition: border-color 0.3s ease;
 	}
 	.skill-card:hover .skills-list {
@@ -323,7 +323,7 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.06em;
-		color: var(--clr-navy);
+		color: var(--text-heading);
 		margin-bottom: 4px;
 		transition: color 0.3s ease;
 	}
@@ -336,7 +336,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 7px 0;
-		border-bottom: 1px dashed rgba(10, 22, 40, 0.06);
+		border-bottom: 1px dashed var(--border-subtle);
 		transition: border-color 0.3s ease;
 		gap: 12px;
 	}
@@ -532,5 +532,91 @@
 	.skill-card:hover .skill-action-btn:hover {
 		background: var(--clr-accent);
 		border-color: var(--clr-accent);
+	}
+
+	/* Dark mode styling */
+	:global(html.dark) .skills-section {
+		background: var(--bg-surface-subtle);
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .skills-headline {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .skills-sub {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .skill-card {
+		background: var(--bg-surface);
+		border-color: var(--border-subtle);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+	}
+	:global(html.dark) .skill-card:hover {
+		background: #0f1c34;
+		border-color: var(--clr-accent);
+		box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+	}
+	:global(html.dark) .pillar-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .pillar-subtitle {
+		color: #60a5fa;
+	}
+	:global(html.dark) .pillar-desc {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .pillar-badge {
+		background: var(--bg-surface-elevated);
+		color: #93c5fd;
+	}
+	:global(html.dark) .competency-name {
+		color: var(--text-primary);
+	}
+	:global(html.dark) .level-badge {
+		background: var(--bg-surface-elevated);
+		color: #93c5fd;
+	}
+	:global(html.dark) .meter-bars .bar-step {
+		background: rgba(255, 255, 255, 0.15);
+	}
+	:global(html.dark) .meter-bars .bar-step.filled {
+		background: var(--clr-accent);
+	}
+	:global(html.dark) .skills-list {
+		border-color: var(--border-subtle);
+	}
+	:global(html.dark) .list-label {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .skill-competency-item {
+		border-bottom-color: var(--border-subtle);
+	}
+	:global(html.dark) .tool-pill {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-subtle);
+		color: #cbd5e1;
+	}
+	:global(html.dark) .skill-action-btn {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-medium);
+		color: var(--text-heading);
+	}
+	:global(html.dark) .skill-action-btn:hover {
+		background: var(--btn-primary-bg);
+		border-color: var(--btn-primary-bg);
+		color: #ffffff;
+	}
+	:global(html.dark) .empty-skills-wrap {
+		background: var(--bg-surface);
+		border-color: var(--border-medium);
+	}
+	:global(html.dark) .empty-skills-title {
+		color: var(--text-heading);
+	}
+	:global(html.dark) .empty-skills-desc {
+		color: var(--text-muted);
+	}
+	:global(html.dark) .empty-skills-icon {
+		background: var(--bg-surface-elevated);
+		border-color: var(--border-medium);
 	}
 </style>
